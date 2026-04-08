@@ -227,8 +227,7 @@ export default function BuildYourBox() {
                 ← Voltar
               </button>
               <Button
-                variant="primary"
-                size="md"
+                variant="cart"
                 onClick={() => setStep('summary')}
                 disabled={!isComplete}
               >
@@ -309,8 +308,7 @@ export default function BuildYourBox() {
                 ← Editar
               </button>
               <Button
-                variant="primary"
-                size="md"
+                variant="cart"
                 className="flex-1"
                 onClick={handleAddToCart}
                 disabled={added}

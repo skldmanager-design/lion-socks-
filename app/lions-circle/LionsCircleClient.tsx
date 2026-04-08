@@ -46,7 +46,7 @@ export default function LionsCircleClient() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-20" style={{ background: '#0a0a0a' }}>
       {/* Back link */}
-      <div className="absolute top-24 left-4 sm:left-8 z-10" style={{ top: 'calc(36px + 80px + 16px)' }}>
+      <div className="absolute left-4 sm:left-8 z-10" style={{ top: '284px' }}>
         <Link
           href="/"
           className="flex items-center gap-1.5 font-body transition-colors hover:text-white"
@@ -63,7 +63,7 @@ export default function LionsCircleClient() {
             {/* Pre-headline */}
             <p
               className="font-body uppercase mb-6"
-              style={{ fontSize: '14px', letterSpacing: '0.15em', color: '#C5A55A', fontWeight: 400 }}
+              style={{ fontSize: '14px', letterSpacing: '0.15em', color: '#B8960C', fontWeight: 400 }}
             >
               Em Breve
             </p>
@@ -99,11 +99,11 @@ export default function LionsCircleClient() {
                     style={{
                       width: '20px',
                       height: '20px',
-                      border: '1px solid rgba(197,165,90,0.4)',
+                      border: '1px solid rgba(184,150,12,0.4)',
                       marginTop: '2px',
                     }}
                   >
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C5A55A', display: 'block' }} />
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#B8960C', display: 'block' }} />
                   </div>
                   <div>
                     <p
@@ -158,8 +158,8 @@ export default function LionsCircleClient() {
                 disabled={loading}
                 className="w-full font-body uppercase transition-all duration-300 disabled:opacity-60 flex items-center justify-center gap-2"
                 style={{
-                  border: '1px solid #C5A55A',
-                  color: '#C5A55A',
+                  border: '1px solid #B8960C',
+                  color: '#B8960C',
                   fontSize: '11px',
                   letterSpacing: '0.15em',
                   padding: '16px',
@@ -167,8 +167,8 @@ export default function LionsCircleClient() {
                   background: 'transparent',
                   cursor: loading ? 'not-allowed' : 'pointer',
                 }}
-                onMouseEnter={(e) => { if (!loading) { e.currentTarget.style.background = '#C5A55A'; e.currentTarget.style.color = '#0a0a0a' } }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#C5A55A' }}
+                onMouseEnter={(e) => { if (!loading) { e.currentTarget.style.background = '#B8960C'; e.currentTarget.style.color = '#0a0a0a' } }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#B8960C' }}
               >
                 {loading ? (
                   <>
@@ -198,7 +198,7 @@ export default function LionsCircleClient() {
           <div>
             <div
               className="inline-flex h-16 w-16 items-center justify-center rounded-full mb-8"
-              style={{ border: '1px solid rgba(197,165,90,0.4)' }}
+              style={{ border: '1px solid rgba(184,150,12,0.4)' }}
             >
               <Check size={28} className="text-gold" strokeWidth={1.5} />
             </div>
@@ -228,8 +228,8 @@ export default function LionsCircleClient() {
                 href="/loja"
                 className="block w-full font-body uppercase text-center transition-all duration-300"
                 style={{
-                  border: '1px solid rgba(197,165,90,0.4)',
-                  color: '#C5A55A',
+                  border: '1px solid rgba(184,150,12,0.4)',
+                  color: '#B8960C',
                   fontSize: '11px',
                   letterSpacing: '0.15em',
                   padding: '16px',

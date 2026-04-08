@@ -309,9 +309,9 @@ export default function CartPageClient() {
               </div>
 
               <Button
-                variant="primary"
-                size="lg"
-                className="w-full mb-3"
+                variant="cart"
+                fullWidth
+                className="mb-3"
                 onClick={handleCheckout}
               >
                 Finalizar Compra

@@ -21,7 +21,7 @@ export default function PacksTeaser() {
         >
           <p
             className="font-body uppercase mb-4"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
           >
             EMBALAGEM PREMIUM
           </p>
@@ -53,7 +53,7 @@ export default function PacksTeaser() {
                     border: '1px solid rgba(255,255,255,0.06)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(197,165,90,0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(184,150,12,0.3)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
@@ -66,8 +66,8 @@ export default function PacksTeaser() {
                       style={{
                         fontSize: '9px',
                         letterSpacing: '0.15em',
-                        color: '#C5A55A',
-                        border: '1px solid rgba(197,165,90,0.3)',
+                        color: '#B8960C',
+                        border: '1px solid rgba(184,150,12,0.3)',
                         padding: '3px 8px',
                       }}
                     >
@@ -110,7 +110,7 @@ export default function PacksTeaser() {
                       </span>
                       <span
                         className="font-body ml-auto"
-                        style={{ fontSize: '11px', color: '#C5A55A', letterSpacing: '0.05em' }}
+                        style={{ fontSize: '11px', color: '#B8960C', letterSpacing: '0.05em' }}
                       >
                         Poupa {formatPrice(savings)}
                       </span>
@@ -134,8 +134,8 @@ export default function PacksTeaser() {
             href="/packs"
             className="font-body uppercase inline-block transition-all duration-300 hover:bg-gold hover:text-primary hover:border-gold"
             style={{
-              border: '1px solid rgba(197,165,90,0.5)',
-              color: '#C5A55A',
+              border: '1px solid rgba(184,150,12,0.5)',
+              color: '#B8960C',
               fontSize: '11px',
               letterSpacing: '0.15em',
               padding: '16px 40px',

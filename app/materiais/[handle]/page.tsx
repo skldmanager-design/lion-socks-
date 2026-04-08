@@ -17,8 +17,8 @@ const materialData = {
     name: 'Seda',
     article: 'a',
     tagline: 'O epítome do luxo em meias',
-    heroImage: 'https://placehold.co/1920x900/1a0e1a/C5A55A?text=Seda&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/1a0e1a/C5A55A?text=Textura+Seda&font=playfair-display',
+    heroImage: 'https://placehold.co/1920x900/1a0e1a/B8960C?text=Seda&font=playfair-display',
+    textureImage: 'https://placehold.co/900x700/1a0e1a/B8960C?text=Textura+Seda&font=playfair-display',
     color: '#8B7355',
     history: [
       'Utilizada pela realeza há mais de quatro mil anos, a seda continua a ser o epítome do luxo. Originária da China, onde o processo de sericultura era guardado como segredo de estado durante séculos, a seda chegou à Europa pela Rota da Seda e conquistou os ateliês dos maiores alfaiates do mundo.',
@@ -40,8 +40,8 @@ const materialData = {
     name: "Fil d'Écosse",
     article: 'o',
     tagline: 'Tradição têxtil. Leveza e brilho subtil.',
-    heroImage: 'https://placehold.co/1920x900/1a2e1a/C5A55A?text=Fil+d%27Ecosse&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/1a2e1a/C5A55A?text=Textura+Fil+d%27Ecosse&font=playfair-display',
+    heroImage: 'https://placehold.co/1920x900/1a2e1a/B8960C?text=Fil+d%27Ecosse&font=playfair-display',
+    textureImage: 'https://placehold.co/900x700/1a2e1a/B8960C?text=Textura+Fil+d%27Ecosse&font=playfair-display',
     color: '#4A6741',
     history: [
       "Algodão egípcio de fibra longa, mercerizado duas vezes num processo que lhe confere um brilho subtil e uma durabilidade excepcional. O nome vem da tradição têxtil escocesa — \"fil\" significa fio em francês, e as manufaturas escocesas do século XIX eram famosas pela qualidade do seu trabalho com algodão de longa fibra.",
@@ -63,8 +63,8 @@ const materialData = {
     name: 'Lã Merino',
     article: 'a',
     tagline: 'Conforto termorregulador. Para todas as estações.',
-    heroImage: 'https://placehold.co/1920x900/2e2a1a/C5A55A?text=La+Merino&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/2e2a1a/C5A55A?text=Textura+La+Merino&font=playfair-display',
+    heroImage: 'https://placehold.co/1920x900/2e2a1a/B8960C?text=La+Merino&font=playfair-display',
+    textureImage: 'https://placehold.co/900x700/2e2a1a/B8960C?text=Textura+La+Merino&font=playfair-display',
     color: '#6B5B45',
     history: [
       'Proveniente das ovelhas Merino da Austrália e Nova Zelândia, esta lã ultrafina é naturalmente termorreguladora — fresca no verão, quente no inverno. Com 18,5 microns de diâmetro, está abaixo do limiar de picada humana (tipicamente 22 microns), o que a torna suave ao toque mesmo para as peles mais sensíveis.',
@@ -107,7 +107,7 @@ function PropertyCard({ label, desc }: { label: string; desc: string }) {
   return (
     <div
       className="p-5 transition-colors duration-200"
-      style={{ borderLeft: '2px solid #C5A55A', background: '#fafafa' }}
+      style={{ borderLeft: '2px solid #B8960C', background: '#fafafa' }}
     >
       <p
         className="font-body uppercase mb-2"

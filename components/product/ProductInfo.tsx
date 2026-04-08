@@ -90,14 +90,14 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {/* Material label */}
       <p
         className="font-body uppercase"
-        style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#C5A55A', fontWeight: 500 }}
+        style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#B8960C', fontWeight: 500 }}
       >
         {product.materialLabel}
       </p>
 
       {/* Badges */}
       <div className="flex items-center gap-2 flex-wrap -mt-2">
-        <Badge variant="material">{product.typeLabel}</Badge>
+        <Badge variant="outline">{product.typeLabel}</Badge>
         {product.badge && <Badge variant="gold">{product.badge}</Badge>}
       </div>
 
@@ -174,7 +174,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         <Link
           href={`/materiais/${product.material}`}
           className="font-body transition-colors hover:opacity-70"
-          style={{ fontSize: '12px', color: '#C5A55A', textDecoration: 'underline', textUnderlineOffset: '2px' }}
+          style={{ fontSize: '12px', color: '#B8960C', textDecoration: 'underline', textUnderlineOffset: '2px' }}
         >
           Saber mais sobre {product.materialLabel} →
         </Link>

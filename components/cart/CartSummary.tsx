@@ -20,13 +20,13 @@ export default function CartSummary() {
   return (
     <div
       className="px-6 py-5 space-y-4"
-      style={{ borderTop: '1px solid rgba(197,165,90,0.15)' }}
+      style={{ borderTop: '1px solid rgba(184,150,12,0.15)' }}
     >
       {/* Free shipping progress */}
       <div>
         <div
           className="flex items-center gap-2 mb-2 font-body"
-          style={{ fontSize: '12px', color: hasFreeShipping ? '#C5A55A' : '#9E9E9E' }}
+          style={{ fontSize: '12px', color: hasFreeShipping ? '#B8960C' : '#9E9E9E' }}
         >
           <Truck size={13} strokeWidth={1.5} />
           {hasFreeShipping ? (
@@ -42,7 +42,7 @@ export default function CartSummary() {
         <div className="overflow-hidden" style={{ height: '3px', background: 'rgba(0,0,0,0.06)' }}>
           <div
             className="h-full transition-all duration-500 ease-out"
-            style={{ width: `${progressPercent}%`, background: '#C5A55A' }}
+            style={{ width: `${progressPercent}%`, background: '#B8960C' }}
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function CartSummary() {
           border: 'none',
           cursor: items.length === 0 ? 'not-allowed' : 'pointer',
         }}
-        onMouseEnter={(e) => { if (items.length > 0) e.currentTarget.style.background = '#C5A55A' }}
+        onMouseEnter={(e) => { if (items.length > 0) e.currentTarget.style.background = '#B8960C' }}
         onMouseLeave={(e) => { e.currentTarget.style.background = '#0a0a0a' }}
       >
         FINALIZAR COMPRA

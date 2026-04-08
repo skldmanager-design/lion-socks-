@@ -4,7 +4,7 @@
 @theme {
   /* Paleta Lion Socks */
   --color-primary: #0F0F0F;
-  --color-gold: #C4A652;
+  --color-gold: #B8960C;
   --color-gold-light: #D4B96E;
   --color-gold-dark: #A8893E;
   --color-cream: #FAF7F2;
@@ -56,9 +56,13 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #1A1A1A;
-  --announcement-height: 36px;
+  --background: #0A0A0A;
+  --foreground: #F5F3EE;
+}
+
+html,
+body {
+  background-color: #0A0A0A;
 }
 
 html {
@@ -66,7 +70,7 @@ html {
   color: var(--color-gray-900);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+  /* scroll-behavior handled by Next.js */
 }
 
 * {
@@ -76,16 +80,16 @@ html {
 /* Scrollbar elegante */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(197,165,90,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(184,150,12,0.3); border-radius: 3px; }
 
 /* Selecção de texto */
-::selection { background: rgba(197,165,90,0.2); color: inherit; }
+::selection { background: rgba(184,150,12,0.2); color: inherit; }
 
 /* Focus states */
-*:focus-visible { outline: 2px solid #C5A55A; outline-offset: 2px; }
+*:focus-visible { outline: 2px solid #B8960C; outline-offset: 2px; }
 
 /* Links no corpo de texto */
-.prose a { color: #C5A55A; text-decoration: underline; text-underline-offset: 2px; }
+.prose a { color: #B8960C; text-decoration: underline; text-underline-offset: 2px; }
 
 body {
   background: var(--background);
@@ -93,3 +97,4 @@ body {
   font-weight: 300;
   line-height: 1.8;
 }
+

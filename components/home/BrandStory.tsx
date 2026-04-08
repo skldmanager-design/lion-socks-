@@ -29,7 +29,7 @@ export default function BrandStory() {
             </div>
             <div
               className="absolute -bottom-4 -right-4 w-28 h-28 hidden lg:block"
-              style={{ border: '1px solid rgba(197,165,90,0.25)' }}
+              style={{ border: '1px solid rgba(184,150,12,0.25)' }}
             />
           </motion.div>
 
@@ -43,7 +43,7 @@ export default function BrandStory() {
           >
             <p
               className="font-body uppercase mb-4"
-              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
             >
               A NOSSA HISTÓRIA
             </p>

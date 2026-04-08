@@ -47,10 +47,10 @@ export default function Drawer({
       {/* Backdrop */}
       <div
         className={cn(
-          'fixed inset-0 z-40 transition-opacity duration-300',
+          'fixed inset-0 z-40 bg-black/50 transition-opacity duration-300',
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
-        style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }}
+        style={{ backdropFilter: 'blur(4px)' }}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -61,7 +61,7 @@ export default function Drawer({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'fixed top-0 z-50 h-full bg-white flex flex-col transition-transform duration-300 ease-out',
+          'fixed top-0 z-50 h-full bg-off-white flex flex-col transition-transform duration-300 ease-out',
           side === 'right' ? 'right-0' : 'left-0',
           side === 'right'
             ? isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -73,18 +73,17 @@ export default function Drawer({
         {/* Header */}
         {title && (
           <div
-            className="flex items-center justify-between px-6 py-5"
-            style={{ borderBottom: '1px solid rgba(197,165,90,0.15)' }}
+            className="flex items-center justify-between px-6 py-5 border-b border-border"
           >
             <h2
-              className="font-display text-gray-900"
+              className="font-display text-black"
               style={{ fontSize: '24px', fontWeight: 400 }}
             >
               {title.replace(/\s*\(\d+\)$/, '')}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-primary transition-colors"
+              className="p-1 text-muted hover:text-gold transition-colors"
               aria-label="Fechar"
             >
               <X size={20} strokeWidth={1.5} />

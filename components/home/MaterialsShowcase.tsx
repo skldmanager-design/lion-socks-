@@ -59,7 +59,7 @@ export default function MaterialsShowcase() {
                 <div className={isEven ? 'lg:order-2' : 'lg:order-1'}>
                   <p
                     className="font-body uppercase mb-4"
-                    style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+                    style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
                   >
                     {material.number}
                   </p>
@@ -82,7 +82,7 @@ export default function MaterialsShowcase() {
                       style={{
                         fontSize: '11px',
                         letterSpacing: '0.15em',
-                        color: '#C5A55A',
+                        color: '#B8960C',
                       }}
                     >
                       Explorar Coleção →

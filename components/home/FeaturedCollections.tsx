@@ -80,7 +80,7 @@ function CollectionCard({ col, index }: { col: (typeof collections)[0]; index: n
           >
             <p
               className="font-body uppercase mb-2"
-              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
             >
               {col.subtitle}
             </p>
@@ -105,7 +105,7 @@ function CollectionCard({ col, index }: { col: (typeof collections)[0]; index: n
               style={{
                 fontSize: '11px',
                 letterSpacing: '0.1em',
-                color: '#C5A55A',
+                color: '#B8960C',
                 opacity: hovered ? 1 : 0.6,
               }}
             >
@@ -132,7 +132,7 @@ export default function FeaturedCollections() {
         >
           <p
             className="font-body uppercase mb-4"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
           >
             AS NOSSAS COLEÇÕES
           </p>

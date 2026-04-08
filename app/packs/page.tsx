@@ -19,7 +19,7 @@ export default function PacksPage() {
         className="flex items-center justify-center text-center"
         style={{
           background: '#0a0a0a',
-          paddingTop: 'calc(36px + 80px + 60px)',
+          paddingTop: '60px',
           paddingBottom: '80px',
           paddingLeft: '24px',
           paddingRight: '24px',
@@ -28,7 +28,7 @@ export default function PacksPage() {
         <div className="max-w-2xl">
           <p
             className="font-body uppercase mb-4"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A', fontWeight: 400 }}
+            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C', fontWeight: 400 }}
           >
             EMBALAGEM PREMIUM
           </p>
@@ -81,7 +81,7 @@ export default function PacksPage() {
           <div className="max-w-3xl mx-auto text-center">
             <p
               className="font-body uppercase mb-3"
-              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
             >
               A Embalagem
             </p>
@@ -173,7 +173,7 @@ export default function PacksPage() {
                           style={{
                             height: '20px',
                             width: '20px',
-                            background: '#C5A55A',
+                            background: '#B8960C',
                             color: '#ffffff',
                             fontSize: '10px',
                             fontWeight: 500,
@@ -191,7 +191,7 @@ export default function PacksPage() {
                 <div className="p-5" style={{ background: '#0a0a0a' }}>
                   <p
                     className="font-body uppercase mb-3"
-                    style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#C5A55A' }}
+                    style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#B8960C' }}
                   >
                     Descontos disponíveis
                   </p>
@@ -205,7 +205,7 @@ export default function PacksPage() {
                         <span className="font-body" style={{ fontSize: '13px', fontWeight: 300, color: 'rgba(255,255,255,0.7)' }}>
                           {item.label}
                         </span>
-                        <span className="font-body" style={{ fontSize: '13px', fontWeight: 400, color: '#C5A55A' }}>
+                        <span className="font-body" style={{ fontSize: '13px', fontWeight: 400, color: '#B8960C' }}>
                           {item.discount} off
                         </span>
                       </div>

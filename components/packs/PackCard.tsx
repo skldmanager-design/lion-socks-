@@ -50,7 +50,7 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
           className="absolute top-4 right-4 font-body uppercase"
           style={{
             background: '#0a0a0a',
-            color: '#C5A55A',
+            color: '#B8960C',
             fontSize: '10px',
             letterSpacing: '0.1em',
             padding: '4px 10px',
@@ -144,7 +144,7 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
         {/* Savings */}
         <div
           className="mb-5 p-3 flex items-center"
-          style={{ background: 'rgba(197,165,90,0.06)', border: '1px solid rgba(197,165,90,0.15)' }}
+          style={{ background: 'rgba(184,150,12,0.06)', border: '1px solid rgba(184,150,12,0.15)' }}
         >
           <span
             className="font-body"
@@ -167,7 +167,7 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
               padding: '16px',
               fontWeight: 400,
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#C5A55A' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#B8960C' }}
             onMouseLeave={(e) => { e.currentTarget.style.background = '#0a0a0a' }}
           >
             Escolher Tamanho e Comprar <ArrowRight size={12} strokeWidth={1.5} />

@@ -27,7 +27,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
               className="relative overflow-hidden transition-all duration-200"
               style={{
                 aspectRatio: '4/5',
-                border: active === i ? '2px solid #C5A55A' : '2px solid transparent',
+                border: active === i ? '2px solid #B8960C' : '2px solid transparent',
                 opacity: active === i ? 1 : 0.5,
               }}
               onMouseEnter={(e) => { if (active !== i) e.currentTarget.style.opacity = '0.8' }}

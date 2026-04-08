@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Hero from '@/components/home/Hero'
-import HomeSections from '@/components/HomeSections'
+import HomeSections from '@/components/home/HomeSections'
 
 export const metadata: Metadata = {
   title: 'Meias Premium Portuguesas — Lion Socks',

@@ -49,7 +49,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           >
             Tamanho
             {selectedSize && (
-              <span className="ml-2 normal-case tracking-normal" style={{ color: '#C5A55A', fontWeight: 300 }}>
+              <span className="ml-2 normal-case tracking-normal" style={{ color: '#B8960C', fontWeight: 300 }}>
                 — {selectedSize}
               </span>
             )}
@@ -97,7 +97,7 @@ export default function AddToCart({ product }: AddToCartProps) {
         disabled={added}
         className="w-full font-body uppercase transition-all duration-300 flex items-center justify-center gap-2"
         style={{
-          background: added ? '#C5A55A' : '#0a0a0a',
+          background: added ? '#B8960C' : '#0a0a0a',
           color: '#ffffff',
           fontSize: '12px',
           letterSpacing: '0.15em',
@@ -106,7 +106,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           border: 'none',
           cursor: 'pointer',
         }}
-        onMouseEnter={(e) => { if (!added) e.currentTarget.style.background = '#C5A55A' }}
+        onMouseEnter={(e) => { if (!added) e.currentTarget.style.background = '#B8960C' }}
         onMouseLeave={(e) => { if (!added) e.currentTarget.style.background = '#0a0a0a' }}
       >
         {added ? (
@@ -125,7 +125,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           <p className="font-body flex items-center gap-1.5" style={{ fontSize: '12px', color: '#424242', fontWeight: 300 }}>
             <span
               className="rounded-full flex-shrink-0"
-              style={{ height: '6px', width: '6px', background: '#C5A55A' }}
+              style={{ height: '6px', width: '6px', background: '#B8960C' }}
             />
             Em stock — envio em 1–2 dias úteis
           </p>

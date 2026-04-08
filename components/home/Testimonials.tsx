@@ -37,7 +37,7 @@ export default function Testimonials() {
         >
           <p
             className="font-body uppercase mb-3"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#C5A55A' }}
+            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
           >
             Quem Usa
           </p>
@@ -65,7 +65,7 @@ export default function Testimonials() {
                 className="block font-display select-none leading-none mb-4"
                 style={{
                   fontSize: '120px',
-                  color: '#C5A55A',
+                  color: '#B8960C',
                   opacity: 0.3,
                   lineHeight: 0.8,
                   fontStyle: 'italic',
@@ -82,7 +82,7 @@ export default function Testimonials() {
               </blockquote>
 
               <div className="flex items-center gap-3">
-                <div className="h-px w-6" style={{ background: 'rgba(197,165,90,0.5)' }} />
+                <div className="h-px w-6" style={{ background: 'rgba(184,150,12,0.5)' }} />
                 <div>
                   <p
                     className="font-body uppercase text-gray-900"

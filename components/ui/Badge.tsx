@@ -2,34 +2,32 @@ import { cn } from '@/lib/utils'
 
 interface BadgeProps {
   children: React.ReactNode
-  variant?: 'default' | 'gold' | 'material' | 'outline'
+  variant?: 'gold' | 'outline'
   className?: string
 }
 
-export default function Badge({ children, variant = 'default', className }: BadgeProps) {
-  const base = 'inline-block text-[9px] font-body font-medium tracking-[0.1em] uppercase'
+export default function Badge({ children, variant = 'gold', className }: BadgeProps) {
+  const base = 'inline-block text-[10px] font-body font-medium uppercase tracking-[0.08em]'
 
   if (variant === 'gold') {
     return (
       <span
-        className={cn(base, className)}
-        style={{ background: '#C5A55A', color: '#ffffff', padding: '4px 10px' }}
+        className={cn(base, 'bg-gold text-black', className)}
+        style={{ padding: '4px 8px', borderRadius: '2px' }}
       >
         {children}
       </span>
     )
   }
 
-  // material + default + outline → subtle ghost badge
   return (
     <span
-      className={cn(base, className)}
+      className={cn(base, 'text-muted', className)}
       style={{
         background: 'transparent',
-        border: '1px solid rgba(0,0,0,0.12)',
-        color: '#888',
+        border: '1px solid #E8E5DF',
         padding: '3px 8px',
-        borderRadius: 0,
+        borderRadius: '2px',
       }}
     >
       {children}

@@ -20,7 +20,7 @@ description: Lion Socks brand identity, voice, and visual guidelines. Use when c
 
 ## Paleta Visual
 - Preto (#000000) — cor dominante
-- Dourado (#C5A55A) — APENAS como acento (bordas finas, hovers, detalhes tipográficos)
+- Dourado (#B8960C) — APENAS como acento (bordas finas, hovers, detalhes tipográficos)
 - Creme (#FAF7F2) — fundos alternativos
 - Branco (#FFFFFF) — fundo principal
 - Cinzas para texto e hierarquia

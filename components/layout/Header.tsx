@@ -1,194 +1,245 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { ShoppingBag, Search, User, Menu, ChevronDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { ShoppingBag, Search, User, Menu } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import MobileMenu from './MobileMenu'
+import MegaMenuPanel from './MegaMenuPanel'
+import { navigation } from '@/lib/navigation'
 
-const materialLinks = [
-  { label: 'Seda', href: '/materiais/seda', desc: 'Luxo absoluto' },
-  { label: "Fil d'Écosse", href: '/materiais/fil-d-ecosse', desc: 'Brilho e leveza' },
-  { label: 'Lã Merino', href: '/materiais/la-merino', desc: 'Conforto termorregulador' },
-]
-
-const NAV_STYLE: React.CSSProperties = {
-  fontFamily: 'var(--font-body)',
-  fontSize: '14px',
-  letterSpacing: '4px',
+const NAV_LINK_STYLE: React.CSSProperties = {
+  fontFamily: "'Inter', system-ui, sans-serif",
+  fontSize: '13px',
+  letterSpacing: '0.08em',
   fontWeight: 500,
   textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.9)',
+  color: '#F5F3EE',
+  textDecoration: 'none',
+  padding: '6px 0',
+  display: 'inline-block',
+  position: 'relative',
+  transition: 'color 200ms ease',
+}
+
+const UTILITY_LINK_STYLE: React.CSSProperties = {
+  fontFamily: "'Inter', system-ui, sans-serif",
+  fontSize: '11px',
+  letterSpacing: '0.08em',
+  fontWeight: 500,
+  textTransform: 'uppercase',
+  color: '#F5F3EE',
+  textDecoration: 'none',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  padding: 0,
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '8px',
+  transition: 'color 200ms ease',
 }
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
-  const [materiaisOpen, setMateriaisOpen] = useState(false)
+  const [openItem, setOpenItem] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const openTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { totalItems, openCart } = useCart()
-  const pathname = usePathname()
-  const isHome = pathname === '/'
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setMateriaisOpen(false)
-      }
+  const handleMouseEnter = useCallback((label: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
     }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
+    openTimeoutRef.current = setTimeout(() => setOpenItem(label), 150)
   }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current)
+      openTimeoutRef.current = null
+    }
+    closeTimeoutRef.current = setTimeout(() => setOpenItem(null), 200)
+  }, [])
+
+  const closeMenu = useCallback(() => setOpenItem(null), [])
 
   return (
     <>
-      <header
-        className="fixed left-0 right-0 z-30 transition-[background-color,backdrop-filter] duration-300"
-        style={{
-          top: 'var(--announcement-height, 36px)',
-          backgroundColor: (!isHome || scrolled) ? '#0A0A0A' : 'transparent',
-          backdropFilter: (!isHome || scrolled) ? 'blur(10px)' : 'none',
-          WebkitBackdropFilter: (!isHome || scrolled) ? 'blur(10px)' : 'none',
-        }}
-      >
-        <div style={{ paddingLeft: '40px', paddingRight: '40px' }}>
-          <div className="flex items-center justify-between" style={{ height: '90px' }}>
+      <style jsx global>{`
+        .nav-link-underline::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          right: 50%;
+          bottom: 0;
+          height: 1px;
+          background: #B8960C;
+          transition: left 300ms ease, right 300ms ease;
+        }
+        .nav-link-underline:hover::after,
+        .nav-link-underline[data-open='true']::after {
+          left: 0;
+          right: 0;
+        }
+        .nav-link-underline:hover {
+          color: #B8960C !important;
+        }
+      `}</style>
 
-            {/* Left: nav (desktop) + hamburger (mobile) */}
-            <div className="flex items-center" style={{ gap: '36px', flex: '1' }}>
-              <button
-                onClick={() => setMobileOpen(true)}
-                className="lg:hidden p-1"
-                style={{ color: 'rgba(255,255,255,0.9)' }}
-                aria-label="Abrir menu"
-              >
-                <Menu size={22} strokeWidth={1.5} />
-              </button>
+      {/* ─── Header: utility + logo (scrolls naturally) ─── */}
+      <header style={{ backgroundColor: '#0A0A0A' }}>
+        {/* Utility row — compact 28px */}
+        <div
+          className="hidden lg:flex items-center justify-between"
+          style={{ height: '28px', padding: '0 40px' }}
+        >
+          <button
+            className="hover:text-gold"
+            style={UTILITY_LINK_STYLE}
+            aria-label="Iniciar sessão"
+          >
+            <User size={13} strokeWidth={1.5} />
+            <span>Iniciar Sessão</span>
+          </button>
 
-              <nav className="hidden lg:flex items-center" style={{ gap: '36px' }}>
-                <Link href="/loja" className="hover:text-gold transition-colors" style={NAV_STYLE}>
-                  Loja
-                </Link>
-
-                <Link href="/packs" className="hover:text-gold transition-colors" style={NAV_STYLE}>
-                  Packs
-                </Link>
-
-                <div ref={dropdownRef} className="relative">
-                  <button
-                    onClick={() => setMateriaisOpen(v => !v)}
-                    className="flex items-center gap-1.5 hover:text-gold transition-colors"
-                    style={{ ...NAV_STYLE, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                    aria-expanded={materiaisOpen}
-                    aria-haspopup="true"
-                  >
-                    Materiais
-                    <ChevronDown
-                      size={13}
-                      strokeWidth={1.5}
-                      className={cn('transition-transform duration-200', materiaisOpen && 'rotate-180')}
-                    />
-                  </button>
-
-                  {materiaisOpen && (
-                    <div className="absolute top-full left-0 mt-3 w-52 bg-white border border-gray-100 shadow-lg py-2">
-                      {materialLinks.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={() => setMateriaisOpen(false)}
-                          className="block px-5 py-3 group hover:bg-gray-50 transition-colors"
-                        >
-                          <span
-                            className="block group-hover:text-gold transition-colors"
-                            style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 400, color: '#1a1a1a' }}
-                          >
-                            {link.label}
-                          </span>
-                          <span className="block text-xs text-gray-400 font-body mt-0.5">
-                            {link.desc}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <Link href="/sobre" className="hover:text-gold transition-colors" style={NAV_STYLE}>
-                  Sobre
-                </Link>
-              </nav>
-            </div>
-
-            {/* Center: Logo */}
-            <Link
-              href="/"
-              className="absolute left-1/2 -translate-x-1/2"
-              aria-label="Lion Socks — Homepage"
-            >
-              <Image
-                src="/logo.png"
-                alt="Lion Socks"
-                width={300}
-                height={540}
-                priority
-                className="w-auto object-contain brightness-0 invert"
-                style={{ height: '90px' }}
+          <button
+            onClick={openCart}
+            className="relative hover:text-gold"
+            style={UTILITY_LINK_STYLE}
+            aria-label={`Carrinho — ${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
+          >
+            <ShoppingBag size={13} strokeWidth={1.5} />
+            <span>Carrinho</span>
+            {totalItems > 0 && (
+              <span
+                className="absolute rounded-full"
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  background: '#B8960C',
+                  top: '-2px',
+                  right: '-8px',
+                }}
               />
-            </Link>
-
-            {/* Right: icons */}
-            <div className="flex items-center gap-4" style={{ flex: '1', justifyContent: 'flex-end' }}>
-              <button
-                aria-label="Pesquisar"
-                className="p-1 transition-colors hidden sm:block hover:text-gold"
-                style={{ color: 'rgba(255,255,255,0.8)' }}
-              >
-                <Search size={24} strokeWidth={1.5} />
-              </button>
-
-              <button
-                aria-label="Conta"
-                className="p-1 transition-colors hidden sm:block hover:text-gold"
-                style={{ color: 'rgba(255,255,255,0.8)' }}
-              >
-                <User size={24} strokeWidth={1.5} />
-              </button>
-
-              <button
-                onClick={openCart}
-                aria-label={`Carrinho — ${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
-                className="relative p-1 transition-colors hover:text-gold"
-                style={{ color: 'rgba(255,255,255,0.8)' }}
-              >
-                <ShoppingBag size={24} strokeWidth={1.5} />
-                {totalItems > 0 && (
-                  <span
-                    className="absolute -top-0.5 -right-0.5 rounded-full"
-                    style={{ width: '8px', height: '8px', background: '#C4A652' }}
-                  />
-                )}
-              </button>
-            </div>
-
-          </div>
+            )}
+          </button>
         </div>
 
-        {/* Gold separator — only visible when scrolled */}
+        {/* Logo row — compact 72px */}
         <div
-          className="h-px transition-opacity duration-300"
-          style={{ background: 'rgba(197,165,90,0.2)', opacity: scrolled ? 1 : 0 }}
-        />
+          className="flex items-center justify-center"
+          style={{ height: '72px', padding: '0 40px' }}
+        >
+          <Link href="/" aria-label="Lion Socks — Homepage">
+            <Image
+              src="/lion_socks_brand_kit/01_logo_principal/logo_completo_transparente_1000h.png"
+              alt="Lion Socks"
+              width={528}
+              height={1000}
+              priority
+              className="w-auto object-contain"
+              style={{ height: '60px' }}
+            />
+          </Link>
+        </div>
       </header>
+
+      {/* ─── Nav row · STICKY · Outside header ─── */}
+      <div
+        className="flex items-center"
+        style={{
+          height: '56px',
+          padding: '0 40px',
+          position: 'sticky',
+          top: 0,
+          background: '#0A0A0A',
+          zIndex: 30,
+          borderBottom: '1px solid #2A2A2A',
+        }}
+      >
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="lg:hidden p-1"
+          style={{ color: '#F5F3EE' }}
+          aria-label="Abrir menu"
+        >
+          <Menu size={22} strokeWidth={1.5} />
+        </button>
+
+        {/* Mobile cart */}
+        <button
+          onClick={openCart}
+          className="lg:hidden absolute right-4 p-1"
+          style={{ color: '#F5F3EE' }}
+          aria-label={`Carrinho — ${totalItems}`}
+        >
+          <ShoppingBag size={20} strokeWidth={1.5} />
+          {totalItems > 0 && (
+            <span
+              className="absolute -top-0.5 -right-0.5 rounded-full"
+              style={{ width: '8px', height: '8px', background: '#B8960C' }}
+            />
+          )}
+        </button>
+
+        {/* Desktop: Centered nav */}
+        <nav
+          className="hidden lg:flex items-center"
+          style={{ gap: '44px', margin: '0 auto' }}
+        >
+          {navigation.map((item) => {
+            const hasDropdown = !!item.dropdown
+            const isOpen = openItem === item.label
+            const style = item.highlight
+              ? { ...NAV_LINK_STYLE, color: '#B8960C' }
+              : NAV_LINK_STYLE
+
+            return (
+              <div
+                key={item.label}
+                onMouseEnter={() => hasDropdown && handleMouseEnter(item.label)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <Link
+                  href={item.href}
+                  className="nav-link-underline"
+                  style={style}
+                  data-open={isOpen ? 'true' : 'false'}
+                >
+                  {item.label.toUpperCase()}
+                </Link>
+
+                {isOpen && hasDropdown && (
+                  <MegaMenuPanel item={item} onLinkClick={closeMenu} />
+                )}
+              </div>
+            )
+          })}
+        </nav>
+
+        {/* Desktop: Search icon absolute right */}
+        <button
+          aria-label="Pesquisar"
+          className="hidden lg:block absolute hover:text-gold"
+          style={{
+            right: '40px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            color: '#F5F3EE',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '4px',
+            transition: 'color 200ms ease',
+          }}
+        >
+          <Search size={20} strokeWidth={1.5} />
+        </button>
+      </div>
 
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>

@@ -1,13 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
 export default function AnnouncementBar() {
   const [visible, setVisible] = useState(true)
 
+  useEffect(() => {
+    const dismissed = localStorage.getItem('lion_socks_announcement_dismissed')
+    if (dismissed === 'true') setVisible(false)
+  }, [])
+
   const handleClose = () => {
-    document.documentElement.style.setProperty('--announcement-height', '0px')
+    localStorage.setItem('lion_socks_announcement_dismissed', 'true')
     setVisible(false)
   }
 
@@ -15,24 +20,49 @@ export default function AnnouncementBar() {
 
   return (
     <div
-      className="fixed left-0 right-0 top-0 z-40 flex items-center justify-center px-10 overflow-hidden"
-      style={{ background: '#0A0A0A', height: '36px' }}
+      className="relative z-40 overflow-hidden"
+      style={{ background: '#0A0A0A', height: '24px' }}
     >
-      <span
-        className="font-body uppercase"
-        style={{ fontSize: '11px', letterSpacing: '3px', color: '#C4A652', fontWeight: 400 }}
+      <div
+        className="flex items-center justify-center relative"
+        style={{
+          height: '24px',
+          paddingLeft: '40px',
+          paddingRight: '40px',
+        }}
       >
-        ENVIO GRATUITO EM COMPRAS ACIMA DE €45
-      </span>
+        <span
+          className="font-body uppercase"
+          style={{
+            fontSize: '10px',
+            letterSpacing: '0.08em',
+            color: '#B8960C',
+            fontWeight: 500,
+          }}
+        >
+          ENVIO GRATUITO EM COMPRAS ACIMA DE €45
+        </span>
 
-      <button
-        onClick={handleClose}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 transition-colors"
-        style={{ color: 'rgba(197,165,90,0.4)' }}
-        aria-label="Fechar barra de anúncios"
-      >
-        <X size={12} />
-      </button>
+        <button
+          onClick={handleClose}
+          className="absolute p-1"
+          style={{
+            right: '12px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            color: '#F5F3EE',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'color 200ms ease',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = '#B8960C')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#F5F3EE')}
+          aria-label="Fechar barra de anúncios"
+        >
+          <X size={11} strokeWidth={1.5} />
+        </button>
+      </div>
     </div>
   )
 }

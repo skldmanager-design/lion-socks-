@@ -15,7 +15,7 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
 
   if (submitted) {
     return (
-      <p className="font-body" style={{ fontSize: '13px', color: '#C5A55A' }}>
+      <p className="font-body" style={{ fontSize: '13px', color: '#B8960C' }}>
         Obrigado! Irá receber as nossas novidades em breve.
       </p>
     )
@@ -44,7 +44,7 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
           className="font-body transition-colors hover:text-gold flex-shrink-0"
           style={{
             fontSize: '18px',
-            color: '#C5A55A',
+            color: '#B8960C',
             padding: '4px 0 4px 12px',
             background: 'none',
             border: 'none',
