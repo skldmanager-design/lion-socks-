@@ -48,13 +48,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               left: '12px',
               background: '#B8960C',
               color: '#0A0A0A',
-              fontSize: '10px',
+              fontSize: '11px',
               fontFamily: "'Inter', system-ui, sans-serif",
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
               padding: '4px 8px',
-              borderRadius: '2px',
+              borderRadius: '4px',
             }}
           >
             {product.badge}
@@ -97,12 +97,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             left: '50%',
             transform: 'translateX(-50%)',
             fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '10px',
+            fontSize: '9px',
             fontWeight: 400,
             textTransform: 'uppercase',
-            letterSpacing: '0.12em',
+            letterSpacing: '0.15em',
             color: '#6B6B6B',
-            opacity: 0.6,
+            opacity: 0.4,
           }}
         >
           LION SOCKS
@@ -121,7 +121,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '10px',
+              fontSize: '11px',
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
@@ -133,7 +133,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '10px',
+              fontSize: '11px',
               fontWeight: 400,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',

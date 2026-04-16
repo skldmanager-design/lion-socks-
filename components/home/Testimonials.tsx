@@ -37,7 +37,7 @@ export default function Testimonials() {
         >
           <p
             className="font-body uppercase mb-3"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
+            style={{ fontSize: '12px', letterSpacing: '0.15em', color: '#B8960C' }}
           >
             Quem Usa
           </p>
@@ -90,7 +90,7 @@ export default function Testimonials() {
                   >
                     {t.name}
                   </p>
-                  <p className="font-body text-gray-400" style={{ fontSize: '11px' }}>
+                  <p className="font-body text-gray-400" style={{ fontSize: '12px' }}>
                     {t.title}
                   </p>
                 </div>

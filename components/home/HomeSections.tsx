@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { products } from '@/lib/mock-data'
 import { formatPrice } from '@/lib/utils'
 import ProductCard from '@/components/product/ProductCard'
+
+const Testimonials = lazy(() => import('@/components/home/Testimonials'))
 
 /* ─── SVG Icons for Materials ─────────────────────────────────────────── */
 
@@ -171,10 +173,10 @@ function BestsellersSection() {
             <p
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
-                fontSize: '11px',
+                fontSize: '12px',
                 fontWeight: 500,
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.1em',
                 color: '#B8960C',
                 marginBottom: '8px',
               }}
@@ -252,10 +254,10 @@ function PacksSection() {
             <p
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
-                fontSize: '11px',
+                fontSize: '12px',
                 fontWeight: 500,
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.1em',
                 color: '#B8960C',
                 marginBottom: '12px',
               }}
@@ -380,7 +382,7 @@ function PacksSection() {
           >
             <div className="pack-zoom-inner" style={{ position: 'absolute', inset: 0 }}>
               <Image
-                src="/lion_socks_brand_kit/08_site/pack_editorial_desktop.png.png"
+                src="/lion_socks_brand_kit/08_site/pack_editorial_desktop.png"
                 alt="Lion Socks · Pack Premium com caixa de metal"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
@@ -579,7 +581,7 @@ function NewsletterSection() {
         <p
           style={{
             fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '11px',
+            fontSize: '12px',
             color: '#6B6B6B',
             marginTop: '12px',
           }}
@@ -599,6 +601,9 @@ export default function HomeSections() {
       <MateriaisSection />
       <BestsellersSection />
       <PacksSection />
+      <Suspense fallback={null}>
+        <Testimonials />
+      </Suspense>
       <ManifestoSection />
       <NewsletterSection />
     </>

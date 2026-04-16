@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 
 export default function LojaPage() {
   return (
-    <div className="pt-32 lg:pt-40 pb-20 lg:pb-28">
+    <div className="pt-12 lg:pt-16 pb-20 lg:pb-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         {/* Page header */}
         <div className="mb-12 max-w-xl">
-          <p className="text-gold text-[10px] tracking-[0.4em] uppercase font-body mb-3">
+          <p className="text-gold text-[12px] tracking-[0.15em] uppercase font-body mb-3">
             Toda a Colecção
           </p>
           <h1 className="font-display text-4xl lg:text-5xl text-gray-900 mb-4">

@@ -28,8 +28,8 @@
   --color-ds-border-dark: #2A2A2A;
 
   /* Tipografia */
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-sans: var(--font-body);
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-inter: 'Inter', system-ui, sans-serif;

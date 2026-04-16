@@ -44,9 +44,22 @@ const UTILITY_LINK_STYLE: React.CSSProperties = {
 export default function Header() {
   const [openItem, setOpenItem] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const openTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { totalItems, openCart } = useCart()
+
+  // Scroll behavior: hide upper rows, keep nav sticky
+  useEffect(() => {
+    let lastY = 0
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+      lastY = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const handleMouseEnter = useCallback((label: string) => {
     if (closeTimeoutRef.current) {
@@ -89,12 +102,20 @@ export default function Header() {
         }
       `}</style>
 
-      {/* ─── Header: utility + logo (scrolls naturally) ─── */}
-      <header style={{ backgroundColor: '#0A0A0A' }}>
-        {/* Utility row — compact 28px */}
+      {/* ─── Header: utility + logo (collapses on scroll) ─── */}
+      <header
+        style={{
+          backgroundColor: '#0A0A0A',
+          overflow: 'hidden',
+          maxHeight: scrolled ? '0px' : '136px',
+          opacity: scrolled ? 0 : 1,
+          transition: 'max-height 300ms ease, opacity 250ms ease',
+        }}
+      >
+        {/* Utility row — 36px per DESIGN.md */}
         <div
           className="hidden lg:flex items-center justify-between"
-          style={{ height: '28px', padding: '0 40px' }}
+          style={{ height: '36px', padding: '0 40px' }}
         >
           <button
             className="hover:text-gold"
@@ -128,10 +149,10 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Logo row — compact 72px */}
+        {/* Logo row — 100px per DESIGN.md, logo 90px */}
         <div
           className="flex items-center justify-center"
-          style={{ height: '72px', padding: '0 40px' }}
+          style={{ height: '100px', padding: '0 40px' }}
         >
           <Link href="/" aria-label="Lion Socks — Homepage">
             <Image
@@ -141,13 +162,13 @@ export default function Header() {
               height={1000}
               priority
               className="w-auto object-contain"
-              style={{ height: '60px' }}
+              style={{ height: '90px' }}
             />
           </Link>
         </div>
       </header>
 
-      {/* ─── Nav row · STICKY · Outside header ─── */}
+      {/* ─── Nav row · STICKY · Always visible ─── */}
       <div
         className="flex items-center"
         style={{
@@ -224,7 +245,7 @@ export default function Header() {
         {/* Desktop: Search icon absolute right */}
         <button
           aria-label="Pesquisar"
-          className="hidden lg:block absolute hover:text-gold"
+          className="hidden lg:block absolute hover:text-gold transition-colors duration-200"
           style={{
             right: '40px',
             top: '50%',
@@ -234,7 +255,6 @@ export default function Header() {
             border: 'none',
             cursor: 'pointer',
             padding: '4px',
-            transition: 'color 200ms ease',
           }}
         >
           <Search size={20} strokeWidth={1.5} />

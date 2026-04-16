@@ -19,8 +19,8 @@ export default function PacksPage() {
         className="flex items-center justify-center text-center"
         style={{
           background: '#0a0a0a',
-          paddingTop: '60px',
-          paddingBottom: '80px',
+          paddingTop: '48px',
+          paddingBottom: '64px',
           paddingLeft: '24px',
           paddingRight: '24px',
         }}
@@ -28,7 +28,7 @@ export default function PacksPage() {
         <div className="max-w-2xl">
           <p
             className="font-body uppercase mb-4"
-            style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C', fontWeight: 400 }}
+            style={{ fontSize: '12px', letterSpacing: '0.15em', color: '#B8960C', fontWeight: 500 }}
           >
             EMBALAGEM PREMIUM
           </p>

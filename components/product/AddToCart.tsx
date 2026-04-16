@@ -14,15 +14,21 @@ interface AddToCartProps {
 export default function AddToCart({ product }: AddToCartProps) {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
   const [added, setAdded] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { addItem } = useCart()
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!selectedSize) {
       setError(true)
       setTimeout(() => setError(false), 2000)
       return
     }
+
+    setLoading(true)
+
+    // Simulate slight network delay for visual feedback
+    await new Promise((r) => setTimeout(r, 400))
 
     addItem({
       variantId: `mock-${product.id}-${selectedSize}`,
@@ -34,6 +40,7 @@ export default function AddToCart({ product }: AddToCartProps) {
       quantity: 1,
     })
 
+    setLoading(false)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -45,7 +52,7 @@ export default function AddToCart({ product }: AddToCartProps) {
         <div className="flex items-center justify-between mb-3">
           <label
             className="font-body uppercase"
-            style={{ fontSize: '10px', letterSpacing: '0.15em', fontWeight: 500, color: '#424242' }}
+            style={{ fontSize: '11px', letterSpacing: '0.15em', fontWeight: 500, color: '#424242' }}
           >
             Tamanho
             {selectedSize && (
@@ -94,22 +101,31 @@ export default function AddToCart({ product }: AddToCartProps) {
       {/* Add button */}
       <button
         onClick={handleAdd}
-        disabled={added}
+        disabled={added || loading}
         className="w-full font-body uppercase transition-all duration-300 flex items-center justify-center gap-2"
         style={{
-          background: added ? '#B8960C' : '#0a0a0a',
+          background: added ? '#B8960C' : loading ? '#1a1a1a' : '#0a0a0a',
           color: '#ffffff',
           fontSize: '12px',
           letterSpacing: '0.15em',
           padding: '18px',
           fontWeight: 400,
           border: 'none',
-          cursor: 'pointer',
+          cursor: loading ? 'wait' : 'pointer',
+          opacity: loading ? 0.8 : 1,
         }}
-        onMouseEnter={(e) => { if (!added) e.currentTarget.style.background = '#B8960C' }}
-        onMouseLeave={(e) => { if (!added) e.currentTarget.style.background = '#0a0a0a' }}
+        onMouseEnter={(e) => { if (!added && !loading) e.currentTarget.style.background = '#B8960C' }}
+        onMouseLeave={(e) => { if (!added && !loading) e.currentTarget.style.background = '#0a0a0a' }}
       >
-        {added ? (
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <span
+              className="inline-block rounded-full border-2 border-white/30 border-t-white animate-spin"
+              style={{ width: '16px', height: '16px' }}
+            />
+            A adicionar...
+          </span>
+        ) : added ? (
           <span className="flex items-center gap-2">
             <Check size={16} strokeWidth={1.5} />
             Adicionado ao Carrinho

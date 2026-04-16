@@ -34,7 +34,7 @@ export default function AnnouncementBar() {
         <span
           className="font-body uppercase"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.08em',
             color: '#B8960C',
             fontWeight: 500,
