@@ -2,8 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { Heart } from 'lucide-react'
 import type { Product } from '@/lib/mock-data'
 import { formatPrice } from '@/lib/utils'
+import { useWishlist } from '@/context/WishlistContext'
+import { useToast } from '@/context/ToastContext'
 
 interface ProductCardProps {
   product: Product
@@ -11,10 +15,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false)
+  const { has, toggle } = useWishlist()
+  const { show } = useToast()
+  const isFavorite = has(product.id)
 
-  const showBadge = product.badge === 'Destaque' || product.badge === 'Executive'
-    || product.badge === 'Premium' || product.badge === 'Edição Limitada'
-    || product.badge === 'Favorito' || product.badge === 'Clássico'
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const willBeFavorite = !isFavorite
+    toggle(product.id)
+    show(willBeFavorite ? 'Adicionado aos favoritos' : 'Removido dos favoritos')
+  }
+
+  const hasRealImage = Boolean(product.images?.[0])
 
   return (
     <Link
@@ -23,136 +36,141 @@ export default function ProductCard({ product }: ProductCardProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        transition: 'all 200ms ease',
-        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        border: hovered ? '1px solid #B8960C' : '1px solid transparent',
-        borderRadius: '4px',
-        overflow: 'hidden',
+        transition: 'all 320ms cubic-bezier(0.22, 1, 0.36, 1)',
+        transform: hovered ? 'translateY(-3px)' : 'translateY(0)',
+        background: '#FFFFFF',
+        border: hovered ? '1px solid rgba(184,150,12,0.5)' : '1px solid rgba(0,0,0,0.08)',
+        boxShadow: hovered ? '0 14px 40px rgba(10,10,10,0.08)' : '0 1px 2px rgba(10,10,10,0.02)',
+        textDecoration: 'none',
       }}
     >
-      {/* Zona superior — navy */}
+      {/* Image area — soft cream gradient */}
       <div
-        className="relative flex flex-col items-center justify-center"
+        className="relative overflow-hidden"
         style={{
-          background: '#0D1B2A',
-          aspectRatio: '4 / 3.25',
-          padding: '24px 16px 16px',
+          background: 'linear-gradient(160deg, #F5F3EE 0%, #FFFFFF 50%, #EFEBE2 100%)',
+          aspectRatio: '1 / 1',
         }}
       >
-        {/* Badge top-left */}
-        {showBadge && product.badge && (
-          <span
-            style={{
-              position: 'absolute',
-              top: '12px',
-              left: '12px',
-              background: '#B8960C',
-              color: '#0A0A0A',
-              fontSize: '11px',
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontWeight: 500,
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              padding: '4px 8px',
-              borderRadius: '4px',
-            }}
-          >
-            {product.badge}
-          </span>
-        )}
-
-        {/* Product name — serif, gold, centered */}
-        <h3
+        {/* Wishlist heart */}
+        <button
+          onClick={handleFavorite}
+          aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
           style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: '16px',
-            fontWeight: 500,
-            color: '#B8960C',
-            textAlign: 'center',
-            lineHeight: 1.3,
-            marginBottom: '6px',
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            background: 'rgba(255,255,255,0.85)',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: '50%',
+            width: '44px',
+            height: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 200ms ease',
+            zIndex: 3,
+            backdropFilter: 'blur(4px)',
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#FFFFFF' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.85)' }}
         >
-          {product.name}
-        </h3>
+          <Heart
+            size={14}
+            strokeWidth={1.5}
+            fill={isFavorite ? '#B8960C' : 'none'}
+            color={isFavorite ? '#B8960C' : '#0A0A0A'}
+          />
+        </button>
 
-        {/* Sub-line: color / pattern */}
-        <p
-          style={{
-            fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '12px',
-            color: '#6B6B6B',
-            textAlign: 'center',
-            lineHeight: 1.4,
-          }}
-        >
-          {product.color} · {product.patternLabel}
-        </p>
-
-        {/* LION SOCKS branding at bottom */}
+        {/* Material chip — top-left */}
         <span
           style={{
             position: 'absolute',
-            bottom: '12px',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            top: '14px',
+            left: '14px',
             fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '9px',
-            fontWeight: 400,
+            fontSize: '10px',
+            fontWeight: 500,
+            letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            letterSpacing: '0.15em',
-            color: '#6B6B6B',
-            opacity: 0.4,
+            color: '#B8960C',
+            background: 'rgba(255,255,255,0.85)',
+            padding: '5px 10px',
+            borderRadius: '999px',
+            border: '1px solid rgba(184,150,12,0.18)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 2,
           }}
         >
-          LION SOCKS
+          {product.materialLabel}
         </span>
-      </div>
 
-      {/* Zona inferior — off-white */}
-      <div
-        style={{
-          background: '#F5F3EE',
-          padding: '16px',
-        }}
-      >
-        {/* Badges: material + type */}
-        <div className="flex items-center gap-2 mb-2">
+        {hasRealImage ? (
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            fill
+            unoptimized
+            className="object-contain"
+            style={{ padding: '32px', transition: 'transform 600ms cubic-bezier(0.22, 1, 0.36, 1)', transform: hovered ? 'scale(1.04)' : 'scale(1)' }}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style={{ opacity: 0.18 }} aria-hidden>
+              <path d="M60 10 L102 22 L102 60 Q102 90 60 110 Q18 90 18 60 L18 22 Z" stroke="#B8960C" strokeWidth="1.5" fill="none" />
+              <text x="60" y="74" textAnchor="middle" fontSize="46" fontFamily="Playfair Display, Georgia, serif" fontStyle="italic" fontWeight="500" fill="#B8960C">L</text>
+            </svg>
+          </div>
+        )}
+
+        {/* Hover CTA — slim gold line + label */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            padding: '20px',
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(6px)',
+            transition: 'all 300ms cubic-bezier(0.22, 1, 0.36, 1)',
+            pointerEvents: 'none',
+          }}
+        >
           <span
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '11px',
-              fontWeight: 500,
+              fontSize: '10px',
+              fontWeight: 600,
+              letterSpacing: '0.18em',
               textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              color: '#B8960C',
+              color: '#0A0A0A',
+              background: '#F5F3EE',
+              padding: '8px 18px',
+              borderBottom: '2px solid #B8960C',
             }}
           >
-            {product.materialLabel}
-          </span>
-          <span
-            style={{
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '11px',
-              fontWeight: 400,
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              color: '#6B6B6B',
-            }}
-          >
-            {product.typeLabel}
+            Ver detalhes
           </span>
         </div>
+      </div>
 
-        {/* Name + Price row */}
-        <div className="flex items-start justify-between gap-2 mb-1">
+      {/* Info block — light */}
+      <div style={{ background: '#FFFFFF', padding: '16px 18px 18px' }}>
+        <div className="flex items-start justify-between gap-3 mb-1.5">
           <p
             style={{
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '14px',
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: '17px',
               fontWeight: 400,
               color: '#0A0A0A',
-              lineHeight: 1.4,
+              lineHeight: 1.25,
             }}
           >
             {product.name}
@@ -160,43 +178,41 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '15px',
+              fontSize: '14px',
               fontWeight: 500,
               color: '#0A0A0A',
               flexShrink: 0,
+              marginTop: '2px',
             }}
           >
             {formatPrice(product.price)}
           </span>
         </div>
 
-        {/* Color text */}
-        <p
-          style={{
-            fontFamily: "'Inter', system-ui, sans-serif",
-            fontSize: '13px',
-            color: '#6B6B6B',
-            marginBottom: '8px',
-          }}
-        >
-          {product.color}
-        </p>
-
-        {/* Color swatch */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <span
-            className="relative group/swatch"
             style={{
               height: '10px',
               width: '10px',
               borderRadius: '50%',
               backgroundColor: product.colorHex,
-              border: '1px solid rgba(0,0,0,0.1)',
+              border: '1px solid rgba(0,0,0,0.12)',
               flexShrink: 0,
               display: 'inline-block',
             }}
             title={product.color}
           />
+          <span
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '12px',
+              color: '#6B6B6B',
+            }}
+          >
+            {product.color}
+            <span style={{ color: 'rgba(0,0,0,0.25)', margin: '0 6px' }}>·</span>
+            {product.typeLabel}
+          </span>
         </div>
       </div>
     </Link>

@@ -2,10 +2,27 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Package, RotateCcw, Shield } from 'lucide-react'
 import type { Product } from '@/lib/mock-data'
+import { products as allProducts } from '@/lib/mock-data'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import AddToCart from './AddToCart'
-import { cn } from '@/lib/utils'
+import { cn, formatPrice, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
+
+// Material → composition copy. Lookup beats a 3-deep ternary.
+const MATERIAL_COMPOSITION: Record<string, string> = {
+  'seda':
+    'seda natural, 100% pura. Naturalmente termorreguladora, hipoalergénica e de uma suavidade incomparável.',
+  'fil-d-ecosse':
+    'algodão egípcio de fibra longa, mercerizado duas vezes para conferir brilho subtil e durabilidade excepcional. Composição: 85% algodão, 12% poliamida, 3% elastano.',
+  'la-merino':
+    'lã merino ultrafina de 18,5 microns — abaixo do limiar de picada. Naturalmente termorreguladora. Composição: 80% lã merino, 17% poliamida, 3% elastano.',
+  'cashmere':
+    'cashmere puro da Mongólia. Subpêlo recolhido à mão, oito vezes mais isolante que lã comum. Suavidade incomparável.',
+  'algodao-penteado':
+    'algodão de fibra longa, penteado para remover imperfeições. Macio, durável, sem encolher nem deformar.',
+}
 
 interface ProductInfoProps {
   product: Product
@@ -15,11 +32,7 @@ const accordionItems = (product: Product) => [
   {
     title: 'Materiais & Composição',
     content: `Este par é fabricado em ${product.materialLabel} — ${
-      product.material === 'seda'
-        ? 'seda natural, 100% pura. Naturalmente termorreguladora, hipoalergénica e de uma suavidade incomparável.'
-        : product.material === 'fil-d-ecosse'
-        ? "algodão egípcio de fibra longa, mercerizado duas vezes para conferir brilho subtil e durabilidade excepcional. Composição: 85% algodão, 12% poliamida, 3% elastano."
-        : 'lã merino ultrafina de 18,5 microns — abaixo do limiar de picada. Naturalmente termorreguladora. Composição: 80% lã merino, 17% poliamida, 3% elastano.'
+      MATERIAL_COMPOSITION[product.material] ?? MATERIAL_COMPOSITION['algodao-penteado']
     }`,
   },
   {
@@ -30,7 +43,7 @@ const accordionItems = (product: Product) => [
   {
     title: 'Envios & Devoluções',
     content:
-      'Envio gratuito em compras acima de €45. Para encomendas abaixo, o custo de envio é €3,50. Prazo de entrega: 1–3 dias úteis para Portugal Continental. Devoluções gratuitas no prazo de 30 dias, produto não usado e embalagem original.',
+      `Envio gratuito em compras acima de €${FREE_SHIPPING_THRESHOLD}. Para encomendas abaixo, o custo de envio é €3,50. Prazo de entrega: 1–3 dias úteis para Portugal Continental. Devoluções gratuitas no prazo de 30 dias, produto não usado e embalagem original.`,
   },
 ]
 
@@ -60,7 +73,7 @@ function AccordionItem({ title, content }: { title: string; content: string }) {
       </button>
       <div
         className="overflow-hidden transition-all duration-300"
-        style={{ maxHeight: open ? '200px' : '0' }}
+        style={{ maxHeight: open ? '600px' : '0' }}
       >
         <p
           className="font-body text-gray-600 pb-4"
@@ -74,18 +87,23 @@ function AccordionItem({ title, content }: { title: string; content: string }) {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const siblings = allProducts.filter(
+    (p) =>
+      p.name === product.name &&
+      p.material === product.material &&
+      p.pattern === product.pattern &&
+      p.type === product.type,
+  )
+
   return (
-    <div className="space-y-6">
-      {/* Breadcrumb */}
-      <nav className="font-body text-gray-400" aria-label="Breadcrumb" style={{ fontSize: '12px' }}>
-        <ol className="flex items-center gap-1.5">
-          <li><Link href="/" className="hover:text-primary transition-colors">Início</Link></li>
-          <li>/</li>
-          <li><Link href="/loja" className="hover:text-primary transition-colors">Loja</Link></li>
-          <li>/</li>
-          <li className="text-gray-700">{product.name}</li>
-        </ol>
-      </nav>
+    <div className="space-y-5">
+      <Breadcrumbs
+        items={[
+          { label: 'Início', href: '/' },
+          { label: 'Loja', href: '/loja' },
+          { label: product.name },
+        ]}
+      />
 
       {/* Material label */}
       <p
@@ -95,72 +113,98 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {product.materialLabel}
       </p>
 
-      {/* Badges */}
-      <div className="flex items-center gap-2 flex-wrap -mt-2">
-        <Badge variant="outline">{product.typeLabel}</Badge>
-        {product.badge && <Badge variant="gold">{product.badge}</Badge>}
-      </div>
-
-      {/* Title */}
+      {/* Title + Badges inline */}
       <div>
         <h1
-          className="font-display text-gray-900 mb-1"
-          style={{ fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 400 }}
+          className="font-display text-gray-900 mb-2"
+          style={{ fontSize: 'clamp(26px, 3vw, 34px)', fontWeight: 400 }}
         >
           {product.name}
         </h1>
-        <p className="font-body text-gray-500" style={{ fontSize: '14px' }}>
-          {product.color} · {product.patternLabel}
-        </p>
-      </div>
-
-      {/* Price */}
-      <p className="font-body text-gray-900" style={{ fontSize: '24px', fontWeight: 400 }}>
-        {new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(product.price)}
-      </p>
-
-      {/* Color swatch */}
-      <div className="flex items-center gap-3">
-        <span
-          className="font-body uppercase text-gray-400"
-          style={{ fontSize: '10px', letterSpacing: '0.15em' }}
-        >
-          Cor:
-        </span>
-        <div className="flex items-center gap-2">
-          <span
-            className="rounded-full"
-            style={{
-              height: '20px',
-              width: '20px',
-              backgroundColor: product.colorHex,
-              border: '2px solid #1a1a1a',
-              outline: '2px solid rgba(26,26,26,0.2)',
-              outlineOffset: '1px',
-            }}
-            aria-label={product.color}
-          />
-          <span className="font-body text-gray-700" style={{ fontSize: '14px', fontWeight: 300 }}>
-            {product.color}
-          </span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge variant="outline">{product.typeLabel}</Badge>
+          {product.badge && <Badge variant="gold">{product.badge}</Badge>}
         </div>
       </div>
 
-      {/* Description */}
+      <p className="font-body text-gray-900" style={{ fontSize: '22px', fontWeight: 400 }}>
+        {formatPrice(product.price)}
+      </p>
+
+      {/* Color picker — siblings (same name + material + pattern, different color) */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="font-body uppercase text-gray-400"
+            style={{ fontSize: '10px', letterSpacing: '0.15em' }}
+          >
+            Cor:
+          </span>
+          <span className="font-body text-gray-700" style={{ fontSize: '13px', fontWeight: 400 }}>
+            {product.color}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {siblings.map((s) => {
+                const active = s.id === product.id
+                return (
+                  <Link
+                    key={s.id}
+                    href={`/loja/${s.handle}`}
+                    aria-label={s.color}
+                    title={s.color}
+                    style={{
+                      display: 'inline-block',
+                      height: '44px',
+                      width: '44px',
+                      borderRadius: '50%',
+                      backgroundColor: s.colorHex,
+                      border: active ? '2px solid #B8960C' : '1px solid rgba(0,0,0,0.15)',
+                      outline: active ? '1px solid #B8960C' : 'none',
+                      outlineOffset: '2px',
+                      transition: 'all 200ms ease',
+                    }}
+                  />
+                )
+              })}
+        </div>
+      </div>
+
+      {/* Add to cart — BEFORE description (build desire, then justify) */}
+      <div className="pt-2">
+        <AddToCart product={product} />
+      </div>
+
+      {/* Trust badges — immediately after CTA */}
+      <div
+        className="flex flex-wrap gap-x-6 gap-y-2 pt-3 pb-1"
+        style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '16px' }}
+      >
+        {[
+          { Icon: Package, text: `Envio grátis +€${FREE_SHIPPING_THRESHOLD}` },
+          { Icon: RotateCcw, text: 'Devoluções 30 dias' },
+          { Icon: Shield, text: 'Garantia de qualidade' },
+        ].map(({ Icon, text }) => (
+          <div key={text} className="flex items-center gap-1.5">
+            <Icon size={13} strokeWidth={1.5} style={{ color: '#B8960C' }} />
+            <span className="font-body text-gray-500" style={{ fontSize: '12px' }}>
+              {text}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Description — AFTER the CTA (justifies the purchase decision) */}
       <p
-        className="font-body text-gray-700 pt-5"
+        className="font-body text-gray-700"
         style={{
-          fontSize: '15px',
+          fontSize: '14px',
           fontWeight: 300,
           lineHeight: 1.8,
-          borderTop: '1px solid rgba(0,0,0,0.06)',
         }}
       >
         {product.description}
       </p>
-
-      {/* Add to cart */}
-      <AddToCart product={product} />
 
       {/* Accordion */}
       <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '8px' }}>

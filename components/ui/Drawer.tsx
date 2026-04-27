@@ -61,32 +61,51 @@ export default function Drawer({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'fixed top-0 z-50 h-full bg-off-white flex flex-col transition-transform duration-300 ease-out',
+          'fixed top-0 z-50 h-full flex flex-col transition-transform duration-300 ease-out',
           side === 'right' ? 'right-0' : 'left-0',
           side === 'right'
             ? isOpen ? 'translate-x-0' : 'translate-x-full'
             : isOpen ? 'translate-x-0' : '-translate-x-full',
           className
         )}
-        style={{ width: 'min(420px, 100vw)' }}
+        style={{ width: 'min(420px, 100vw)', background: '#F5F3EE' }}
       >
         {/* Header */}
         {title && (
           <div
-            className="flex items-center justify-between px-6 py-5 border-b border-border"
+            className="flex items-center justify-between border-b border-border"
+            style={{ padding: '14px 16px 14px 24px' }}
           >
             <h2
               className="font-display text-black"
-              style={{ fontSize: '24px', fontWeight: 400 }}
+              style={{ fontSize: '22px', fontWeight: 400 }}
             >
               {title.replace(/\s*\(\d+\)$/, '')}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 text-muted hover:text-gold transition-colors"
+              className="flex items-center gap-2 transition-colors"
+              style={{
+                minWidth: '44px',
+                minHeight: '44px',
+                padding: '10px 14px',
+                borderRadius: '4px',
+                background: 'rgba(10,10,10,0.04)',
+                border: '1px solid rgba(10,10,10,0.1)',
+                color: '#0A0A0A',
+                fontFamily: "'Inter', system-ui, sans-serif",
+                fontSize: '11px',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                fontWeight: 500,
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#0A0A0A'; e.currentTarget.style.color = '#F5F3EE' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(10,10,10,0.04)'; e.currentTarget.style.color = '#0A0A0A' }}
               aria-label="Fechar"
             >
-              <X size={20} strokeWidth={1.5} />
+              <X size={16} strokeWidth={1.8} />
+              <span>Fechar</span>
             </button>
           </div>
         )}

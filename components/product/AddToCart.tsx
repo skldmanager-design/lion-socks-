@@ -1,48 +1,67 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Check } from 'lucide-react'
 import type { Product, Size } from '@/lib/mock-data'
 import { useCart } from '@/context/CartContext'
-import { formatPrice } from '@/lib/utils'
+import { useToast } from '@/context/ToastContext'
+import { formatPrice, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
 import SizeGuide from './SizeGuide'
 
 interface AddToCartProps {
   product: Product
 }
 
+// Prefix makes these IDs trivially identifiable when migrating to real Shopify gid://
+// — checkout rejects them and we can purge any leaked cart.
+const mockVariantId = (productId: string, size: Size) => `lsmock:${productId}:${size}`
+
 export default function AddToCart({ product }: AddToCartProps) {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
+  const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { addItem } = useCart()
+  const { show } = useToast()
+
+  const errorTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const addedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => {
+    if (errorTimerRef.current) clearTimeout(errorTimerRef.current)
+    if (addedTimerRef.current) clearTimeout(addedTimerRef.current)
+  }, [])
 
   const handleAdd = async () => {
+    if (!product.inStock) {
+      show('Produto temporariamente sem stock', 'error')
+      return
+    }
     if (!selectedSize) {
       setError(true)
-      setTimeout(() => setError(false), 2000)
+      errorTimerRef.current = setTimeout(() => setError(false), 2000)
       return
     }
 
     setLoading(true)
 
-    // Simulate slight network delay for visual feedback
+    // Simulate slight network delay for visual feedback (drop once Shopify wired)
     await new Promise((r) => setTimeout(r, 400))
 
     addItem({
-      variantId: `mock-${product.id}-${selectedSize}`,
+      variantId: mockVariantId(product.id, selectedSize),
       productHandle: product.handle,
       productTitle: product.name,
       variantTitle: `${selectedSize} / ${product.color}`,
       image: product.images[0] ?? '',
       price: product.price,
-      quantity: 1,
+      quantity,
     })
 
     setLoading(false)
     setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
+    show(`${product.name} adicionado ao carrinho`)
+    addedTimerRef.current = setTimeout(() => setAdded(false), 2000)
   }
 
   return (
@@ -92,30 +111,98 @@ export default function AddToCart({ product }: AddToCartProps) {
         </div>
 
         {error && (
-          <p className="font-body mt-2" style={{ fontSize: '12px', color: '#cc3333', fontWeight: 300 }}>
+          <p className="font-body mt-2" style={{ fontSize: '12px', color: '#B8960C', fontWeight: 300 }}>
             Por favor seleccione um tamanho.
           </p>
         )}
       </div>
 
-      {/* Add button */}
+      {/* Quantity stepper */}
+      <div>
+        <label
+          className="font-body uppercase block mb-3"
+          style={{ fontSize: '11px', letterSpacing: '0.15em', fontWeight: 500, color: '#424242' }}
+        >
+          Quantidade
+        </label>
+        <div
+          className="flex items-center"
+          style={{
+            border: '1px solid rgba(0,0,0,0.16)',
+            width: 'fit-content',
+            borderRadius: '2px',
+          }}
+        >
+          <button
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            disabled={quantity <= 1}
+            className="font-body disabled:opacity-25 transition-colors"
+            style={{ width: '44px', height: '44px', fontSize: '18px', color: '#424242', background: 'transparent', border: 'none' }}
+            onMouseEnter={(e) => { if (quantity > 1) e.currentTarget.style.color = '#B8960C' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#424242' }}
+            aria-label="Diminuir quantidade"
+          >
+            −
+          </button>
+          <span
+            className="font-body text-center"
+            style={{
+              minWidth: '40px',
+              height: '44px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '15px',
+              fontWeight: 500,
+              color: '#0A0A0A',
+              borderLeft: '1px solid rgba(0,0,0,0.08)',
+              borderRight: '1px solid rgba(0,0,0,0.08)',
+            }}
+          >
+            {quantity}
+          </span>
+          <button
+            onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+            disabled={quantity >= 10}
+            className="font-body disabled:opacity-25 transition-colors"
+            style={{ width: '44px', height: '44px', fontSize: '18px', color: '#424242', background: 'transparent', border: 'none' }}
+            onMouseEnter={(e) => { if (quantity < 10) e.currentTarget.style.color = '#B8960C' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#424242' }}
+            aria-label="Aumentar quantidade"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* Add button — premium black slab with gold rule on hover */}
       <button
         onClick={handleAdd}
-        disabled={added || loading}
-        className="w-full font-body uppercase transition-all duration-300 flex items-center justify-center gap-2"
+        disabled={added || loading || !product.inStock}
+        className="w-full font-body uppercase flex items-center justify-center gap-2"
         style={{
-          background: added ? '#B8960C' : loading ? '#1a1a1a' : '#0a0a0a',
-          color: '#ffffff',
+          background: added ? '#B8960C' : '#0a0a0a',
+          color: added ? '#0a0a0a' : '#F5F3EE',
           fontSize: '12px',
-          letterSpacing: '0.15em',
-          padding: '18px',
-          fontWeight: 400,
-          border: 'none',
+          letterSpacing: '0.18em',
+          padding: '20px',
+          fontWeight: 500,
+          border: '1px solid #0a0a0a',
+          borderBottom: '2px solid #0a0a0a',
           cursor: loading ? 'wait' : 'pointer',
-          opacity: loading ? 0.8 : 1,
+          opacity: loading ? 0.85 : 1,
+          transition: 'all 280ms cubic-bezier(0.22, 1, 0.36, 1)',
         }}
-        onMouseEnter={(e) => { if (!added && !loading) e.currentTarget.style.background = '#B8960C' }}
-        onMouseLeave={(e) => { if (!added && !loading) e.currentTarget.style.background = '#0a0a0a' }}
+        onMouseEnter={(e) => {
+          if (added || loading || !product.inStock) return
+          e.currentTarget.style.borderBottom = '2px solid #B8960C'
+          e.currentTarget.style.transform = 'translateY(-1px)'
+        }}
+        onMouseLeave={(e) => {
+          if (added || loading) return
+          e.currentTarget.style.borderBottom = '2px solid #0a0a0a'
+          e.currentTarget.style.transform = 'translateY(0)'
+        }}
       >
         {loading ? (
           <span className="flex items-center gap-2">
@@ -130,6 +217,8 @@ export default function AddToCart({ product }: AddToCartProps) {
             <Check size={16} strokeWidth={1.5} />
             Adicionado ao Carrinho
           </span>
+        ) : !product.inStock ? (
+          'Esgotado'
         ) : (
           'Adicionar ao Carrinho'
         )}
@@ -151,7 +240,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           </p>
         )}
         <p className="font-body" style={{ fontSize: '12px', color: '#9E9E9E', fontWeight: 300 }}>
-          Envio gratuito em compras acima de €45
+          Envio gratuito em compras acima de {formatPrice(FREE_SHIPPING_THRESHOLD)}
         </p>
       </div>
     </div>

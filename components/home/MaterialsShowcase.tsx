@@ -39,7 +39,7 @@ const materials = [
 
 export default function MaterialsShowcase() {
   return (
-    <section style={{ background: '#FAF7F2', padding: '120px 0' }}>
+    <section style={{ background: '#F5F3EE', padding: '120px 0' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         {materials.map((material, index) => {
           const isEven = index % 2 === 1

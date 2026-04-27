@@ -5,6 +5,8 @@ import { formatPrice } from '@/lib/utils'
 import ProductGallery from '@/components/product/ProductGallery'
 import ProductInfo from '@/components/product/ProductInfo'
 import ProductCard from '@/components/product/ProductCard'
+import RecentlyViewed from '@/components/product/RecentlyViewed'
+import StickyMobileCart from '@/components/product/StickyMobileCart'
 
 interface Props {
   params: Promise<{ handle: string }>
@@ -67,11 +69,11 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="pt-28 lg:pt-36 pb-20 lg:pb-28">
+      <div style={{ background: '#F5F3EE', minHeight: '100vh' }} className="pt-28 lg:pt-36 pb-20 lg:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
 
           {/* Product main section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 mb-20 lg:mb-28">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16 xl:gap-20 mb-20 lg:mb-28">
             {/* Gallery */}
             <div>
               <ProductGallery images={product.images} productName={product.name} />
@@ -104,8 +106,12 @@ export default async function ProductPage({ params }: Props) {
               </div>
             </section>
           )}
+
+          <RecentlyViewed currentProductId={product.id} registerOnMount />
         </div>
       </div>
+
+      <StickyMobileCart product={product} />
     </>
   )
 }

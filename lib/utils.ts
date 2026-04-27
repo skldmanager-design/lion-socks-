@@ -43,4 +43,4 @@ export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ')
 }
 
-export const FREE_SHIPPING_THRESHOLD = 45
+export const FREE_SHIPPING_THRESHOLD = 49

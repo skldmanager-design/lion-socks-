@@ -1,0 +1,397 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: Portes grátis acima de €49 · Entregas em 24h
+    - button "Fechar barra de anúncios" [ref=e6] [cursor=pointer]:
+      - img [ref=e7]
+  - banner [ref=e10]:
+    - link "Lion Socks — Homepage" [ref=e12] [cursor=pointer]:
+      - /url: /
+      - img "Lion Socks" [ref=e13]
+  - generic [ref=e14]:
+    - navigation [ref=e15]:
+      - link "MEN" [ref=e17] [cursor=pointer]:
+        - /url: /loja/homem
+      - link "WOMAN" [ref=e19] [cursor=pointer]:
+        - /url: /loja/mulher
+      - link "BOX" [ref=e21] [cursor=pointer]:
+        - /url: /packs
+      - link "DESTAQUES" [ref=e23] [cursor=pointer]:
+        - /url: /destaques
+      - link "SOBRE NÓS" [ref=e25] [cursor=pointer]:
+        - /url: /sobre
+    - generic [ref=e26]:
+      - button "Pesquisar" [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+      - link "Favoritos — 0" [ref=e31] [cursor=pointer]:
+        - /url: /favoritos
+        - img [ref=e32]
+      - button "Carrinho — 1" [ref=e394] [cursor=pointer]:
+        - img [ref=e35]
+      - link "Conta" [ref=e38] [cursor=pointer]:
+        - /url: /conta
+        - img [ref=e39]
+  - dialog "Carrinho (1)" [ref=e396]:
+    - generic [ref=e43]:
+      - heading "Carrinho" [level=2] [ref=e44]
+      - button "Fechar" [ref=e45] [cursor=pointer]:
+        - img [ref=e46]
+        - generic [ref=e49]: Fechar
+    - generic [ref=e50]:
+      - generic [ref=e397]:
+        - img "Fil d'Écosse Classic Solid" [ref=e399]
+        - generic [ref=e400]:
+          - generic [ref=e401]:
+            - generic [ref=e402]:
+              - heading "Fil d'Écosse Classic Solid" [level=4] [ref=e403]
+              - paragraph [ref=e404]: 42-45 / Preto
+            - button "Remover Fil d'Écosse Classic Solid" [ref=e405]:
+              - img [ref=e406]
+          - generic [ref=e409]:
+            - generic [ref=e410]:
+              - button "Diminuir quantidade" [ref=e411]:
+                - img [ref=e412]
+              - generic [ref=e413]: "1"
+              - button "Aumentar quantidade" [ref=e414]:
+                - img [ref=e415]
+            - generic [ref=e416]: €15
+      - generic [ref=e417]:
+        - generic [ref=e419]:
+          - img [ref=e420]
+          - generic [ref=e425]:
+            - text: Faltam
+            - strong [ref=e426]: €34
+            - text: para envio gratuito
+        - button "Tenho código de desconto" [ref=e430]:
+          - img [ref=e431]
+          - text: Tenho código de desconto
+        - generic [ref=e434]:
+          - generic [ref=e435]: Subtotal
+          - generic [ref=e436]: €15
+        - generic [ref=e437]:
+          - generic [ref=e438]: Total
+          - generic [ref=e439]: €15
+        - paragraph [ref=e440]: Envio calculado no checkout.
+        - button "FINALIZAR COMPRA" [ref=e441] [cursor=pointer]
+  - main [ref=e64]:
+    - generic [ref=e65]:
+      - generic [ref=e70]:
+        - paragraph [ref=e71]: COLECÇÃO HOMEM
+        - heading "Para quem repara nos detalhes." [level=1] [ref=e72]
+        - paragraph [ref=e73]: Meias de manufactura portuguesa. Do fio de escócia à seda. Acabamento artesanal. Linha dourada.
+        - link "Descobrir a colecção" [ref=e74] [cursor=pointer]:
+          - /url: /loja
+      - generic [ref=e76]: Descobrir
+    - generic [ref=e81]:
+      - link "Everyday Os que vestes sem pensar. Everyday Descobrir →" [ref=e83] [cursor=pointer]:
+        - /url: /colecoes/oficio
+        - img "Everyday" [ref=e84]
+        - generic [ref=e86]:
+          - paragraph [ref=e87]: Os que vestes sem pensar.
+          - heading "Everyday" [level=3] [ref=e88]
+          - text: Descobrir →
+      - link "Evening Quando os detalhes falam. Evening" [ref=e90] [cursor=pointer]:
+        - /url: /colecoes/lello
+        - img "Evening" [ref=e91]
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: Quando os detalhes falam.
+          - heading "Evening" [level=3] [ref=e95]
+      - link "Signature Raro. Por definição. Signature" [ref=e97] [cursor=pointer]:
+        - /url: /colecoes/reserva
+        - img "Signature" [ref=e98]
+        - generic [ref=e100]:
+          - paragraph [ref=e101]: Raro. Por definição.
+          - heading "Signature" [level=3] [ref=e102]
+    - generic [ref=e105]:
+      - heading "Mais vendidos" [level=2] [ref=e107]
+      - generic [ref=e108]:
+        - link "Adicionar aos favoritos Ofício Pin Dot Ver detalhes → Fil d'Écosse · Mid-calf Ofício Pin Dot €17 Azul Marinho / Creme Azul Marinho / Creme Detalhe que só se descobre de perto." [ref=e110] [cursor=pointer]:
+          - /url: /loja/fil-ecosse-pin-dot-marinho-creme
+          - generic [ref=e111]:
+            - button "Adicionar aos favoritos" [ref=e112]:
+              - img [ref=e113]
+            - img "Ofício Pin Dot" [ref=e115]
+            - generic:
+              - generic: Ver detalhes →
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]: Fil d'Écosse
+              - generic [ref=e119]: · Mid-calf
+            - generic [ref=e120]:
+              - paragraph [ref=e121]: Ofício Pin Dot
+              - generic [ref=e122]: €17
+            - generic [ref=e123]:
+              - generic "Azul Marinho / Creme" [ref=e124]
+              - generic [ref=e125]: Azul Marinho / Creme
+            - paragraph [ref=e126]: Detalhe que só se descobre de perto.
+        - link "Adicionar aos favoritos Ribeira Herringbone Ver detalhes → Lã Merino · Mid-calf Ribeira Herringbone €21 Bordeaux Bordeaux Padrão discreto, presença firme." [ref=e128] [cursor=pointer]:
+          - /url: /loja/merino-herringbone-bordeaux
+          - generic [ref=e129]:
+            - button "Adicionar aos favoritos" [ref=e130]:
+              - img [ref=e131]
+            - img "Ribeira Herringbone" [ref=e133]
+            - generic:
+              - generic: Ver detalhes →
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - generic [ref=e136]: Lã Merino
+              - generic [ref=e137]: · Mid-calf
+            - generic [ref=e138]:
+              - paragraph [ref=e139]: Ribeira Herringbone
+              - generic [ref=e140]: €21
+            - generic [ref=e141]:
+              - generic "Bordeaux" [ref=e142]
+              - generic [ref=e143]: Bordeaux
+            - paragraph [ref=e144]: Padrão discreto, presença firme.
+        - link "Adicionar aos favoritos Ofício Classic Ver detalhes → Fil d'Écosse · Mid-calf Ofício Classic €15 Preto Preto O essencial para o escritório." [ref=e146] [cursor=pointer]:
+          - /url: /loja/fil-ecosse-classic-preto
+          - generic [ref=e147]:
+            - button "Adicionar aos favoritos" [ref=e148]:
+              - img [ref=e149]
+            - img "Ofício Classic" [ref=e151]
+            - generic:
+              - generic: Ver detalhes →
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - generic [ref=e154]: Fil d'Écosse
+              - generic [ref=e155]: · Mid-calf
+            - generic [ref=e156]:
+              - paragraph [ref=e157]: Ofício Classic
+              - generic [ref=e158]: €15
+            - generic [ref=e159]:
+              - generic "Preto" [ref=e160]
+              - generic [ref=e161]: Preto
+            - paragraph [ref=e162]: O essencial para o escritório.
+        - link "Adicionar aos favoritos Ofício Classic Ver detalhes → Fil d'Écosse · Mid-calf Ofício Classic €15 Azul Marinho Azul Marinho O essencial para o escritório." [ref=e164] [cursor=pointer]:
+          - /url: /loja/fil-ecosse-classic-marinho
+          - generic [ref=e165]:
+            - button "Adicionar aos favoritos" [ref=e166]:
+              - img [ref=e167]
+            - img "Ofício Classic" [ref=e169]
+            - generic:
+              - generic: Ver detalhes →
+          - generic [ref=e170]:
+            - generic [ref=e171]:
+              - generic [ref=e172]: Fil d'Écosse
+              - generic [ref=e173]: · Mid-calf
+            - generic [ref=e174]:
+              - paragraph [ref=e175]: Ofício Classic
+              - generic [ref=e176]: €15
+            - generic [ref=e177]:
+              - generic "Azul Marinho" [ref=e178]
+              - generic [ref=e179]: Azul Marinho
+            - paragraph [ref=e180]: O essencial para o escritório.
+    - generic [ref=e184]:
+      - generic [ref=e185]:
+        - paragraph [ref=e186]: EMBALAGEM PREMIUM
+        - heading "Lion Box" [level=2] [ref=e187]
+        - paragraph [ref=e188]: A experiência começa antes de abrir a caixa.
+        - generic [ref=e189]:
+          - link "Lion Entry Box €24,90 2 pares · Caixa de Metal" [ref=e190] [cursor=pointer]:
+            - /url: /packs/lion-entry-box
+            - generic [ref=e191]:
+              - generic [ref=e192]: Lion Entry Box
+              - generic [ref=e193]: €24,90
+            - paragraph [ref=e194]: 2 pares · Caixa de Metal
+          - link "Lion Essentials €34,90 3 pares · Caixa de Metal" [ref=e195] [cursor=pointer]:
+            - /url: /packs/lion-essentials
+            - generic [ref=e196]:
+              - generic [ref=e197]: Lion Essentials
+              - generic [ref=e198]: €34,90
+            - paragraph [ref=e199]: 3 pares · Caixa de Metal
+          - link "Lion Connoisseur €69,90 5 pares · Caixa de Metal Premium" [ref=e200] [cursor=pointer]:
+            - /url: /packs/lion-connoisseur
+            - generic [ref=e201]:
+              - generic [ref=e202]: Lion Connoisseur
+              - generic [ref=e203]: €69,90
+            - paragraph [ref=e204]: 5 pares · Caixa de Metal Premium
+          - link "Lion Gentleman's Collection €169 12 pares · Caixa Gaveta" [ref=e205] [cursor=pointer]:
+            - /url: /packs/lion-gentlemans-collection
+            - generic [ref=e206]:
+              - generic [ref=e207]: Lion Gentleman's Collection
+              - generic [ref=e208]: €169
+            - paragraph [ref=e209]: 12 pares · Caixa Gaveta
+        - link "Ver todas as Caixas →" [ref=e210] [cursor=pointer]:
+          - /url: /packs
+      - link "Ver todos os packs Lion Socks" [ref=e211] [cursor=pointer]:
+        - /url: /packs
+        - img "Lion Socks · Pack Premium com caixa de metal" [ref=e213]
+    - generic [ref=e216]:
+      - paragraph [ref=e217]: OS NOSSOS MATERIAIS
+      - heading "O que não se vê é o que importa." [level=2] [ref=e218]
+      - paragraph [ref=e219]: Cinco materiais. Uma exigência. Do algodão penteado ao cashmere puro, cada fio é escolhido pelo que faz — não pelo que parece.
+      - generic [ref=e220]:
+        - link "Ribeira — Merino Ribeira Merino Fibra que se adapta. Quente no inverno, fresca no verão — por estrutura, não por marketing. Saber mais →" [ref=e222] [cursor=pointer]:
+          - /url: /colecoes/ribeira
+          - img "Ribeira — Merino" [ref=e225]
+          - heading "Ribeira" [level=3] [ref=e226]
+          - paragraph [ref=e227]: Merino
+          - paragraph [ref=e228]: Fibra que se adapta. Quente no inverno, fresca no verão — por estrutura, não por marketing.
+          - generic [ref=e229]:
+            - text: Saber mais
+            - generic [ref=e230]: →
+        - link "Ofício — Fio de Escócia Ofício Fio de Escócia Algodão egípcio mercerizado. Brilho subtil, cor profunda, zero pilling. Saber mais →" [ref=e232] [cursor=pointer]:
+          - /url: /colecoes/oficio
+          - img "Ofício — Fio de Escócia" [ref=e235]
+          - heading "Ofício" [level=3] [ref=e236]
+          - paragraph [ref=e237]: Fio de Escócia
+          - paragraph [ref=e238]: Algodão egípcio mercerizado. Brilho subtil, cor profunda, zero pilling.
+          - generic [ref=e239]:
+            - text: Saber mais
+            - generic [ref=e240]: →
+        - link "Lello — Seda Lello Seda O toque que desliza. Para os dias que importam. Saber mais →" [ref=e242] [cursor=pointer]:
+          - /url: /colecoes/lello
+          - img "Lello — Seda" [ref=e245]
+          - heading "Lello" [level=3] [ref=e246]
+          - paragraph [ref=e247]: Seda
+          - paragraph [ref=e248]: O toque que desliza. Para os dias que importam.
+          - generic [ref=e249]:
+            - text: Saber mais
+            - generic [ref=e250]: →
+        - link "Reserva — Cashmere Reserva Cashmere A fibra mais fina do mundo. Oito vezes mais isolante que a lã. Saber mais →" [ref=e252] [cursor=pointer]:
+          - /url: /colecoes/reserva
+          - img "Reserva — Cashmere" [ref=e255]
+          - heading "Reserva" [level=3] [ref=e256]
+          - paragraph [ref=e257]: Cashmere
+          - paragraph [ref=e258]: A fibra mais fina do mundo. Oito vezes mais isolante que a lã.
+          - generic [ref=e259]:
+            - text: Saber mais
+            - generic [ref=e260]: →
+        - link "Alma — Algodão Penteado Alma Algodão Penteado A base honesta. Macio, durável, sem dramas. Saber mais →" [ref=e262] [cursor=pointer]:
+          - /url: /colecoes/alma
+          - img "Alma — Algodão Penteado" [ref=e265]
+          - heading "Alma" [level=3] [ref=e266]
+          - paragraph [ref=e267]: Algodão Penteado
+          - paragraph [ref=e268]: A base honesta. Macio, durável, sem dramas.
+          - generic [ref=e269]:
+            - text: Saber mais
+            - generic [ref=e270]: →
+    - generic [ref=e272]:
+      - paragraph [ref=e273]: Lista Privada
+      - heading "Acesso antecipado, 10% no primeiro par." [level=2] [ref=e274]
+      - paragraph [ref=e275]: Sem spam. Só o que importa — lançamentos, edições limitadas, convites.
+      - generic [ref=e276]:
+        - textbox "Email para lista privada" [ref=e277]:
+          - /placeholder: O seu email
+        - button "Entrar na Lista" [ref=e278] [cursor=pointer]
+    - generic [ref=e281]:
+      - paragraph [ref=e283]: A Assinatura
+      - heading "A Linha Dourada" [level=2] [ref=e284]
+      - paragraph [ref=e285]: Cada par Lion Socks carrega uma linha dourada no punho. Não é decoração — é assinatura.
+      - paragraph [ref=e286]: O detalhe que se vê quando a calça sobe, quando cruzas as pernas, quando alguém repara. Discreto para quem veste. Inconfundível para quem conhece.
+    - paragraph [ref=e289]:
+      - img "Bandeira de Portugal" [ref=e290]
+      - text: Feitas em Portugal
+  - contentinfo [ref=e296]:
+    - generic [ref=e298]:
+      - generic [ref=e299]:
+        - link "Lion Socks" [ref=e300] [cursor=pointer]:
+          - /url: /
+        - paragraph [ref=e301]: Feitas no Porto. Para quem repara nos detalhes.
+        - generic [ref=e302]:
+          - link "Instagram" [ref=e303] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e304]
+          - link "Pinterest" [ref=e308] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e309]
+      - generic [ref=e311]:
+        - generic [ref=e312]: Colecções
+        - list [ref=e313]:
+          - listitem [ref=e314]:
+            - link "Ribeira · Merino" [ref=e315] [cursor=pointer]:
+              - /url: /colecoes/ribeira
+          - listitem [ref=e316]:
+            - link "Ofício · Fio de Escócia" [ref=e317] [cursor=pointer]:
+              - /url: /colecoes/oficio
+          - listitem [ref=e318]:
+            - link "Lello · Seda" [ref=e319] [cursor=pointer]:
+              - /url: /colecoes/lello
+          - listitem [ref=e320]:
+            - link "Reserva · Cashmere" [ref=e321] [cursor=pointer]:
+              - /url: /colecoes/reserva
+          - listitem [ref=e322]:
+            - link "Alma · Algodão Penteado" [ref=e323] [cursor=pointer]:
+              - /url: /colecoes/alma
+          - listitem [ref=e324]:
+            - link "Packs" [ref=e325] [cursor=pointer]:
+              - /url: /packs
+      - generic [ref=e326]:
+        - generic [ref=e327]: Informação
+        - list [ref=e328]:
+          - listitem [ref=e329]:
+            - link "Sobre Nós" [ref=e330] [cursor=pointer]:
+              - /url: /sobre
+          - listitem [ref=e331]:
+            - link "O Nosso Processo" [ref=e332] [cursor=pointer]:
+              - /url: /craft
+          - listitem [ref=e333]:
+            - link "Guia de Materiais" [ref=e334] [cursor=pointer]:
+              - /url: /guide
+          - listitem [ref=e335]:
+            - link "Guia de Cuidados" [ref=e336] [cursor=pointer]:
+              - /url: /cuidados
+          - listitem [ref=e337]:
+            - link "Guia de Tamanhos" [ref=e338] [cursor=pointer]:
+              - /url: /guia-tamanhos
+          - listitem [ref=e339]:
+            - link "Envios & Devoluções" [ref=e340] [cursor=pointer]:
+              - /url: /envios
+          - listitem [ref=e341]:
+            - link "FAQ" [ref=e342] [cursor=pointer]:
+              - /url: /faq
+        - generic [ref=e343]: Legal
+        - list [ref=e344]:
+          - listitem [ref=e345]:
+            - link "Política de Privacidade" [ref=e346] [cursor=pointer]:
+              - /url: /privacidade
+          - listitem [ref=e347]:
+            - link "Política de Cookies" [ref=e348] [cursor=pointer]:
+              - /url: /cookies
+          - listitem [ref=e349]:
+            - link "Termos & Condições" [ref=e350] [cursor=pointer]:
+              - /url: /termos
+          - listitem [ref=e351]:
+            - link "Livro de Reclamações ↗" [ref=e352] [cursor=pointer]:
+              - /url: https://www.livroreclamacoes.pt
+      - generic [ref=e353]:
+        - generic [ref=e354]: Contacto
+        - list [ref=e355]:
+          - listitem [ref=e356]:
+            - link "hello@lionsocks.com" [ref=e357] [cursor=pointer]:
+              - /url: mailto:hello@lionsocks.com
+          - listitem [ref=e358]:
+            - link "@lionsocks" [ref=e359] [cursor=pointer]:
+              - /url: https://instagram.com/lionsocks
+        - generic [ref=e360]: Newsletter
+        - paragraph [ref=e361]: Novidades e acesso antecipado.
+        - generic [ref=e363]:
+          - textbox "Email para newsletter" [ref=e364]:
+            - /placeholder: O seu email
+          - button "Subscrever newsletter" [ref=e365] [cursor=pointer]: →
+        - paragraph [ref=e366]: Nunca fazemos saldos. O nosso preço é o preço justo, todo o ano.
+    - generic [ref=e368]:
+      - generic [ref=e369]:
+        - generic [ref=e370]: Visa
+        - generic [ref=e371]: Mastercard
+        - generic [ref=e372]: AMEX
+        - generic [ref=e373]: MB WAY
+        - generic [ref=e374]: PayPal
+        - generic [ref=e375]: Apple Pay
+        - generic [ref=e376]: Google Pay
+      - generic [ref=e377]:
+        - generic [ref=e378]: 🔒 Pagamento seguro SSL
+        - generic [ref=e379]: 📦 Envio em 24h
+        - generic [ref=e380]: ↩️ Devolução em 30 dias
+        - generic [ref=e381]: 🛡️ Garantia de qualidade
+    - generic [ref=e383]:
+      - generic [ref=e384]:
+        - paragraph [ref=e385]: © 2026 Lion Socks. Todos os direitos reservados.
+        - paragraph [ref=e386]:
+          - img "Bandeira de Portugal" [ref=e387]
+          - text: Feitas em Portugal
+      - paragraph [ref=e393]: Lion Socks é uma marca operada por Valsport, Lda. · NIF 500000000 · Rua Exemplo, 123, 4000-000 Porto
+  - button "Voltar ao topo":
+    - img
+  - button "Open Next.js Dev Tools" [ref=e447] [cursor=pointer]:
+    - img [ref=e448]
+  - alert [ref=e451]

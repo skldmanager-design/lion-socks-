@@ -1,177 +1,157 @@
 // lib/navigation.ts
+// Structure: Men · Woman · Box · Destaques · Sobre Nós
 
-export type MegaMenuColumn = {
+export type MegaColumn = {
   title: string
-  links: { label: string; href: string; price?: string }[]
-}
-
-export type EditorialSlot = {
-  overline: string
-  headline: string // palavra italic principal
-  sublinha: string
-  body: string
-  ctaLabel: string
-  ctaHref: string
+  links: { label: string; href: string; price?: string; muted?: boolean }[]
 }
 
 export type NavItem = {
   label: string
   href: string
-  highlight?: boolean // SALE a dourado
+  highlight?: boolean
   dropdown?:
     | { type: 'simple'; links: { label: string; href: string }[] }
-    | { type: 'mega'; columns: MegaMenuColumn[]; editorial: EditorialSlot }
+    | { type: 'mega'; columns: MegaColumn[] }
 }
+
+// ── Helpers ──────────────────────────────────────────────────────
+
+const genderColumns = (gender: 'homem' | 'mulher'): MegaColumn[] => {
+  const q = (k: string, v: string) => `/loja/${gender}?${k}=${v}`
+  const ver = gender === 'homem' ? 'Ver Homem' : 'Ver Mulher'
+  return [
+    {
+      title: 'Por Família',
+      links: [
+        { label: 'Ribeira · Merino',        href: `/colecoes/ribeira?genero=${gender}` },
+        { label: 'Ofício · Fio de Escócia', href: `/colecoes/oficio?genero=${gender}` },
+        { label: 'Lello · Seda',            href: `/colecoes/lello?genero=${gender}` },
+        { label: 'Reserva · Cashmere',      href: `/colecoes/reserva?genero=${gender}` },
+        { label: 'Alma · Algodão Penteado', href: `/colecoes/alma?genero=${gender}` },
+        { label: ver,                       href: `/loja/${gender}` },
+      ],
+    },
+    {
+      title: 'Por Corte',
+      links: [
+        { label: 'Mid-Calf',       href: q('corte', 'mid-calf') },
+        { label: 'Over-the-Calf',  href: q('corte', 'over-calf') },
+        { label: 'No-Show',        href: q('corte', 'no-show') },
+        { label: 'Executive',      href: q('corte', 'executive') },
+      ],
+    },
+    {
+      title: 'Por Padrão',
+      links: [
+        { label: 'Liso',          href: q('padrao', 'solid') },
+        { label: 'Canelado',      href: q('padrao', 'ribbed') },
+        { label: 'Pin Dot',       href: q('padrao', 'pin-dot') },
+        { label: 'Riscas Finas',  href: q('padrao', 'riscas') },
+        { label: 'Herringbone',   href: q('padrao', 'herringbone') },
+        { label: 'Argyle',        href: q('padrao', 'argyle') },
+      ],
+    },
+    {
+      title: 'Destaques',
+      links: [
+        { label: 'Novidades',          href: `/novidades?genero=${gender}` },
+        { label: 'Best-sellers',       href: `/loja/${gender}?destaque=bestseller` },
+        { label: 'Edições Limitadas',  href: `/novidades/edicoes-limitadas?genero=${gender}` },
+        { label: 'Em Saldo',           href: `/sale?genero=${gender}` },
+      ],
+    },
+  ]
+}
+
+// ── Nav ──────────────────────────────────────────────────────────
 
 export const navigation: NavItem[] = [
   {
-    label: 'Novidades',
-    href: '/novidades',
-    dropdown: {
-      type: 'simple',
-      links: [
-        { label: 'Últimas Chegadas', href: '/novidades/ultimas' },
-        { label: 'Colecção Primavera 2026', href: '/novidades/primavera-2026' },
-        { label: 'Edições Limitadas', href: '/novidades/edicoes-limitadas' },
-        { label: 'Pré-venda', href: '/novidades/pre-venda' },
-      ],
-    },
-  },
-  {
-    label: 'Homem',
+    label: 'Men',
     href: '/loja/homem',
-    dropdown: {
-      type: 'mega',
-      columns: [
-        {
-          title: 'Por Colecção',
-          links: [
-            { label: 'Todas as Meias', href: '/loja/homem' },
-            { label: 'Clássica', href: '/loja/homem/classica' },
-            { label: 'Executive', href: '/loja/homem/executive' },
-            { label: 'Sport & Casual', href: '/loja/homem/sport' },
-            { label: 'Edições Limitadas', href: '/loja/homem/edicoes-limitadas' },
-          ],
-        },
-        {
-          title: 'Por Material',
-          links: [
-            { label: "Fil d'Écosse", href: '/loja/homem?material=fil-ecosse' },
-            { label: 'Lã Merino', href: '/loja/homem?material=merino' },
-            { label: 'Seda', href: '/loja/homem?material=seda' },
-            { label: 'Algodão Pima', href: '/loja/homem?material=pima' },
-            { label: 'Cashmere', href: '/loja/homem?material=cashmere' },
-          ],
-        },
-        {
-          title: 'Por Corte',
-          links: [
-            { label: 'Mid-Calf', href: '/loja/homem?corte=mid-calf' },
-            { label: 'Over-the-Calf', href: '/loja/homem?corte=over-calf' },
-            { label: 'Invisível', href: '/loja/homem?corte=invisivel' },
-            { label: 'Casa', href: '/loja/homem?corte=casa' },
-          ],
-        },
-      ],
-      editorial: {
-        overline: 'THE',
-        headline: 'Executive',
-        sublinha: 'COLLECTION',
-        body: 'Meias de gentleman para momentos que exigem presença.',
-        ctaLabel: 'Descobrir Homem',
-        ctaHref: '/loja/homem/executive',
-      },
-    },
+    dropdown: { type: 'mega', columns: genderColumns('homem') },
   },
   {
-    label: 'Mulher',
+    label: 'Woman',
     href: '/loja/mulher',
-    dropdown: {
-      type: 'mega',
-      columns: [
-        {
-          title: 'Por Colecção',
-          links: [
-            { label: 'Todas as Meias', href: '/loja/mulher' },
-            { label: 'Clássica', href: '/loja/mulher/classica' },
-            { label: 'Essentials', href: '/loja/mulher/essentials' },
-            { label: 'Edições Limitadas', href: '/loja/mulher/edicoes-limitadas' },
-          ],
-        },
-        {
-          title: 'Por Material',
-          links: [
-            { label: "Fil d'Écosse", href: '/loja/mulher?material=fil-ecosse' },
-            { label: 'Lã Merino', href: '/loja/mulher?material=merino' },
-            { label: 'Seda', href: '/loja/mulher?material=seda' },
-            { label: 'Cashmere', href: '/loja/mulher?material=cashmere' },
-          ],
-        },
-        {
-          title: 'Por Estilo',
-          links: [
-            { label: 'Discreta', href: '/loja/mulher?estilo=discreta' },
-            { label: 'Midi', href: '/loja/mulher?estilo=midi' },
-            { label: 'Acima do Joelho', href: '/loja/mulher?estilo=joelho' },
-            { label: 'Casa', href: '/loja/mulher?estilo=casa' },
-            { label: 'Meia-Meia', href: '/loja/mulher?estilo=meia-meia' },
-          ],
-        },
-      ],
-      editorial: {
-        overline: 'COLECÇÃO',
-        headline: 'Mulher',
-        sublinha: 'LION SOCKS',
-        body: 'Refinamento feminino. Conforto absoluto.',
-        ctaLabel: 'Descobrir Mulher',
-        ctaHref: '/loja/mulher',
-      },
-    },
+    dropdown: { type: 'mega', columns: genderColumns('mulher') },
   },
   {
-    label: 'Packs',
+    label: 'Box',
     href: '/packs',
     dropdown: {
       type: 'mega',
       columns: [
         {
-          title: 'Colecções Prontas',
+          title: 'Caixas Curadas',
           links: [
-            { label: 'Todos os Packs', href: '/packs' },
-            { label: 'The Essentials', href: '/packs/essentials', price: '€39' },
-            { label: 'The Connoisseur', href: '/packs/connoisseur', price: '€75' },
-            { label: "The Gentleman's", href: '/packs/gentlemans', price: '€175' },
+            { label: 'Lion Entry Box',      href: '/packs/lion-entry-box',               price: '€24,90' },
+            { label: 'Lion Essentials',     href: '/packs/lion-essentials',              price: '€34,90' },
+            { label: 'Lion Connoisseur',    href: '/packs/lion-connoisseur',             price: '€69,90' },
+            { label: "Lion Gentleman's",    href: '/packs/lion-gentlemans-collection',   price: '€169' },
+            { label: 'Ver Todas as Caixas', href: '/packs' },
           ],
         },
         {
-          title: 'Criar Pack',
+          title: 'Criar a Tua Caixa',
           links: [
             { label: 'Build Your Own', href: '/packs/build-your-own' },
+            { label: 'Caixa de 3',     href: '/packs/build-your-box-3' },
+            { label: 'Caixa de 5',     href: '/packs/build-your-box-5' },
+            { label: 'Caixa de 12',    href: '/packs/build-your-box-12' },
+          ],
+        },
+        {
+          title: 'Por Ocasião',
+          links: [
+            { label: 'Presente',    href: '/packs?ocasiao=presente' },
+            { label: 'Casamento',   href: '/packs?ocasiao=casamento' },
+            { label: 'Natal',       href: '/packs?ocasiao=natal' },
+            { label: 'Corporativo', href: '/packs?ocasiao=corporativo' },
+          ],
+        },
+        {
+          title: 'Embalagem',
+          links: [
+            { label: 'Caixa de Metal',  href: '/packs?embalagem=metal' },
+            { label: 'Caixa Gaveta',    href: '/packs?embalagem=gaveta' },
+            { label: 'Vale-Presente',   href: '/packs/vale-presente' },
           ],
         },
       ],
-      editorial: {
-        overline: 'PACKS &',
-        headline: 'Colecções',
-        sublinha: 'EMBALAGEM PREMIUM',
-        body: 'A experiência começa antes de abrir a caixa.',
-        ctaLabel: 'Ver Packs',
-        ctaHref: '/packs',
-      },
     },
   },
   {
-    label: 'Sale',
-    href: '/sale',
+    label: 'Destaques',
+    href: '/destaques',
     highlight: true,
     dropdown: {
-      type: 'simple',
-      links: [
-        { label: 'Tudo em Saldo', href: '/sale' },
-        { label: 'Homem em Saldo', href: '/sale/homem' },
-        { label: 'Mulher em Saldo', href: '/sale/mulher' },
-        { label: 'Últimas Unidades', href: '/sale/ultimas' },
+      type: 'mega',
+      columns: [
+        {
+          title: 'Novidades',
+          links: [
+            { label: 'Toda a Colecção',           href: '/novidades' },
+            { label: 'Novidades Homem',           href: '/novidades?genero=homem' },
+            { label: 'Novidades Mulher',          href: '/novidades?genero=mulher' },
+            { label: 'Edições Limitadas',         href: '/novidades/edicoes-limitadas' },
+          ],
+        },
+        {
+          title: 'Em Saldo',
+          links: [
+            { label: 'Toda a Selecção',   href: '/sale' },
+            { label: 'Sale Homem',        href: '/sale?genero=homem' },
+            { label: 'Sale Mulher',       href: '/sale?genero=mulher' },
+            { label: 'Últimas Unidades',  href: '/sale/ultimas' },
+          ],
+        },
       ],
     },
+  },
+  {
+    label: 'Sobre Nós',
+    href: '/sobre',
   },
 ]

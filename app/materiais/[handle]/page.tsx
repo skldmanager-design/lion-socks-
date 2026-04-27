@@ -15,6 +15,7 @@ interface Props {
 const materialData = {
   seda: {
     name: 'Seda',
+    family: 'Lello',
     article: 'a',
     tagline: 'O epítome do luxo em meias',
     heroImage: 'https://placehold.co/1920x900/1a0e1a/B8960C?text=Seda&font=playfair-display',
@@ -38,6 +39,7 @@ const materialData = {
   },
   'fil-d-ecosse': {
     name: "Fil d'Écosse",
+    family: 'Ofício',
     article: 'o',
     tagline: 'Tradição têxtil. Leveza e brilho subtil.',
     heroImage: 'https://placehold.co/1920x900/1a2e1a/B8960C?text=Fil+d%27Ecosse&font=playfair-display',
@@ -61,6 +63,7 @@ const materialData = {
   },
   'la-merino': {
     name: 'Lã Merino',
+    family: 'Ribeira',
     article: 'a',
     tagline: 'Conforto termorregulador. Para todas as estações.',
     heroImage: 'https://placehold.co/1920x900/2e2a1a/B8960C?text=La+Merino&font=playfair-display',
@@ -80,6 +83,54 @@ const materialData = {
       { label: 'Durável', desc: 'Fibra elástica que não perde a forma' },
     ],
     collection: 'la-merino',
+    packHref: '/packs',
+  },
+  cashmere: {
+    name: 'Cashmere',
+    family: 'Reserva',
+    article: 'o',
+    tagline: 'A fibra mais fina do mundo',
+    heroImage: 'https://placehold.co/1920x900/2a1a1a/B8960C?text=Cashmere&font=playfair-display',
+    textureImage: 'https://placehold.co/900x700/2a1a1a/B8960C?text=Textura+Cashmere&font=playfair-display',
+    color: '#8B6F47',
+    history: [
+      'O cashmere vem do subpêlo das cabras criadas nos planaltos da Mongólia e do norte da China — onde os invernos chegam a -40°C. Para sobreviverem, estas cabras desenvolvem uma segunda camada de pêlo, extremamente fina e densa, que é recolhida à mão na primavera durante a muda natural.',
+      'Cada cabra produz apenas 150 a 200 gramas de cashmere por ano. Para uma única meia são necessárias múltiplas cabras. Esta escassez não é artificial — é física. É o que justifica o preço e o que torna o cashmere um material de exceção há mais de 500 anos.',
+      'O resultado é uma fibra oito vezes mais isolante que a lã de ovelha e incomparavelmente mais suave. O nosso cashmere — puro ou em blend com merino — é o topo da colecção. Não por ser o mais caro, mas porque quando envolvemos um pé em cashmere numa manhã de inverno, percebemos que não há volta atrás.',
+    ],
+    properties: [
+      { label: '8× mais isolante', desc: 'Que a lã de ovelha comum' },
+      { label: 'Recolha manual', desc: 'Muda natural na primavera' },
+      { label: 'Ultra-fino', desc: 'Abaixo de 19 microns de diâmetro' },
+      { label: 'Termorregulador', desc: 'Quente sem sobreaquecer' },
+      { label: 'Hipoalergénico', desc: 'Sem lanolina, suave na pele' },
+      { label: 'Escasso por natureza', desc: '150-200g por cabra/ano' },
+    ],
+    collection: 'cashmere',
+    packHref: '/packs',
+  },
+  'algodao-penteado': {
+    name: 'Algodão Penteado',
+    family: 'Alma',
+    article: 'o',
+    tagline: 'A base honesta. Sem dramas.',
+    heroImage: 'https://placehold.co/1920x900/1a2a1a/B8960C?text=Algodao+Penteado&font=playfair-display',
+    textureImage: 'https://placehold.co/900x700/1a2a1a/B8960C?text=Textura+Algodao&font=playfair-display',
+    color: '#D5C9B1',
+    history: [
+      'Algodão de fibra longa, penteado — um processo que passa cada fibra por pentes finos que removem as fibras curtas e imperfeições. O que fica é um fio mais uniforme, mais macio, mais durável.',
+      'O algodão penteado não tem o glamour do merino nem o brilho da seda, mas é o material que vestes sem pensar e que nunca te desilude. É a base honesta de um guarda-roupa bem construído — aquele par que usas 200 dias por ano e continua a aguentar-se.',
+      'Não encolhe, não deforma, não perde cor. Tricotado nas nossas máquinas com acabamento hand-linked na biqueira. A essência de uma boa meia: sem ruído, sem compromissos, sem exageros.',
+    ],
+    properties: [
+      { label: 'Fibra longa', desc: 'Mais suave e resistente' },
+      { label: 'Penteado', desc: 'Sem fibras curtas ou imperfeições' },
+      { label: 'Duradouro', desc: 'Lavagem após lavagem' },
+      { label: 'Respirável', desc: 'Absorve humidade naturalmente' },
+      { label: 'Sem compromissos', desc: 'Qualidade que se usa sem pensar' },
+      { label: 'Biqueira artesanal', desc: 'Hand-linked no acabamento' },
+    ],
+    collection: 'algodao-penteado',
     packHref: '/packs',
   },
 } as const
@@ -151,10 +202,10 @@ export default async function MaterialPage({ params }: Props) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pb-14 lg:pb-20 w-full">
           <p className="text-gold text-[10px] tracking-[0.45em] uppercase font-body mb-4">
-            Os Nossos Materiais
+            {data.name}
           </p>
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl text-white mb-4 leading-tight">
-            {data.name}
+            {data.family}
           </h1>
           <p className="text-cream/70 font-body text-base sm:text-lg max-w-lg leading-relaxed">
             {data.tagline}

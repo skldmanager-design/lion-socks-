@@ -177,7 +177,7 @@ export default function BuildYourBox() {
                   </div>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <span className="text-sm font-body font-medium text-green-600">
+                  <span className="text-sm font-body font-medium text-gold">
                     -{box.discount}% desconto
                   </span>
                 </div>
@@ -266,7 +266,7 @@ export default function BuildYourBox() {
               </div>
               <div className="flex justify-between text-sm font-body">
                 <span className="text-gray-500">Desconto ({selectedBox.discount}%)</span>
-                <span className="text-green-600 font-medium">-{formatPrice(savings)}</span>
+                <span className="text-gold font-medium">-{formatPrice(savings)}</span>
               </div>
             </div>
             <div className="flex justify-between items-baseline border-t border-gray-100 pt-3 mb-5">

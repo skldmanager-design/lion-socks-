@@ -1,101 +1,84 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
-const testimonials = [
+const quotes = [
   {
-    quote:
-      'Comprei o pack The Connoisseur para mim próprio há três meses. Agora não consigo usar outra coisa. O fil d\'Écosse é uma revelação.',
+    quote: 'Comprei o pack The Connoisseur para mim próprio. Agora não consigo usar outra coisa. O fio de escócia é uma revelação.',
     name: 'Ricardo M.',
-    title: 'Lisboa',
+    context: 'Lisboa',
   },
   {
-    quote:
-      'Dei as Silk Essential ao meu marido no Natal. Ele disse que foram o melhor presente que alguma vez recebeu. E ele não é pessoa de dizer essas coisas.',
+    quote: 'Dei o Lello Essential ao meu marido no Natal. Disse que foi o melhor presente que alguma vez recebeu.',
     name: 'Ana S.',
-    title: 'Porto',
+    context: 'Porto',
   },
   {
-    quote:
-      'Uso fato todos os dias. As meias eram sempre o elo mais fraco. Com a Lion Socks, esse problema desapareceu. Uso as Merino Executive desde setembro.',
+    quote: 'Uso fato todos os dias. As meias eram sempre o elo mais fraco. Com a Lion Socks, esse problema desapareceu.',
     name: 'João P.',
-    title: 'Braga',
+    context: 'Braga',
   },
 ]
 
 export default function Testimonials() {
   return (
-    <section style={{ background: '#FAF7F2', padding: '100px 0' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-16"
+    <section style={{ background: '#0A0A0A', padding: 'clamp(48px, 7vw, 80px) 0' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+        <p
+          className="text-center font-body uppercase mb-14"
+          style={{
+            fontSize: '11px',
+            letterSpacing: '0.18em',
+            color: '#B8960C',
+            fontWeight: 500,
+          }}
         >
-          <p
-            className="font-body uppercase mb-3"
-            style={{ fontSize: '12px', letterSpacing: '0.15em', color: '#B8960C' }}
-          >
-            Quem Usa
-          </p>
-          <h2
-            className="font-display text-gray-900"
-            style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 400 }}
-          >
-            Palavras de quem sabe
-          </h2>
-        </motion.div>
+          Em voz de quem as usa
+        </p>
 
-        {/* Testimonials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: "easeOut" }}
-              className="relative"
-            >
-              {/* Large quote mark */}
-              <span
-                className="block font-display select-none leading-none mb-4"
+        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '48px' }}>
+          {quotes.map((q) => (
+            <figure key={q.name} className="text-center">
+              {/* Opening mark */}
+              <div
+                aria-hidden
                 style={{
-                  fontSize: '120px',
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: '56px',
+                  lineHeight: 0.4,
                   color: '#B8960C',
-                  opacity: 0.3,
-                  lineHeight: 0.8,
+                  marginBottom: '16px',
                   fontStyle: 'italic',
+                  opacity: 0.6,
                 }}
               >
-                &ldquo;
-              </span>
+                “
+              </div>
 
               <blockquote
-                className="font-display italic text-gray-700 mb-6 max-w-sm"
-                style={{ fontSize: '18px', fontWeight: 400, lineHeight: 1.6 }}
+                style={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(16px, 1.5vw, 18px)',
+                  color: '#E8E5DF',
+                  lineHeight: 1.65,
+                  marginBottom: '20px',
+                  fontWeight: 400,
+                }}
               >
-                {t.quote}
+                {q.quote}
               </blockquote>
 
-              <div className="flex items-center gap-3">
-                <div className="h-px w-6" style={{ background: 'rgba(184,150,12,0.5)' }} />
-                <div>
-                  <p
-                    className="font-body uppercase text-gray-900"
-                    style={{ fontSize: '12px', letterSpacing: '0.1em', fontWeight: 500 }}
-                  >
-                    {t.name}
-                  </p>
-                  <p className="font-body text-gray-400" style={{ fontSize: '12px' }}>
-                    {t.title}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              <figcaption
+                className="font-body uppercase"
+                style={{
+                  fontSize: '10px',
+                  letterSpacing: '0.18em',
+                  color: 'rgba(245,243,238,0.55)',
+                  fontWeight: 500,
+                }}
+              >
+                {q.name} · {q.context}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

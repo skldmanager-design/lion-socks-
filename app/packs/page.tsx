@@ -6,20 +6,20 @@ import BuildYourBox from '@/components/packs/BuildYourBox'
 export const metadata: Metadata = {
   title: 'Packs',
   description:
-    'Packs de meias premium Lion Socks em embalagem exclusiva. Escolha um pack curado ou monte a sua própria caixa com desconto até 19%.',
+    'Packs de meias premium Lion Socks em embalagem exclusiva. Quatro selecções curadas, cada uma com a nossa embalagem de apresentação.',
 }
 
 export default function PacksPage() {
   const bundles = getFeaturedBundles()
 
   return (
-    <div>
-      {/* Hero */}
+    <div style={{ background: '#0A0A0A' }}>
+      {/* Hero — editorial */}
       <div
         className="flex items-center justify-center text-center"
         style={{
           background: '#0a0a0a',
-          paddingTop: '48px',
+          paddingTop: '72px',
           paddingBottom: '64px',
           paddingLeft: '24px',
           paddingRight: '24px',
@@ -28,28 +28,29 @@ export default function PacksPage() {
         <div className="max-w-2xl">
           <p
             className="font-body uppercase mb-4"
-            style={{ fontSize: '12px', letterSpacing: '0.15em', color: '#B8960C', fontWeight: 500 }}
+            style={{ fontSize: '11px', letterSpacing: '0.18em', color: '#B8960C', fontWeight: 500 }}
           >
-            EMBALAGEM PREMIUM
+            Embalagem Premium
           </p>
           <h1
-            className="font-display text-white mb-5"
-            style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 400 }}
+            className="font-display text-white mb-4"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}
           >
-            Packs & Coleções
+            Lion Box
           </h1>
+          <div style={{ width: '40px', height: '1px', background: '#B8960C', margin: '20px auto' }} />
           <p
             className="font-body mx-auto"
             style={{
-              fontSize: '15px',
+              fontSize: '14px',
               fontWeight: 300,
-              color: 'rgba(255,255,255,0.6)',
+              color: 'rgba(255,255,255,0.65)',
               maxWidth: '480px',
-              lineHeight: 1.8,
+              lineHeight: 1.75,
             }}
           >
-            A experiência começa antes de abrir a caixa. Packs fixos com curadoria da equipa Lion Socks,
-            ou monte a sua própria caixa com os pares que mais gosta — sempre com desconto.
+            A experiência começa antes de abrir a caixa. Quatro selecções curadas,
+            cada uma com a nossa embalagem de apresentação.
           </p>
         </div>
       </div>
@@ -59,14 +60,11 @@ export default function PacksPage() {
         <section className="mb-20 lg:mb-28 pt-16 lg:pt-20">
           <div className="flex items-baseline gap-3 mb-8">
             <h2 className="font-display text-gray-900" style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 400 }}>
-              Packs Curados
-            </h2>
-            <p className="font-body text-gray-400" style={{ fontSize: '14px', fontWeight: 300 }}>
               Seleccionados pela equipa
-            </p>
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {bundles.map((bundle) => (
               <PackCard key={bundle.id} bundle={bundle} featured />
             ))}
@@ -76,12 +74,12 @@ export default function PacksPage() {
         {/* What's inside the box */}
         <section
           className="mb-20 lg:mb-28 py-12 lg:py-16 px-6 lg:px-12"
-          style={{ background: '#FAF7F2' }}
+          style={{ background: '#F5F3EE' }}
         >
           <div className="max-w-3xl mx-auto text-center">
             <p
               className="font-body uppercase mb-3"
-              style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#B8960C' }}
+              style={{ fontSize: '11px', letterSpacing: '0.18em', color: '#B8960C' }}
             >
               A Embalagem
             </p>

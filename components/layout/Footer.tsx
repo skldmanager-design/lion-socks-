@@ -1,167 +1,304 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Lock, Truck, RotateCcw, Shield } from 'lucide-react'
 import NewsletterForm from './NewsletterForm'
+import PortugalFlag from '@/components/ui/PortugalFlag'
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
 
 const footerLinks = {
-  loja: [
-    { label: 'Loja', href: '/loja' },
+  colecoes: [
+    { label: 'Ribeira · Merino', href: '/colecoes/ribeira' },
+    { label: 'Ofício · Fio de Escócia', href: '/colecoes/oficio' },
+    { label: 'Lello · Seda', href: '/colecoes/lello' },
+    { label: 'Reserva · Cashmere', href: '/colecoes/reserva' },
+    { label: 'Alma · Algodão Penteado', href: '/colecoes/alma' },
     { label: 'Packs', href: '/packs' },
-    { label: 'Sobre', href: '/sobre' },
-    { label: 'Contacto', href: '/contacto' },
-    { label: "The Lion's Circle", href: '/lions-circle' },
   ],
-  materiais: [
-    { label: 'Seda', href: '/materiais/seda' },
-    { label: "Fil d'Écosse", href: '/materiais/fil-d-ecosse' },
-    { label: 'Lã Merino', href: '/materiais/la-merino' },
-  ],
-  apoio: [
-    { label: 'Envios & Devoluções', href: '/envios' },
+  informacao: [
+    { label: 'Sobre Nós', href: '/sobre' },
+    { label: 'O Nosso Processo', href: '/craft' },
+    { label: 'Guia de Materiais', href: '/guide' },
+    { label: 'Guia de Cuidados', href: '/cuidados' },
     { label: 'Guia de Tamanhos', href: '/guia-tamanhos' },
-    { label: 'Política de Privacidade', href: '/privacidade' },
+    { label: 'Envios & Devoluções', href: '/envios' },
     { label: 'FAQ', href: '/faq' },
+  ],
+  legal: [
+    { label: 'Política de Privacidade', href: '/privacidade' },
+    { label: 'Política de Cookies', href: '/cookies' },
+    { label: 'Termos & Condições', href: '/termos' },
+    { label: 'Livro de Reclamações', href: 'https://www.livroreclamacoes.pt', external: true },
   ],
 }
 
 const colHeadStyle = {
-  fontSize: '11px',
+  fontSize: 'clamp(9px, 1vw, 11px)',
   letterSpacing: '0.08em',
   textTransform: 'uppercase' as const,
   fontWeight: 500,
   color: '#B8960C',
-  marginBottom: '16px',
+  marginBottom: 'clamp(8px, 1.5vw, 16px)',
   display: 'block',
 }
 
 const linkStyle = {
-  fontSize: '14px',
-  color: '#6B6B6B',
+  fontSize: 'clamp(11px, 1.4vw, 14px)',
+  color: '#5A5A5A',
 }
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#0a0a0a', borderTop: '1px solid rgba(184,150,12,0.15)' }}>
+    <footer style={{ background: '#F5F3EE', borderTop: '1px solid rgba(184,150,12,0.18)' }}>
       {/* Main footer */}
       <div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12"
-        style={{ paddingTop: '80px', paddingBottom: '40px' }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 footer-main"
+        style={{ paddingTop: 'clamp(28px, 5vw, 80px)', paddingBottom: 'clamp(20px, 3vw, 40px)' }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-12 footer-grid" style={{ gap: 'clamp(16px, 3vw, 40px)' }}>
 
-          {/* Brand column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-5">
-              <Image
-                src="/lion_socks_brand_kit/01_logo_principal/logo_completo_transparente_1000h.png"
-                alt="Lion Socks"
-                width={528}
-                height={1000}
-                className="h-[48px] w-auto"
-              />
+          {/* Brand column — full-width compact em mobile */}
+          <div className="col-span-2 lg:col-span-3 footer-brand">
+            <Link
+              href="/"
+              className="inline-block footer-brand-name"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: 'clamp(15px, 1.8vw, 20px)',
+                fontWeight: 500,
+                color: '#0A0A0A',
+                textDecoration: 'none',
+                letterSpacing: '0.02em',
+              }}
+            >
+              Lion Socks
             </Link>
             <p
-              className="font-body leading-relaxed max-w-xs"
-              style={{ fontSize: '14px', fontWeight: 300, color: '#6B6B6B' }}
+              className="font-body footer-brand-tagline"
+              style={{ fontSize: 'clamp(11px, 1.3vw, 13px)', color: '#6B6B6B', lineHeight: 1.5, maxWidth: '260px' }}
             >
-              Meias premium em seda, fil d&apos;Écosse e lã merino.
-              Elegância que se nota nos detalhes.
+              Feitas no Porto. Para quem repara nos detalhes.
             </p>
+          </div>
 
-            {/* Social */}
-            <div className="flex items-center gap-4 mt-6">
-              <a href="#" aria-label="Instagram" className="transition-colors hover:text-gold" style={{ color: '#6B6B6B' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <circle cx="12" cy="12" r="4"/>
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-                </svg>
-              </a>
-              <a href="#" aria-label="Pinterest" className="transition-colors hover:text-gold" style={{ color: '#6B6B6B' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.22-5.17 1.22-5.17s-.31-.62-.31-1.54c0-1.45.84-2.53 1.88-2.53.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.54 1.88 1.85 0 3.27-1.95 3.27-4.76 0-2.49-1.79-4.23-4.34-4.23-2.96 0-4.7 2.22-4.7 4.51 0 .89.34 1.85.77 2.37.08.1.09.19.07.29-.08.32-.25 1.04-.28 1.18-.04.19-.14.23-.32.14-1.25-.58-2.03-2.42-2.03-3.89 0-3.15 2.29-6.05 6.61-6.05 3.47 0 6.16 2.47 6.16 5.77 0 3.44-2.17 6.21-5.18 6.21-1.01 0-1.97-.53-2.3-1.15l-.62 2.33c-.23.87-.84 1.96-1.25 2.62.94.29 1.94.45 2.97.45 5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
-                </svg>
-              </a>
+          {/* Colecções */}
+          <div className="lg:col-span-3">
+            <span className="font-body" style={colHeadStyle}>Colecções</span>
+            <ul className="footer-link-list">
+              {footerLinks.colecoes.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-body transition-colors hover:text-gold gold-underline"
+                    style={linkStyle}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Informação */}
+          <div className="lg:col-span-3">
+            <span className="font-body" style={colHeadStyle}>Informação</span>
+            <ul className="footer-link-list footer-link-list-mb">
+              {footerLinks.informacao.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-body transition-colors hover:text-gold gold-underline"
+                    style={linkStyle}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <span className="font-body" style={colHeadStyle}>Legal</span>
+            <ul className="footer-link-list">
+              {footerLinks.legal.map((link) => (
+                <li key={link.href}>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-body transition-colors hover:text-gold gold-underline"
+                      style={linkStyle}
+                    >
+                      {link.label} ↗
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="font-body transition-colors hover:text-gold gold-underline"
+                      style={linkStyle}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contacto + Newsletter + Pledge — full-width em mobile */}
+          <div className="col-span-2 lg:col-span-3 footer-last-col">
+            <div className="footer-last-grid">
+              <div className="footer-contacto">
+                <span className="font-body" style={colHeadStyle}>Contacto</span>
+                <ul className="footer-link-list">
+                  <li>
+                    <a
+                      href="mailto:hello@lionsocks.com"
+                      className="font-body transition-colors hover:text-gold gold-underline"
+                      style={linkStyle}
+                    >
+                      hello@lionsocks.com
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://instagram.com/lionsocks"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-body transition-colors hover:text-gold gold-underline"
+                      style={linkStyle}
+                    >
+                      @lionsocks
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="footer-newsletter-head">
+                <span className="font-body" style={colHeadStyle}>Newsletter</span>
+                <p
+                  className="font-body leading-relaxed"
+                  style={{ fontSize: 'clamp(11px, 1.3vw, 13px)', fontWeight: 300, color: '#6B6B6B', marginBottom: 'clamp(6px, 1.5vw, 16px)' }}
+                >
+                  Novidades e acesso antecipado.
+                </p>
+              </div>
             </div>
-          </div>
 
-          {/* Loja links */}
-          <div>
-            <span className="font-body" style={colHeadStyle}>Loja</span>
-            <ul className="space-y-3">
-              {footerLinks.loja.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body transition-colors hover:text-gold"
-                    style={linkStyle}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="footer-newsletter-form">
+              <NewsletterForm />
+            </div>
 
-          {/* Materiais + Apoio links */}
-          <div>
-            <span className="font-body" style={colHeadStyle}>Materiais</span>
-            <ul className="space-y-3 mb-8">
-              {footerLinks.materiais.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body transition-colors hover:text-gold"
-                    style={linkStyle}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <span className="font-body" style={colHeadStyle}>Apoio</span>
-            <ul className="space-y-3">
-              {footerLinks.apoio.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body transition-colors hover:text-gold"
-                    style={linkStyle}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <span className="font-body" style={colHeadStyle}>Newsletter</span>
             <p
-              className="font-body mb-5 leading-relaxed"
-              style={{ fontSize: '14px', fontWeight: 300, color: '#6B6B6B' }}
+              className="font-body italic footer-pledge"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: 'clamp(11px, 1.3vw, 13px)',
+                color: '#B8960C',
+                lineHeight: 1.5,
+                borderTop: '1px solid rgba(184,150,12,0.2)',
+                paddingTop: 'clamp(10px, 1.5vw, 16px)',
+                marginTop: 'clamp(10px, 2vw, 24px)',
+              }}
             >
-              Novidades, lançamentos e acesso antecipado.
+              Nunca fazemos saldos. O nosso preço é o preço justo, todo o ano.
             </p>
-            <NewsletterForm dark />
+          </div>
+        </div>
+      </div>
+
+      {/* Payment methods + trust */}
+      <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12" style={{ paddingTop: 'clamp(14px, 2vw, 24px)', paddingBottom: 'clamp(14px, 2vw, 24px)' }}>
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 mb-4">
+            {[
+              // Card-style art (each SVG already includes its own colored background, ratio ~5:3)
+              { name: 'Visa',        src: '/payment-icons/visa.svg',         card: true },
+              { name: 'Mastercard',  src: '/payment-icons/mastercard.svg',   card: true },
+              { name: 'PayPal',      src: '/payment-icons/paypal.svg',       card: true },
+              // Icon-only — placed inside a white chip for visual parity with the cards
+              { name: 'Multibanco',  src: '/payment-icons/multibanco.svg',   card: false },
+              { name: 'MB WAY',      src: '/payment-icons/mbway.svg',        card: false },
+              { name: 'Apple Pay',   src: '/payment-icons/applepay.svg',     card: false },
+              { name: 'Google Pay',  src: '/payment-icons/googlepay.svg',    card: false },
+            ].map((m) =>
+              m.card ? (
+                <Image
+                  key={m.name}
+                  src={m.src}
+                  alt={m.name}
+                  width={50}
+                  height={32}
+                  style={{
+                    height: '32px',
+                    width: '50px',
+                    borderRadius: '5px',
+                    border: '1px solid rgba(10,10,10,0.08)',
+                    boxShadow: '0 1px 2px rgba(10,10,10,0.04)',
+                  }}
+                  unoptimized
+                />
+              ) : (
+                <span
+                  key={m.name}
+                  aria-label={m.name}
+                  style={{
+                    height: '32px',
+                    width: '50px',
+                    padding: '6px 10px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: '#FFFFFF',
+                    borderRadius: '5px',
+                    border: '1px solid rgba(10,10,10,0.08)',
+                    boxShadow: '0 1px 2px rgba(10,10,10,0.04)',
+                  }}
+                >
+                  <Image
+                    src={m.src}
+                    alt={m.name}
+                    width={40}
+                    height={20}
+                    style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }}
+                    unoptimized
+                  />
+                </span>
+              ),
+            )}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-body" style={{ color: '#6B6B6B' }}>
+            {[
+              { Icon: Lock, text: 'Pagamento seguro SSL' },
+              { Icon: Truck, text: `Envio grátis +€${FREE_SHIPPING_THRESHOLD}` },
+              { Icon: RotateCcw, text: 'Devolução em 30 dias' },
+              { Icon: Shield, text: 'Garantia de qualidade' },
+            ].map(({ Icon, text }) => (
+              <span key={text} className="flex items-center gap-1.5">
+                <Icon size={12} strokeWidth={1.5} style={{ color: '#B8960C' }} />
+                {text}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: '1px solid #2A2A2A' }}>
-        <div
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-3"
-        >
-          <p className="font-body" style={{ fontSize: '12px', color: '#6B6B6B' }}>
-            © {new Date().getFullYear()} Lion Socks. Todos os direitos reservados.
-          </p>
-          <p className="font-body" style={{ fontSize: '12px', color: '#6B6B6B' }}>
-            Made in Portugal
+      <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12" style={{ paddingTop: 'clamp(12px, 2vw, 24px)', paddingBottom: 'clamp(12px, 2vw, 24px)' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3 mb-2">
+            <p className="font-body" style={{ fontSize: 'clamp(10px, 1.2vw, 12px)', color: '#6B6B6B' }}>
+              © {new Date().getFullYear()} Lion Socks. Todos os direitos reservados.
+            </p>
+            <p className="font-body flex items-center gap-2" style={{ fontSize: 'clamp(10px, 1.2vw, 12px)', color: '#B8960C' }}>
+              <PortugalFlag width={18} height={12} />
+              Feitas em Portugal
+            </p>
+          </div>
+          <p className="font-body text-center" style={{ fontSize: 'clamp(9px, 1vw, 10px)', color: 'rgba(10,10,10,0.4)' }}>
+            Lion Socks é uma marca operada por Valsport, Lda. · Porto, Portugal
           </p>
         </div>
       </div>
     </footer>
   )
 }
+

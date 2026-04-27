@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
-import { X, ChevronDown } from 'lucide-react'
+import { X, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navigation, type NavItem } from '@/lib/navigation'
 
@@ -12,8 +12,6 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
-  const [expanded, setExpanded] = useState<string | null>(null)
-
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
@@ -29,14 +27,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     return () => window.removeEventListener('keydown', handleKey)
   }, [isOpen, onClose])
 
-  const toggle = (label: string) => {
-    setExpanded((prev) => (prev === label ? null : label))
-  }
-
-  const closeAll = () => {
-    setExpanded(null)
-    onClose()
-  }
+  const closeAll = () => onClose()
 
   return (
     <>
@@ -61,74 +52,71 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         style={{
-          width: 'min(340px, 100vw)',
+          width: 'min(280px, 65vw)',
           background: '#0A0A0A',
           borderRight: '1px solid #2A2A2A',
         }}
       >
-        {/* Header */}
+        {/* Top — Account link with user icon (no LION SOCKS text) */}
         <div
-          className="flex items-center justify-between px-6"
-          style={{ height: '72px', borderBottom: '1px solid #2A2A2A' }}
+          className="flex items-center justify-between"
+          style={{ padding: '14px 18px', borderBottom: '1px solid #2A2A2A' }}
         >
           <Link
-            href="/"
+            href="/conta"
             onClick={closeAll}
+            className="flex items-center"
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: '18px',
+              gap: '10px',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '12px',
               fontWeight: 500,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
               color: '#F5F3EE',
-              letterSpacing: '0.08em',
               textDecoration: 'none',
             }}
           >
-            LION SOCKS
+            <User size={14} strokeWidth={1.5} />
+            <span style={{ fontSize: '11px' }}>Iniciar sessão</span>
           </Link>
           <button
             onClick={onClose}
-            className="p-1 hover:text-gold"
-            style={{ color: '#F5F3EE', transition: 'color 200ms ease' }}
+            className="hover:text-gold"
+            style={{ color: '#F5F3EE', transition: 'color 200ms ease', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
             aria-label="Fechar menu"
           >
-            <X size={22} strokeWidth={1.5} />
+            <X size={20} strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Nav list */}
         <nav className="flex-1 overflow-y-auto">
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <li style={{ borderBottom: '1px solid #2A2A2A' }}>
+              <Link
+                href="/"
+                onClick={closeAll}
+                style={{
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  color: '#F5F3EE',
+                  textDecoration: 'none',
+                  display: 'block',
+                  padding: '14px 18px',
+                }}
+              >
+                Página inicial
+              </Link>
+            </li>
             {navigation.map((item) => (
-              <MobileNavItem
-                key={item.label}
-                item={item}
-                isExpanded={expanded === item.label}
-                onToggle={() => toggle(item.label)}
-                onLinkClick={closeAll}
-              />
+              <MobileNavItem key={item.label} item={item} onLinkClick={closeAll} />
             ))}
           </ul>
         </nav>
-
-        {/* Footer */}
-        <div
-          style={{
-            padding: '20px 24px',
-            borderTop: '1px solid #2A2A2A',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '11px',
-              color: '#6B6B6B',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-            }}
-          >
-            Envio gratuito acima de €45
-          </p>
-        </div>
       </div>
     </>
   )
@@ -138,17 +126,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
 interface MobileNavItemProps {
   item: NavItem
-  isExpanded: boolean
-  onToggle: () => void
   onLinkClick: () => void
 }
 
-function MobileNavItem({ item, isExpanded, onToggle, onLinkClick }: MobileNavItemProps) {
-  const hasDropdown = !!item.dropdown
-
+function MobileNavItem({ item, onLinkClick }: MobileNavItemProps) {
   const labelStyle: React.CSSProperties = {
     fontFamily: "'Inter', system-ui, sans-serif",
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: 500,
     textTransform: 'uppercase',
     letterSpacing: '0.08em',
@@ -157,7 +141,7 @@ function MobileNavItem({ item, isExpanded, onToggle, onLinkClick }: MobileNavIte
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '18px 24px',
+    padding: '14px 18px',
     background: 'none',
     border: 'none',
     width: '100%',
@@ -165,100 +149,12 @@ function MobileNavItem({ item, isExpanded, onToggle, onLinkClick }: MobileNavIte
     transition: 'color 200ms ease',
   }
 
-  if (!hasDropdown) {
-    return (
-      <li style={{ borderBottom: '1px solid #2A2A2A' }}>
-        <Link href={item.href} onClick={onLinkClick} style={labelStyle}>
-          {item.label.toUpperCase()}
-        </Link>
-      </li>
-    )
-  }
-
+  // Mobile: cada tópico vai directamente para a sua página, sem accordion.
   return (
     <li style={{ borderBottom: '1px solid #2A2A2A' }}>
-      <button onClick={onToggle} style={labelStyle} aria-expanded={isExpanded}>
-        <span>{item.label.toUpperCase()}</span>
-        <ChevronDown
-          size={14}
-          strokeWidth={1.5}
-          style={{
-            transition: 'transform 200ms ease',
-            transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-          }}
-        />
-      </button>
-
-      {isExpanded && item.dropdown && (
-        <div style={{ padding: '0 24px 20px 24px' }}>
-          {item.dropdown.type === 'simple' ? (
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {item.dropdown.links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={onLinkClick}
-                    style={{
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontSize: '14px',
-                      color: '#F5F3EE',
-                      textDecoration: 'none',
-                      display: 'block',
-                      padding: '10px 0',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            item.dropdown.columns.map((col) => (
-              <div key={col.title} style={{ marginBottom: '20px' }}>
-                <h4
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.12em',
-                    color: '#B8960C',
-                    marginBottom: '10px',
-                  }}
-                >
-                  {col.title}
-                </h4>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {col.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={onLinkClick}
-                        style={{
-                          fontFamily: "'Inter', system-ui, sans-serif",
-                          fontSize: '14px',
-                          color: '#F5F3EE',
-                          textDecoration: 'none',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          padding: '8px 0',
-                        }}
-                      >
-                        <span>{link.label}</span>
-                        {link.price && (
-                          <span style={{ color: '#B8960C', fontWeight: 500 }}>
-                            {link.price}
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          )}
-        </div>
-      )}
+      <Link href={item.href} onClick={onLinkClick} style={labelStyle}>
+        {item.label.toUpperCase()}
+      </Link>
     </li>
   )
 }

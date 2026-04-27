@@ -1,30 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-git)",
-      "Read(//c/Users/Utilizador/OneDrive/Desktop/**)",
-      "Bash(npx create-next-app@latest lion-socks-temp --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-git)",
-      "Bash(npx create-next-app@latest lion-socks-temp --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-git --yes)",
-      "Bash(cp:*)",
-      "Bash(npm install:*)",
-      "Bash(npx tsc:*)",
-      "Bash(node -e \"const luc = require\\(''lucide-react''\\); console.log\\(Object.keys\\(luc\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''instagram''\\) || k.toLowerCase\\(\\).includes\\(''facebook''\\) || k.toLowerCase\\(\\).includes\\(''twitter''\\)\\)\\)\")",
-      "Bash(npm run:*)",
-      "Bash(python3 -c \":*)",
-      "Bash(python -c \":*)",
-      "Bash(node scripts/generate-placeholders.js)",
-      "Bash(KIT=\"C:/Users/Utilizador/OneDrive/Desktop/lion socks/lion_socks_brand_kit/lion_socks_brand_kit\")",
-      "Bash(PUBLIC=\"C:/Users/Utilizador/OneDrive/Desktop/lion socks/public\")",
-      "Bash(APP=\"C:/Users/Utilizador/OneDrive/Desktop/lion socks/app\")",
-      "Bash(__NEW_LINE_7b8d493733fef819__ cp:*)",
-      "Bash(cp \"$KIT/04_favicon/favicon_32x32.png\" \"$APP/icon.png\")",
-      "Bash(pkill -f \"next dev\")",
-      "Bash(npx kill-port:*)",
-      "Bash(pkill -f \"next\")",
-      "Bash(rm -rf .next)",
-      "Bash(\"/c/Users/Utilizador/OneDrive/Desktop/lion socks/.onedriveignore\")",
-      "Bash(cd:*)",
-      "Bash(netstat -ano)"
-    ]
-  }
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Agent(*)",
+      "mcp__playwright__*"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
 }

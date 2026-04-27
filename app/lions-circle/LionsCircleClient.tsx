@@ -147,7 +147,7 @@ export default function LionsCircleClient() {
                   />
                 </div>
                 {error && (
-                  <p className="font-body mt-2" style={{ fontSize: '12px', color: '#ff6b6b' }}>
+                  <p className="font-body mt-2" style={{ fontSize: '12px', color: '#B8960C' }}>
                     {error}
                   </p>
                 )}

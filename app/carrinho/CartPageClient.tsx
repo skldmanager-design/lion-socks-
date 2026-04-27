@@ -23,7 +23,7 @@ function FreeShippingBar({
     <div className="bg-gray-100 px-4 sm:px-6 py-4">
       <div className="max-w-7xl mx-auto">
         {hasFreeShipping ? (
-          <div className="flex items-center gap-2 text-green-600 text-sm font-body">
+          <div className="flex items-center gap-2 text-gold text-sm font-body">
             <CheckCircle2 size={16} />
             <span>Parabéns! Tem <strong>envio gratuito</strong>.</span>
           </div>
@@ -64,7 +64,7 @@ export default function CartPageClient() {
     if (checkoutUrl) {
       window.location.href = checkoutUrl
     } else {
-      alert('Configure a integração Shopify para activar o checkout.')
+      window.location.href = '/checkout'
     }
   }
 
@@ -223,7 +223,7 @@ export default function CartPageClient() {
             </div>
 
             {/* Pack upsell */}
-            {subtotal < 45 && (
+            {subtotal < FREE_SHIPPING_THRESHOLD && (
               <div className="mt-10 p-6 bg-cream border border-gray-200">
                 <div className="flex items-center gap-2 mb-4">
                   <Package size={16} className="text-gold" />
@@ -290,7 +290,7 @@ export default function CartPageClient() {
                 </div>
                 <div className="flex justify-between text-sm font-body">
                   <span className="text-gray-600">Envio</span>
-                  <span className={hasFreeShipping ? 'text-green-600 font-medium' : 'text-gray-900'}>
+                  <span className={hasFreeShipping ? 'text-gold font-medium' : 'text-gray-900'}>
                     {hasFreeShipping ? 'Gratuito' : '€3,50'}
                   </span>
                 </div>

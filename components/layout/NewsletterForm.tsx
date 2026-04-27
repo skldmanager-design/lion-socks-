@@ -4,19 +4,37 @@ import { useState } from 'react'
 
 export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
-      setSubmitted(true)
+    if (!email) return
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus('success')
+        setMessage(data.message || 'Obrigado!')
+      } else {
+        setStatus('error')
+        setMessage(data.error || 'Erro')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Erro de ligação. Tente novamente.')
     }
   }
 
-  if (submitted) {
+  if (status === 'success') {
     return (
       <p className="font-body" style={{ fontSize: '13px', color: '#B8960C' }}>
-        Obrigado! Irá receber as nossas novidades em breve.
+        {message}
       </p>
     )
   }
@@ -41,20 +59,26 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
         />
         <button
           type="submit"
-          className="font-body transition-colors hover:text-gold flex-shrink-0"
+          disabled={status === 'loading'}
+          className="font-body transition-colors hover:text-gold flex-shrink-0 disabled:opacity-50"
           style={{
             fontSize: '18px',
             color: '#B8960C',
             padding: '4px 0 4px 12px',
             background: 'none',
             border: 'none',
-            cursor: 'pointer',
+            cursor: status === 'loading' ? 'wait' : 'pointer',
           }}
           aria-label="Subscrever newsletter"
         >
-          →
+          {status === 'loading' ? '...' : '→'}
         </button>
       </div>
+      {status === 'error' && (
+        <p className="font-body mt-2" style={{ fontSize: '12px', color: '#B8960C' }}>
+          {message}
+        </p>
+      )}
     </form>
   )
 }

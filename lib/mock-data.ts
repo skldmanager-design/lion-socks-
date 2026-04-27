@@ -3,6 +3,8 @@ export type SockType = 'mid-calf' | 'over-the-calf' | 'no-show'
 export type Pattern = 'solid' | 'ribbed' | 'pin-dot' | 'riscas' | 'herringbone' | 'argyle'
 export type Size = '39-42' | '42-45' | '45-48'
 
+export type Gender = 'homem' | 'mulher' | 'unisex'
+
 export interface Product {
   id: string
   handle: string
@@ -22,6 +24,8 @@ export interface Product {
   inStock: boolean
   collections: string[]
   badge?: string
+  gender: Gender
+  editorNote?: string
 }
 
 export interface Bundle {
@@ -50,7 +54,7 @@ export const products: Product[] = [
   {
     id: 'fde-001',
     handle: 'fil-ecosse-classic-preto',
-    name: "Fil d'Écosse Classic Solid",
+    name: "Ofício Classic",
     description:
       "O par essencial de qualquer roupeiro bem cuidado. Tecido em algodão egípcio mercerizado, o Fil d'Écosse Classic oferece um brilho subtil e uma leveza incomparável. Ideal para uso diário com oxford ou derby.",
     price: 15,
@@ -65,12 +69,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-classic-preto'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'essentials', 'novidades'],
+    collections: ['fil-d-ecosse', 'essentials', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-002',
     handle: 'fil-ecosse-classic-marinho',
-    name: "Fil d'Écosse Classic Solid",
+    name: "Ofício Classic",
     description:
       "O azul marinho é a cor mais versátil de um guarda-roupa masculino. Em Fil d'Écosse, ganha uma dimensão extra com o brilho natural do algodão mercerizado. Combina com charcoal, castanho e azul marinho.",
     price: 15,
@@ -85,12 +90,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-classic-marinho'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'essentials', 'novidades'],
+    collections: ['fil-d-ecosse', 'essentials', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-003',
     handle: 'fil-ecosse-classic-charcoal',
-    name: "Fil d'Écosse Classic Solid",
+    name: "Ofício Classic",
     description:
       "O charcoal é a alternativa sofisticada ao preto — mais rico, mais interessante. Em Fil d'Écosse, apresenta uma leveza que surpreende ao toque. A escolha certa para quem quer distinção sem esforço.",
     price: 15,
@@ -105,12 +111,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-classic-charcoal'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'essentials', 'novidades'],
+    collections: ['fil-d-ecosse', 'essentials', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-004',
     handle: 'fil-ecosse-ribbed-preto',
-    name: "Fil d'Écosse Ribbed",
+    name: "Ofício Canelado",
     description:
       "A textura canelada acrescenta profundidade visual sem comprometer a elegância. O padrão ribbed em Fil d'Écosse preto é uma escolha refinada que funciona igualmente bem no escritório ou num jantar.",
     price: 16,
@@ -125,12 +132,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-ribbed-preto'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'novidades'],
+    collections: ['fil-d-ecosse', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-005',
     handle: 'fil-ecosse-ribbed-marinho',
-    name: "Fil d'Écosse Ribbed",
+    name: "Ofício Canelado",
     description:
       "Em azul marinho, o padrão canelado cria um jogo de luz subtil que distingue este par de qualquer outra meia. A textura añade interesse sem quebrar a linha — elegância com detalhe.",
     price: 16,
@@ -145,12 +153,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-ribbed-marinho'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'novidades'],
+    collections: ['fil-d-ecosse', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-006',
     handle: 'fil-ecosse-pin-dot-marinho-creme',
-    name: "Fil d'Écosse Pin Dot",
+    name: "Ofício Pin Dot",
     description:
       "O pin dot é o padrão que separa quem veste bem de quem simplesmente está bem vestido. Fundo azul marinho com pontos creme minúsculos — um detalhe que só se descobre ao olhar de perto.",
     price: 17,
@@ -165,13 +174,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-pin-dot-marinho-creme'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'novidades'],
-    badge: 'Destaque',
+    collections: ['fil-d-ecosse', 'novidades', 'familia:oficio'],
+    badge: 'Destaque', gender: 'homem' as const,
   },
   {
     id: 'fde-007',
     handle: 'fil-ecosse-riscas-charcoal-bordeaux',
-    name: "Fil d'Écosse Riscas Finas",
+    name: "Ofício Riscas Finas",
     description:
       "Riscas finas charcoal sobre bordeaux — uma combinação clássica da tradição sartorial britânica. O bordeaux oferece calor sem ostentação; as riscas mantêm a sobriedade. Para os dias em que se quer personalidade.",
     price: 17,
@@ -186,12 +195,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-riscas-charcoal-bordeaux'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'novidades'],
+    collections: ['fil-d-ecosse', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
   {
     id: 'fde-008',
     handle: 'fil-ecosse-executive-preto',
-    name: "Fil d'Écosse Executive Solid",
+    name: "Ofício Executive",
     description:
       "Over-the-calf para os dias em que os detalhes importam mais. Corte alto que garante que a meia nunca desce, nunca enruga — presença discreta mas inequívoca. Em Fil d'Écosse preto, para o fato mais exigente.",
     price: 18,
@@ -206,13 +216,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-executive-preto'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'executive', 'novidades'],
-    badge: 'Executive',
+    collections: ['fil-d-ecosse', 'executive', 'novidades', 'familia:oficio'],
+    badge: 'Executive', gender: 'homem' as const,
   },
   {
     id: 'fde-009',
     handle: 'fil-ecosse-executive-marinho',
-    name: "Fil d'Écosse Executive Solid",
+    name: "Ofício Executive",
     description:
       "O mesmo corte impecável do Executive, em azul marinho. Para o fato navy ou o blazer sport com calças de flanela. Uma meia que sobe sem baixar — na qualidade e na posição.",
     price: 18,
@@ -227,13 +237,13 @@ export const products: Product[] = [
     images: img('fil-ecosse-executive-marinho'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'executive', 'novidades'],
-    badge: 'Executive',
+    collections: ['fil-d-ecosse', 'executive', 'novidades', 'familia:oficio'],
+    badge: 'Executive', gender: 'homem' as const,
   },
   {
     id: 'fde-010',
     handle: 'fil-ecosse-invisible-no-show',
-    name: "Fil d'Écosse Invisible",
+    name: "Ofício Invisible",
     description:
       "A discrição absoluta. Corte no-show em Fil d'Écosse — tão leve que nem se sente, mas presente onde importa. Ideal para sapatilha, loafer ou mocassim sem meia aparente. Disponível em preto e creme.",
     price: 13,
@@ -248,7 +258,8 @@ export const products: Product[] = [
     images: img('fil-ecosse-invisible-no-show'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['fil-d-ecosse', 'novidades'],
+    collections: ['fil-d-ecosse', 'novidades', 'familia:oficio'],
+    gender: 'homem' as const,
   },
 
   // ─── Linha Lã Merino ─────────────────────────────────────────────────
@@ -256,7 +267,7 @@ export const products: Product[] = [
   {
     id: 'mer-011',
     handle: 'merino-classic-charcoal',
-    name: 'Merino Classic',
+    name: 'Ribeira Classic',
     description:
       'Lã merino ultrafina de 18,5 microns — abaixo do limiar de picada. O charcoal em merino tem uma profundidade que o algodão não consegue replicar: quente no inverno, mais fresco do que parece. Para usar o ano inteiro.',
     price: 19,
@@ -271,12 +282,13 @@ export const products: Product[] = [
     images: img('merino-classic-charcoal'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'essentials', 'novidades'],
+    collections: ['la-merino', 'essentials', 'novidades', 'familia:ribeira'],
+    gender: 'homem' as const,
   },
   {
     id: 'mer-012',
     handle: 'merino-classic-camel',
-    name: 'Merino Classic',
+    name: 'Ribeira Classic',
     description:
       'O camel é a cor da temporada que nunca envelhece. Em lã merino, apresenta uma riqueza tonal que muda com a luz — quase vivo. Combina naturalmente com charcoal, navy e bordeaux.',
     price: 19,
@@ -291,13 +303,13 @@ export const products: Product[] = [
     images: img('merino-classic-camel'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'essentials', 'novidades'],
-    badge: 'Favorito',
+    collections: ['la-merino', 'essentials', 'novidades', 'familia:ribeira'],
+    badge: 'Favorito', gender: 'homem' as const,
   },
   {
     id: 'mer-013',
     handle: 'merino-classic-verde-garrafa',
-    name: 'Merino Classic',
+    name: 'Ribeira Classic',
     description:
       'Verde garrafa — a cor que se atribui aos britânicos mas que é universal na elegância. Em merino, tem uma saturação rica e maturidade. Para quem não tem medo de cor, mas a usa com medida.',
     price: 19,
@@ -312,12 +324,13 @@ export const products: Product[] = [
     images: img('merino-classic-verde-garrafa'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'essentials', 'novidades'],
+    collections: ['la-merino', 'essentials', 'novidades', 'familia:ribeira'],
+    gender: 'homem' as const,
   },
   {
     id: 'mer-014',
     handle: 'merino-herringbone-bordeaux',
-    name: 'Merino Herringbone',
+    name: 'Ribeira Herringbone',
     description:
       'O padrão espinha de peixe em lã merino bordeaux — textura e cor que se complementam numa combinação de inverno sofisticada. Visível ao olhar de perto; discreto à distância. Assim deve ser.',
     price: 21,
@@ -332,13 +345,13 @@ export const products: Product[] = [
     images: img('merino-herringbone-bordeaux'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'novidades'],
-    badge: 'Destaque',
+    collections: ['la-merino', 'novidades', 'familia:ribeira'],
+    badge: 'Destaque', gender: 'homem' as const,
   },
   {
     id: 'mer-015',
     handle: 'merino-herringbone-marinho',
-    name: 'Merino Herringbone',
+    name: 'Ribeira Herringbone',
     description:
       'Espinha de peixe em azul marinho merino — clássico sem ser banal. A estrutura do padrão cria uma tridimensionalidade que o liso não tem. Para quem quer textura com contenção.',
     price: 21,
@@ -353,12 +366,13 @@ export const products: Product[] = [
     images: img('merino-herringbone-marinho'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'novidades'],
+    collections: ['la-merino', 'novidades', 'familia:ribeira'],
+    gender: 'homem' as const,
   },
   {
     id: 'mer-016',
     handle: 'merino-argyle-charcoal-camel',
-    name: 'Merino Argyle',
+    name: 'Ribeira Argyle',
     description:
       'O argyle é o padrão mais carregado de história na mearia clássica. Charcoal com losangos camel — uma combinação de outono que funciona do campo à cidade. Para os que conhecem os seus clássicos.',
     price: 22,
@@ -373,13 +387,13 @@ export const products: Product[] = [
     images: img('merino-argyle-charcoal-camel'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'novidades'],
-    badge: 'Clássico',
+    collections: ['la-merino', 'novidades', 'familia:ribeira'],
+    badge: 'Clássico', gender: 'homem' as const,
   },
   {
     id: 'mer-017',
     handle: 'merino-executive-charcoal',
-    name: 'Merino Executive',
+    name: 'Ribeira Executive',
     description:
       'Over-the-calf em lã merino charcoal — o máximo da funcionalidade e do conforto. Permanece no lugar ao longo do dia, regula a temperatura e não pica. Para o fato mais exigente nos dias mais longos.',
     price: 22,
@@ -394,8 +408,8 @@ export const products: Product[] = [
     images: img('merino-executive-charcoal'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['la-merino', 'executive', 'novidades'],
-    badge: 'Executive',
+    collections: ['la-merino', 'executive', 'novidades', 'familia:ribeira'],
+    badge: 'Executive', gender: 'homem' as const,
   },
 
   // ─── Linha Seda ──────────────────────────────────────────────────────
@@ -403,7 +417,7 @@ export const products: Product[] = [
   {
     id: 'sed-018',
     handle: 'silk-essential-preto',
-    name: 'Silk Essential',
+    name: 'Lello Essential',
     description:
       'Seda pura para os que sabem. Uma leveza e suavidade que nenhuma fibra sintética consegue imitar — apenas a natureza produz algo assim. O preto em seda tem uma profundidade especial, quase líquida.',
     price: 23,
@@ -418,13 +432,13 @@ export const products: Product[] = [
     images: img('silk-essential-preto'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['seda', 'essentials', 'novidades'],
-    badge: 'Premium',
+    collections: ['seda', 'essentials', 'novidades', 'familia:lello'],
+    badge: 'Premium', gender: 'homem' as const,
   },
   {
     id: 'sed-019',
     handle: 'silk-essential-marinho',
-    name: 'Silk Essential',
+    name: 'Lello Essential',
     description:
       'Azul marinho em seda — um par que transforma qualquer fato. A seda tem um brilho subtil que capta a luz de forma que o algodão não consegue. Reserve para as grandes ocasiões, ou para todos os dias se quiser.',
     price: 23,
@@ -439,13 +453,13 @@ export const products: Product[] = [
     images: img('silk-essential-marinho'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['seda', 'essentials', 'novidades'],
-    badge: 'Premium',
+    collections: ['seda', 'essentials', 'novidades', 'familia:lello'],
+    badge: 'Premium', gender: 'homem' as const,
   },
   {
     id: 'sed-020',
     handle: 'silk-riscas-finas-preto-dourado',
-    name: 'Silk Riscas Finas',
+    name: 'Lello Riscas Finas',
     description:
       'Riscas douradas sobre seda preta — um par de cerimónia. Para o fato de gala, o casamento ou qualquer ocasião em que se quer ser o único a saber que está a usar algo verdadeiramente especial.',
     price: 25,
@@ -460,13 +474,13 @@ export const products: Product[] = [
     images: img('silk-riscas-finas-preto-dourado'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['seda', 'novidades'],
-    badge: 'Edição Limitada',
+    collections: ['seda', 'novidades', 'familia:lello'],
+    badge: 'Edição Limitada', gender: 'homem' as const,
   },
   {
     id: 'sed-021',
     handle: 'silk-executive-preto',
-    name: 'Silk Executive',
+    name: 'Lello Executive',
     description:
       'O pináculo. Seda pura, corte over-the-calf, preto — uma declaração de intenções para quem veste como se cada detalhe importasse. Porque importa.',
     price: 25,
@@ -481,8 +495,8 @@ export const products: Product[] = [
     images: img('silk-executive-preto'),
     sizes: ['39-42', '42-45', '45-48'],
     inStock: true,
-    collections: ['seda', 'executive', 'novidades'],
-    badge: 'Premium',
+    collections: ['seda', 'executive', 'novidades', 'familia:lello'],
+    badge: 'Premium', gender: 'homem' as const,
   },
 ]
 
@@ -490,9 +504,26 @@ export const products: Product[] = [
 
 export const bundles: Bundle[] = [
   {
+    id: 'pack-000',
+    handle: 'lion-entry-box',
+    name: 'Lion Entry Box',
+    tagline: '2 pares | Caixa de metal',
+    description:
+      'O primeiro par. Dois essenciais em Ofício — preto e marinho — numa caixa de metal com logo embossed. O ponto de entrada no universo Lion Socks.',
+    packaging: 'metal-box',
+    packagingLabel: 'Caixa de Metal',
+    pairCount: 2,
+    productIds: ['fde-001', 'fde-002'],
+    originalPrice: 30,
+    price: 24.9,
+    discountPercent: 17,
+    image: '/products/lion-entry-box.svg',
+    featured: true,
+  },
+  {
     id: 'pack-001',
-    handle: 'the-essentials',
-    name: 'The Essentials',
+    handle: 'lion-essentials',
+    name: 'Lion Essentials',
     tagline: '3 pares | Caixa de metal',
     description:
       "A trindade perfeita. Preto, marinho e charcoal em Fil d'Écosse — os três essenciais que resolvem qualquer combinação. Em caixa de metal com logo embossed. O ponto de partida.",
@@ -501,15 +532,15 @@ export const bundles: Bundle[] = [
     pairCount: 3,
     productIds: ['fde-001', 'fde-002', 'fde-003'],
     originalPrice: 45,
-    price: 39,
-    discountPercent: 13,
+    price: 34.9,
+    discountPercent: 22,
     image: '/products/the-essentials.svg',
     featured: true,
   },
   {
     id: 'pack-002',
-    handle: 'the-connoisseur',
-    name: 'The Connoisseur',
+    handle: 'lion-connoisseur',
+    name: 'Lion Connoisseur',
     tagline: '5 pares | Caixa de metal',
     description:
       "Para o conhecedor. Cinco pares curados que cobrem o espectro — liso, texturado, padrão — em Fil d'Écosse e Lã Merino. Em caixa de metal premium. Uma introdução completa ao universo Lion Socks.",
@@ -518,15 +549,15 @@ export const bundles: Bundle[] = [
     pairCount: 5,
     productIds: ['fde-001', 'fde-005', 'mer-011', 'fde-006', 'mer-014'],
     originalPrice: 88,
-    price: 75,
-    discountPercent: 15,
+    price: 69.9,
+    discountPercent: 21,
     image: '/products/the-connoisseur.svg',
     featured: true,
   },
   {
     id: 'pack-003',
-    handle: 'the-gentlemans-collection',
-    name: "The Gentleman's Collection",
+    handle: 'lion-gentlemans-collection',
+    name: "Lion Gentleman's Collection",
     tagline: '12 pares | Caixa gaveta',
     description:
       'A colecção completa. Doze pares que cobrem cada ocasião, cada estação, cada humor — do Fil d\'Écosse diário à seda de cerimónia. Em caixa gaveta de luxo com espuma recortada. O melhor presente para si ou para quem merece.',
@@ -543,8 +574,8 @@ export const bundles: Bundle[] = [
       'sed-018',
     ],
     originalPrice: 215,
-    price: 175,
-    discountPercent: 19,
+    price: 169,
+    discountPercent: 21,
     image: '/products/the-gentlemans-collection.svg',
     featured: true,
   },
@@ -598,7 +629,11 @@ export const bundles: Bundle[] = [
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
 export function getProductsByCollection(collectionHandle: string): Product[] {
-  return products.filter((p) => p.collections.includes(collectionHandle))
+  // Support family slugs (ribeira, oficio, etc) via familia:<slug> tag
+  const familyTag = `familia:${collectionHandle}`
+  return products.filter(
+    (p) => p.collections.includes(collectionHandle) || p.collections.includes(familyTag)
+  )
 }
 
 export function getProductByHandle(handle: string): Product | undefined {
@@ -620,4 +655,20 @@ export const collections = [
   { handle: 'executive', name: 'Executive', description: 'Corte over-the-calf — permanece no lugar, sempre.' },
   { handle: 'essentials', name: 'Essentials', description: 'Os imprescindíveis — lisos, versáteis, perfeitos.' },
   { handle: 'novidades', name: 'Novidades', description: 'As últimas chegadas à Lion Socks.' },
+  { handle: 'homem', name: 'Homem', description: 'Meias premium para homem — elegância em cada detalhe.' },
+  { handle: 'mulher', name: 'Mulher', description: 'Meias premium para mulher — conforto refinado.' },
+  { handle: 'classica', name: 'Coleção Clássica', description: 'O essencial, reinventado. Lisos e canelados atemporais.' },
+  { handle: 'edicoes-limitadas', name: 'Edições Limitadas', description: 'Exclusivo, por definição. Produção limitada.' },
+  { handle: 'atlantico', name: 'Atlântico', description: 'A costa que nos define. Azul profundo, areia molhada, verde de algas. O oceano, traduzido em fio.' },
+  { handle: 'granito', name: 'Granito', description: 'A pedra que construiu o Porto. Cinza denso, bordeaux de Vinho do Porto, madeira de barricas. O Porto no inverno.' },
+  // Famílias de material (espelham famílias em lib/families.ts)
+  { handle: 'ribeira', name: 'Ribeira', description: 'A fibra que se adapta. Lã merino extra-fina — termorreguladora, anti-odor, não pica.' },
+  { handle: 'oficio', name: 'Ofício', description: 'Algodão transformado pelo fogo. Fio de escócia mercerizado — brilho subtil, zero pilling.' },
+  { handle: 'lello', name: 'Lello', description: 'O toque que desliza. Seda natural, leveza imperceptível.' },
+  { handle: 'reserva', name: 'Reserva', description: 'A fibra mais fina do mundo. Cashmere da Mongólia, 8× mais isolante que lã.' },
+  { handle: 'alma', name: 'Alma', description: 'A base honesta. Algodão de fibra longa, penteado — sem dramas, sem compromissos.' },
 ]
+
+export function getProductsByGender(gender: Gender): Product[] {
+  return products.filter((p) => p.gender === gender || p.gender === 'unisex')
+}

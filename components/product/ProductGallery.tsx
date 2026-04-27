@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -11,9 +11,20 @@ interface ProductGalleryProps {
 
 export default function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [active, setActive] = useState(0)
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 })
+  const [zooming, setZooming] = useState(false)
+  const imgRef = useRef<HTMLDivElement>(null)
 
   const prev = () => setActive((i) => (i - 1 + images.length) % images.length)
   const next = () => setActive((i) => (i + 1) % images.length)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imgRef.current) return
+    const rect = imgRef.current.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    setZoomPos({ x, y })
+  }
 
   return (
     <div className="flex gap-4">
@@ -50,8 +61,32 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       {/* Main image */}
       <div className="flex-1">
         <div
-          className="relative overflow-hidden"
-          style={{ aspectRatio: '4/5', background: '#f5f5f5' }}
+          ref={imgRef}
+          className="relative overflow-hidden hidden sm:block"
+          style={{ aspectRatio: '4/5', background: 'linear-gradient(160deg, #F5F3EE 0%, #FFFFFF 50%, #EFEBE2 100%)', cursor: zooming ? 'zoom-out' : 'zoom-in' }}
+          onMouseEnter={() => setZooming(true)}
+          onMouseLeave={() => setZooming(false)}
+          onMouseMove={handleMouseMove}
+        >
+          <Image
+            src={images[active] ?? ''}
+            alt={`${productName} — imagem ${active + 1}`}
+            fill
+            unoptimized
+            priority={active === 0}
+            className="object-cover object-center transition-transform duration-300"
+            style={{
+              transform: zooming ? `scale(2)` : 'scale(1)',
+              transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+            }}
+            sizes="(max-width: 768px) 100vw, 55vw"
+          />
+        </div>
+
+        {/* Mobile image (no zoom) */}
+        <div
+          className="relative overflow-hidden sm:hidden"
+          style={{ aspectRatio: '4/5', background: 'linear-gradient(160deg, #F5F3EE 0%, #FFFFFF 50%, #EFEBE2 100%)' }}
         >
           <Image
             src={images[active] ?? ''}
@@ -60,7 +95,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             unoptimized
             priority={active === 0}
             className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, 55vw"
+            sizes="100vw"
           />
 
           {/* Mobile navigation arrows */}
@@ -68,17 +103,19 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             <>
               <button
                 onClick={(e) => { e.stopPropagation(); prev() }}
-                className="sm:hidden absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white transition-colors"
+                className="sm:hidden absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white transition-colors flex items-center justify-center"
+                style={{ width: '44px', height: '44px', borderRadius: '50%' }}
                 aria-label="Imagem anterior"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={20} />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); next() }}
-                className="sm:hidden absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white transition-colors"
+                className="sm:hidden absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white transition-colors flex items-center justify-center"
+                style={{ width: '44px', height: '44px', borderRadius: '50%' }}
                 aria-label="Próxima imagem"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={20} />
               </button>
 
               {/* Mobile dots */}

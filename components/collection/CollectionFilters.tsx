@@ -1,12 +1,15 @@
 'use client'
 
-import { type Material, type SockType, type Pattern } from '@/lib/mock-data'
+import { type Material, type SockType, type Pattern, type Size } from '@/lib/mock-data'
 
 export interface FilterState {
   materials: Material[]
   types: SockType[]
   patterns: Pattern[]
-  sortBy: 'relevance' | 'price-asc' | 'price-desc'
+  sizes: Size[]
+  colors: string[]
+  priceMax: number | null
+  sortBy: 'relevance' | 'price-asc' | 'price-desc' | 'newest'
 }
 
 interface CollectionFiltersProps {
@@ -38,8 +41,25 @@ const patternOptions: { value: Pattern; label: string }[] = [
 
 const sortOptions: { value: FilterState['sortBy']; label: string }[] = [
   { value: 'relevance', label: 'Relevância' },
+  { value: 'newest', label: 'Mais recente' },
   { value: 'price-asc', label: 'Preço: menor primeiro' },
   { value: 'price-desc', label: 'Preço: maior primeiro' },
+]
+
+const sizeOptions: { value: Size; label: string }[] = [
+  { value: '39-42', label: 'S (39-42)' },
+  { value: '42-45', label: 'M (42-45)' },
+  { value: '45-48', label: 'L (45-48)' },
+]
+
+const colorGroups: { label: string; hex: string; matches: string[] }[] = [
+  { label: 'Preto', hex: '#1A1A1A', matches: ['preto'] },
+  { label: 'Azul', hex: '#1B2A4A', matches: ['azul', 'marinho'] },
+  { label: 'Charcoal', hex: '#3D3D3D', matches: ['charcoal'] },
+  { label: 'Castanho', hex: '#6B4423', matches: ['castanho', 'bordeaux'] },
+  { label: 'Creme', hex: '#D5C9B1', matches: ['creme', 'beige'] },
+  { label: 'Verde', hex: '#1F3A28', matches: ['verde'] },
+  { label: 'Cinza', hex: '#808080', matches: ['cinza'] },
 ]
 
 function toggle<T>(arr: T[], val: T): T[] {
@@ -71,10 +91,17 @@ export default function CollectionFilters({
   const hasActiveFilters =
     filters.materials.length > 0 ||
     filters.types.length > 0 ||
-    filters.patterns.length > 0
+    filters.patterns.length > 0 ||
+    filters.sizes.length > 0 ||
+    filters.colors.length > 0 ||
+    filters.priceMax !== null
 
   const clearAll = () =>
-    onChange({ materials: [], types: [], patterns: [], sortBy: filters.sortBy })
+    onChange({
+      materials: [], types: [], patterns: [],
+      sizes: [], colors: [], priceMax: null,
+      sortBy: filters.sortBy,
+    })
 
   return (
     <aside className="w-full lg:w-56 flex-shrink-0">
@@ -91,25 +118,7 @@ export default function CollectionFilters({
         )}
       </div>
 
-      {/* Sort — mobile only top-bar style */}
-      <div className="lg:hidden mb-6">
-        <select
-          value={filters.sortBy}
-          onChange={(e) =>
-            onChange({ ...filters, sortBy: e.target.value as FilterState['sortBy'] })
-          }
-          className="w-full border border-gray-200 text-sm font-body text-gray-700 px-3 py-2.5 focus:outline-none focus:border-primary"
-          aria-label="Ordenar por"
-        >
-          {sortOptions.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Desktop sidebar filters */}
+      {/* Filters */}
       <div>
         {/* Sort — desktop */}
         <FilterSection title="Ordenar">
@@ -237,6 +246,88 @@ export default function CollectionFilters({
                 </span>
               </label>
             ))}
+          </div>
+        </FilterSection>
+
+        {/* Size */}
+        <FilterSection title="Tamanho">
+          <div className="flex flex-wrap gap-2">
+            {sizeOptions.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => onChange({ ...filters, sizes: toggle(filters.sizes, opt.value) })}
+                className="font-body transition-all"
+                style={{
+                  fontSize: '12px',
+                  padding: '6px 12px',
+                  border: filters.sizes.includes(opt.value) ? '1px solid #0A0A0A' : '1px solid #E0E0E0',
+                  background: filters.sizes.includes(opt.value) ? '#0A0A0A' : 'transparent',
+                  color: filters.sizes.includes(opt.value) ? '#FFFFFF' : '#424242',
+                  cursor: 'pointer',
+                  borderRadius: '3px',
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </FilterSection>
+
+        {/* Color */}
+        <FilterSection title="Cor">
+          <div className="flex flex-wrap gap-2">
+            {colorGroups.map((c) => {
+              const active = filters.colors.includes(c.label)
+              return (
+                <button
+                  key={c.label}
+                  onClick={() => onChange({ ...filters, colors: toggle(filters.colors, c.label) })}
+                  title={c.label}
+                  aria-label={c.label}
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    backgroundColor: c.hex,
+                    border: active ? '2px solid #B8960C' : '1px solid rgba(0,0,0,0.15)',
+                    outline: active ? '1px solid #B8960C' : 'none',
+                    outlineOffset: '2px',
+                    cursor: 'pointer',
+                    transition: 'all 150ms ease',
+                  }}
+                />
+              )
+            })}
+          </div>
+        </FilterSection>
+
+        {/* Price */}
+        <FilterSection title="Preço Máx.">
+          <div className="space-y-2">
+            <input
+              type="range"
+              min="10"
+              max="200"
+              step="5"
+              value={filters.priceMax ?? 200}
+              onChange={(e) => onChange({ ...filters, priceMax: Number(e.target.value) })}
+              className="w-full accent-[#B8960C]"
+            />
+            <div className="flex items-center justify-between font-body text-xs text-gray-500">
+              <span>€10</span>
+              <span className="text-gray-900 font-medium">
+                {filters.priceMax ? `Até €${filters.priceMax}` : 'Todos'}
+              </span>
+              <span>€200</span>
+            </div>
+            {filters.priceMax !== null && (
+              <button
+                onClick={() => onChange({ ...filters, priceMax: null })}
+                className="font-body text-xs text-gold underline underline-offset-2"
+              >
+                Limpar preço
+              </button>
+            )}
           </div>
         </FilterSection>
       </div>

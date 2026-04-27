@@ -2,27 +2,20 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const slides = [
   {
-    desktopImg: '/lion_socks_brand_kit/05_hero_banner/hero_meias_desktop_clean.jpg',
-    mobileImg: '/lion_socks_brand_kit/05_hero_banner/hero_meias_mobile.jpg',
-    label: 'COLEÇÃO HOMEM',
-    title: 'Feitas para quem repara\nnos detalhes',
-    subtitle: "Seda, fil d'Écosse e lã merino. Conforto que se sente. Elegância que se nota.",
-    href: '/loja/homem',
+    desktopImg: '/home/hero-homem.jpg',
+    mobileImg: '/home/hero-homem.jpg',
+    label: 'COLECÇÃO HOMEM',
+    title: 'Para quem repara\nnos detalhes.',
+    subtitle: 'Meias de manufactura portuguesa. Do fio de escócia à seda. Acabamento artesanal. Linha dourada.',
+    href: '/loja',
     bgPosition: 'center',
-  },
-  {
-    desktopImg: '/lion_socks_brand_kit/05_hero_banner/hero-mulher-desktop.jpg',
-    mobileImg: '/lion_socks_brand_kit/05_hero_banner/hero-mulher-mobile.jpg',
-    label: 'COLEÇÃO MULHER',
-    title: 'Elegância em\ncada detalhe',
-    subtitle: 'Conforto que se veste. Classe que se sente.',
-    href: '/loja/mulher',
-    bgPosition: 'left center',
+    cta: 'Descobrir a colecção',
   },
 ]
 
@@ -51,35 +44,63 @@ export default function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ height: '640px' }}
+      className="relative overflow-hidden hero-section"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
+      <style>{`
+        .hero-section {
+          margin-top: calc(var(--header-h, 148px) * -1);
+          height: 100vh;
+          min-height: 640px;
+        }
+        @supports (height: 100svh) {
+          .hero-section { height: 100svh; }
+        }
+        /* Mobile: layout idêntico ao desktop em escala — landscape compacto.
+           Header continua a sobrepor-se (marginTop negativo).
+           Aspect-ratio 16:10 em vez de full-screen vertical. */
+        @media (max-width: 1023px) {
+          .hero-section {
+            /* Header transparente em cima sobrepõe o hero (igual desktop) */
+            margin-top: calc(var(--header-h, 64px) * -1);
+            height: auto;
+            aspect-ratio: 4 / 3;
+            min-height: 0;
+          }
+          /* Tipografia escalada — clean e proporcional ao hero compacto */
+          .hero-eyebrow { font-size: 9px !important; margin-bottom: 10px !important; letter-spacing: 0.18em !important; }
+          .hero-title   { font-size: 22px !important; margin-bottom: 12px !important; line-height: 1.15 !important; }
+          .hero-subtitle{ display: none !important; }
+          .hero-cta     { font-size: 10px !important; padding: 12px 20px !important; min-height: 40px !important; letter-spacing: 0.16em !important; }
+          .hero-content-wrap { padding: 0 20px !important; }
+        }
+      `}</style>
       {slides.map((slide, i) => (
         <div
           key={i}
-          className={`hero-slide-${i} absolute inset-0`}
+          className="absolute inset-0"
           style={{
-            backgroundImage: `url(${slide.desktopImg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: slide.bgPosition,
             opacity: i === active ? 1 : 0,
             transition: 'opacity 1s ease-in-out',
             zIndex: i === active ? 1 : 0,
           }}
-        />
+        >
+          <Image
+            src={slide.desktopImg}
+            alt={slide.label}
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className="hero-img"
+            style={{ objectFit: 'cover', objectPosition: slide.bgPosition }}
+          />
+        </div>
       ))}
-      <style>{`
-        @media (max-width: 639px) {
-          .hero-slide-0 { background-image: url(/lion_socks_brand_kit/05_hero_banner/hero_meias_mobile.jpg) !important; }
-          .hero-slide-1 { background-image: url(/lion_socks_brand_kit/05_hero_banner/hero-mulher-mobile.jpg) !important; }
-        }
-      `}</style>
 
-      {/* Overlay — stronger right-side darkening (desktop) */}
+      {/* Overlay — gradient lateral (igual em todos os tamanhos) */}
       <div
-        className="absolute inset-0 hidden sm:block"
+        className="absolute inset-0"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.65) 65%, rgba(0,0,0,0.85) 100%)',
@@ -87,23 +108,17 @@ export default function Hero() {
         }}
       />
 
-      {/* Overlay — uniform mobile */}
-      <div
-        className="absolute inset-0 sm:hidden"
-        style={{ background: 'rgba(0,0,0,0.6)', zIndex: 2 }}
-      />
-
       {/* Content */}
       <div
-        className="relative h-full"
+        className="relative h-full hero-content-wrap"
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '0 40px',
+          padding: '0 clamp(24px, 6vw, 80px)',
           zIndex: 3,
         }}
       >
-        <div className="h-full flex items-center justify-start sm:justify-end">
+        <div className="h-full flex items-center justify-end">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -111,10 +126,11 @@ export default function Hero() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -12 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="text-left sm:text-right"
-              style={{ maxWidth: '520px' }}
+              className="text-right"
+              style={{ maxWidth: '460px', width: '100%', marginLeft: 'auto' }}
             >
               <p
+                className="hero-eyebrow"
                 style={{
                   fontFamily: "'Inter', system-ui, sans-serif",
                   fontSize: '11px',
@@ -129,31 +145,34 @@ export default function Hero() {
               </p>
 
               <h1
+                className="hero-title"
                 style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: 'clamp(36px, 5vw, 56px)',
+                  fontSize: 'clamp(28px, 4.2vw, 48px)',
                   fontWeight: 500,
                   lineHeight: 1.1,
                   color: '#F5F3EE',
                   marginBottom: '24px',
                   whiteSpace: 'pre-line',
                   textShadow: '0 2px 20px rgba(0,0,0,0.7)',
+                  overflowWrap: 'break-word',
                 }}
               >
                 {slides[active].title}
               </h1>
 
               <p
+                className="hero-subtitle"
                 style={{
                   fontFamily: "'Inter', system-ui, sans-serif",
                   fontSize: '15px',
                   fontWeight: 400,
                   color: 'rgba(245,243,238,0.95)',
-                  maxWidth: '440px',
+                  maxWidth: '100%',
                   lineHeight: 1.6,
                   marginBottom: '36px',
-                  marginLeft: 'auto',
                   textShadow: '0 1px 8px rgba(0,0,0,0.5)',
+                  overflowWrap: 'break-word',
                 }}
               >
                 {slides[active].subtitle}
@@ -161,7 +180,7 @@ export default function Hero() {
 
               <Link
                 href={slides[active].href}
-                className="inline-block"
+                className="inline-block hero-cta"
                 style={{
                   fontFamily: "'Inter', system-ui, sans-serif",
                   fontSize: '12px',
@@ -170,7 +189,8 @@ export default function Hero() {
                   textTransform: 'uppercase',
                   border: '1.5px solid #B8960C',
                   color: '#F5F3EE',
-                  padding: '18px 42px',
+                  padding: '18px clamp(20px, 8vw, 42px)',
+                  minHeight: '52px',
                   textDecoration: 'none',
                   transition: 'all 250ms ease',
                   background: 'rgba(10,10,10,0.55)',
@@ -186,14 +206,14 @@ export default function Hero() {
                   e.currentTarget.style.color = '#F5F3EE'
                 }}
               >
-                Descobrir Coleção
+                {slides[active].cta}
               </Link>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
 
-      <button
+      {slides.length > 1 && <button
         onClick={prev}
         aria-label="Slide anterior"
         className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-2"
@@ -202,9 +222,9 @@ export default function Hero() {
         onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.5')}
       >
         <ChevronLeft size={32} color="#F5F3EE" strokeWidth={1} />
-      </button>
+      </button>}
 
-      <button
+      {slides.length > 1 && <button
         onClick={next}
         aria-label="Próximo slide"
         className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-2"
@@ -213,10 +233,11 @@ export default function Hero() {
         onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.5')}
       >
         <ChevronRight size={32} color="#F5F3EE" strokeWidth={1} />
-      </button>
+      </button>}
 
-      <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2"
+      {/* Slide indicators */}
+      {slides.length > 1 && <div
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-2"
         style={{ zIndex: 4 }}
       >
         {slides.map((_, i) => (
@@ -236,6 +257,39 @@ export default function Hero() {
             }}
           />
         ))}
+      </div>}
+
+      {/* Scroll indicator — minimal vertical line + label */}
+      <div
+        className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
+        style={{ zIndex: 4 }}
+      >
+        <span
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '10px',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: 'rgba(245,243,238,0.7)',
+            fontWeight: 500,
+          }}
+        >
+          Descobrir
+        </span>
+        <div
+          style={{
+            width: '1px',
+            height: '40px',
+            background: 'linear-gradient(to bottom, rgba(184,150,12,0.8), rgba(184,150,12,0))',
+            animation: 'scrollLine 2s ease-in-out infinite',
+          }}
+        />
+        <style>{`
+          @keyframes scrollLine {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.4; }
+          }
+        `}</style>
       </div>
     </section>
   )

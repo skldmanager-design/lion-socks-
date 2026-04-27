@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude / session artifacts
+.playwright-mcp/
+.superpowers/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Screenshot clutter
+/v[0-9]*.png
+/review-*.png
+/brainstorm-*.png
+/screenshot-*.png
+/honest-*.png
+/after-*.png
+/page-*.png

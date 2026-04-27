@@ -12,8 +12,7 @@ interface PackCardProps {
   featured?: boolean
 }
 
-export default function PackCard({ bundle, featured = false }: PackCardProps) {
-  const savings = bundle.originalPrice - bundle.price
+export default function PackCard({ bundle }: PackCardProps) {
   const bundleProducts = bundle.productIds
     .map((id) => products.find((p) => p.id === id))
     .filter(Boolean)
@@ -21,51 +20,65 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
   return (
     <div
       id={bundle.handle}
-      className="relative flex flex-col overflow-hidden transition-all duration-300 group"
+      className="relative flex flex-col overflow-hidden group"
       style={{
-        background: '#ffffff',
+        background: '#FFFFFF',
         border: '1px solid rgba(0,0,0,0.08)',
+        transition: 'all 320ms cubic-bezier(0.22, 1, 0.36, 1)',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 14px 40px rgba(10,10,10,0.08)'
+        e.currentTarget.style.borderColor = 'rgba(184,150,12,0.4)'
+        e.currentTarget.style.transform = 'translateY(-3px)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'none'
+        e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)'
+        e.currentTarget.style.transform = 'translateY(0)'
+      }}
     >
-      {/* Image */}
-      <div className="relative overflow-hidden" style={{ height: '220px' }}>
+      {/* Image area — soft cream gradient */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          height: '240px',
+          background: 'linear-gradient(165deg, #F5F3EE 0%, #FFFFFF 50%, #EFEBE2 100%)',
+        }}
+      >
         <Image
           src={bundle.image}
           alt={bundle.name}
           fill
           unoptimized
-          className="object-cover object-center"
-          style={{ transition: 'transform 0.5s', transform: 'scale(1)' }}
+          className="object-contain"
+          style={{ padding: '28px', transition: 'transform 600ms cubic-bezier(0.22, 1, 0.36, 1)' }}
           sizes="(max-width: 768px) 100vw, 33vw"
         />
-        <div
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }}
-        />
 
-        {/* Discount badge */}
-        <div
+        {/* Pair count — gold pill */}
+        <span
           className="absolute top-4 right-4 font-body uppercase"
           style={{
-            background: '#0a0a0a',
+            background: 'rgba(255,255,255,0.9)',
             color: '#B8960C',
             fontSize: '10px',
-            letterSpacing: '0.1em',
-            padding: '4px 10px',
-            fontWeight: 400,
+            letterSpacing: '0.16em',
+            padding: '5px 12px',
+            fontWeight: 600,
+            borderRadius: '999px',
+            border: '1px solid rgba(184,150,12,0.2)',
+            backdropFilter: 'blur(4px)',
           }}
         >
-          Poupa {bundle.discountPercent}%
-        </div>
+          {bundle.pairCount} pares
+        </span>
 
         {/* Packaging label */}
         <div className="absolute bottom-4 left-4 flex items-center gap-1.5">
-          <Package size={12} className="text-gold" strokeWidth={1.5} />
+          <Package size={11} strokeWidth={1.5} style={{ color: '#B8960C' }} />
           <span
             className="font-body uppercase"
-            style={{ fontSize: '10px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.9)' }}
+            style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#6B6B6B', fontWeight: 500 }}
           >
             {bundle.packagingLabel}
           </span>
@@ -95,12 +108,6 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
               style={{ fontSize: '22px', fontWeight: 400 }}
             >
               {formatPrice(bundle.price)}
-            </p>
-            <p
-              className="font-body line-through"
-              style={{ fontSize: '12px', color: '#9E9E9E', fontWeight: 300 }}
-            >
-              {formatPrice(bundle.originalPrice)}
             </p>
           </div>
         </div>
@@ -141,36 +148,31 @@ export default function PackCard({ bundle, featured = false }: PackCardProps) {
           </div>
         )}
 
-        {/* Savings */}
-        <div
-          className="mb-5 p-3 flex items-center"
-          style={{ background: 'rgba(184,150,12,0.06)', border: '1px solid rgba(184,150,12,0.15)' }}
-        >
-          <span
-            className="font-body"
-            style={{ fontSize: '12px', fontWeight: 400, color: '#A8893E' }}
-          >
-            Poupa {formatPrice(savings)} em relação ao preço unitário
-          </span>
-        </div>
-
-        {/* CTA */}
+        {/* CTA — premium black slab with gold rule on hover */}
         <div className="mt-auto">
           <Link
-            href="/loja"
-            className="w-full flex items-center justify-center gap-2 font-body uppercase transition-all duration-300"
+            href={`/packs/${bundle.handle}`}
+            className="w-full flex items-center justify-center gap-2 font-body uppercase"
             style={{
-              background: '#0a0a0a',
-              color: '#ffffff',
+              background: '#0A0A0A',
+              color: '#F5F3EE',
               fontSize: '11px',
-              letterSpacing: '0.15em',
-              padding: '16px',
-              fontWeight: 400,
+              letterSpacing: '0.18em',
+              padding: '18px',
+              fontWeight: 500,
+              border: '1px solid #0A0A0A',
+              borderBottom: '2px solid #0A0A0A',
+              textDecoration: 'none',
+              transition: 'all 280ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#B8960C' }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#0a0a0a' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderBottom = '2px solid #B8960C'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderBottom = '2px solid #0A0A0A'
+            }}
           >
-            Escolher Tamanho e Comprar <ArrowRight size={12} strokeWidth={1.5} />
+            Ver Pack <ArrowRight size={12} strokeWidth={1.5} />
           </Link>
         </div>
       </div>
