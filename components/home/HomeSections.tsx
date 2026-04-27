@@ -183,7 +183,7 @@ function MateriaisSection() {
 
                   {/* Arrow link — pushed to bottom */}
                   <span
-                    className="material-arrow"
+                    className="material-arrow group-hover:gap-3"
                     style={{
                       fontFamily: "'Inter', system-ui, sans-serif",
                       fontSize: 'clamp(10px, 1.3vw, 13px)',
@@ -195,7 +195,6 @@ function MateriaisSection() {
                       marginTop: 'auto',
                       alignSelf: 'flex-start',
                     }}
-                    className="group-hover:gap-3"
                   >
                     Saber mais
                     <span style={{ transition: 'transform 200ms ease' }} className="group-hover:translate-x-1">→</span>

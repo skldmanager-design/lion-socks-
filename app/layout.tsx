@@ -13,7 +13,7 @@ import ScrollToTop from '@/components/ui/ScrollToTop'
 import CookieConsent from '@/components/ui/CookieConsent'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lionsocks.com'),
+  metadataBase: new URL('https://lionsocks.pt'),
   title: {
     default: 'Lion Socks — Meias Premium Feitas em Portugal',
     template: '%s | Lion Socks',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_PT',
     alternateLocale: ['en_US', 'es_ES'],
-    url: 'https://lionsocks.com',
+    url: 'https://lionsocks.pt',
     siteName: 'Lion Socks',
     title: 'Lion Socks — Meias Premium Feitas em Portugal',
     description: 'Feitas para quem repara nos detalhes. Fio de escócia, merino, seda, cashmere. Linha dourada no punho.',
@@ -61,10 +61,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://lionsocks.com',
+    canonical: 'https://lionsocks.pt',
     languages: {
-      'pt-PT': 'https://lionsocks.com',
-      'en': 'https://lionsocks.com/en',
+      'pt-PT': 'https://lionsocks.pt',
+      'en': 'https://lionsocks.pt/en',
     },
   },
   // SVG favicon (scales perfectly at any size) + PNG fallbacks for older browsers/Apple touch.
