@@ -140,7 +140,7 @@ export const products: Product[] = [
     handle: 'fil-ecosse-ribbed-marinho',
     name: "Ofício Canelado",
     description:
-      "Em azul marinho, o padrão canelado cria um jogo de luz subtil que distingue este par de qualquer outra meia. A textura añade interesse sem quebrar a linha — elegância com detalhe.",
+      "Em azul marinho, o padrão canelado cria um jogo de luz subtil que distingue este par de qualquer outra meia. A textura acrescenta interesse sem quebrar a linha — elegância com detalhe.",
     price: 16,
     material: 'fil-d-ecosse',
     materialLabel: "Fil d'Écosse",

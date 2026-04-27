@@ -68,6 +68,7 @@ export const metadata: Metadata = {
       'en': 'https://lionsocks.pt/en',
     },
   },
+  manifest: '/manifest.webmanifest',
   // SVG favicon (scales perfectly at any size) + PNG fallbacks for older browsers/Apple touch.
   icons: {
     icon: [

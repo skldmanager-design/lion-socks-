@@ -44,7 +44,7 @@ export default function CookiesPage() {
 
           <section>
             <h2 className="font-display text-xl text-gray-900 mb-3">Gerir preferências</h2>
-            <p>Pode gerir as suas preferências de cookies a qualquer momento através do banner de consentimento que aparece na primeira visita ou clicando em <strong>"Preferências de Cookies"</strong> no rodapé do site.</p>
+            <p>Pode gerir as suas preferências de cookies a qualquer momento através do banner de consentimento que aparece na primeira visita ou clicando em <strong>&ldquo;Preferências de Cookies&rdquo;</strong> no rodapé do site.</p>
             <p className="mt-3">Pode também bloquear cookies diretamente nas definições do seu navegador, mas isso pode afetar o funcionamento do site.</p>
           </section>
 
