@@ -27,7 +27,7 @@ function MaterialIcon({ src, alt, imgSize = 150 }: { src: string; alt: string; i
         height={imgSize * 2}
         className="object-contain"
         style={{ width: `${imgSize}px`, height: `${imgSize}px`, filter: 'saturate(1.3) brightness(0.9)' }}
-        unoptimized
+
       />
     </div>
   )

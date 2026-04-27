@@ -93,7 +93,7 @@ export default function SobrePage() {
                 src="https://images.unsplash.com/photo-1551601651-bc60f254d532?w=1200&h=750&fit=crop&auto=format&q=85"
                 alt="Fábrica de meias no Porto — máquinas de 200 agulhas em produção"
                 fill
-                unoptimized
+
                 className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
@@ -228,7 +228,7 @@ export default function SobrePage() {
                     alt={`${f.name} — ${f.material}`}
                     width={f.iconSize * 2}
                     height={f.iconSize * 2}
-                    unoptimized
+
                     style={{
                       width: `${f.iconSize}px`,
                       height: `${f.iconSize}px`,

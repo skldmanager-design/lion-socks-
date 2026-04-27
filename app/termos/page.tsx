@@ -47,7 +47,8 @@ export default function TermosPage() {
 
           <section>
             <h2 className="font-display text-xl text-gray-900 mb-3">7. Contacto</h2>
-            <p>Valsport, Lda · NIF 500000000 · Rua Exemplo 123, 4000-000 Porto · <a href="mailto:info@lionsocks.com" className="text-gold underline underline-offset-2">info@lionsocks.com</a></p>
+            {/* TODO pré-launch: substituir NIF placeholder e morada pelos dados reais Valsport, Lda */}
+            <p>Valsport, Lda · NIF [POR PREENCHER] · [Morada por preencher] · <a href="mailto:info@lionsocks.com" className="text-gold underline underline-offset-2">info@lionsocks.com</a></p>
           </section>
         </div>
       </div>

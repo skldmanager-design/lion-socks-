@@ -113,7 +113,7 @@ export default function QuickSearch({ open, onClose }: QuickSearchProps) {
                   className="flex items-center gap-4 p-2 hover:bg-gray-50 transition-colors rounded"
                 >
                   <div className="relative flex-shrink-0" style={{ width: '56px', height: '56px', background: '#F5F3EE', borderRadius: '4px' }}>
-                    <Image src={p.images[0]} alt={p.name} fill unoptimized className="object-contain p-2" />
+                    <Image src={p.images[0]} alt={p.name} fill className="object-contain p-2" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-body text-xs text-gold uppercase tracking-widest">{p.materialLabel}</p>

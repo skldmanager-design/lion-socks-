@@ -69,7 +69,7 @@ export default function PackDetailClient({ bundle, products }: Props) {
               src={bundle.image}
               alt={bundle.name}
               fill
-              unoptimized
+
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 55vw"
             />
@@ -182,7 +182,7 @@ export default function PackDetailClient({ bundle, products }: Props) {
                   style={{ background: '#FFFFFF', padding: '16px', borderRadius: '4px' }}
                 >
                   <div style={{ aspectRatio: '1/1', background: '#F5F3EE', marginBottom: '12px', position: 'relative' }}>
-                    <Image src={p.images[0]} alt={p.name} fill className="object-contain p-4" unoptimized />
+                    <Image src={p.images[0]} alt={p.name} fill className="object-contain p-4" />
                   </div>
                   <p className="font-body text-gold uppercase mb-1" style={{ fontSize: '10px', letterSpacing: '0.12em', fontWeight: 500 }}>
                     {p.materialLabel}

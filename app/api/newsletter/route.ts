@@ -40,7 +40,9 @@ export async function POST(req: Request) {
       if (!res.ok) throw new Error(`PL ${res.status}`)
       return NextResponse.json({ ok: true, message: 'Obrigado! Verifique o seu email.' })
     } catch (err) {
-      console.error('[newsletter] PL proxy failed:', err)
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('[newsletter] PL proxy failed:', err)
+      }
       // Fall through to local stub so the user doesn't see an error.
     }
   }

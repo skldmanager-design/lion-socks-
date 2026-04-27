@@ -46,6 +46,9 @@ next-env.d.ts
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
 
+# Backups gerados pelo script de compressão
+public/home/_originals/
+
 # Screenshot clutter
 /v[0-9]*.png
 /review-*.png

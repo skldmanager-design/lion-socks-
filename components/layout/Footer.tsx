@@ -234,7 +234,7 @@ export default function Footer() {
                     border: '1px solid rgba(10,10,10,0.08)',
                     boxShadow: '0 1px 2px rgba(10,10,10,0.04)',
                   }}
-                  unoptimized
+
                 />
               ) : (
                 <span
@@ -259,7 +259,7 @@ export default function Footer() {
                     width={40}
                     height={20}
                     style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }}
-                    unoptimized
+
                   />
                 </span>
               ),

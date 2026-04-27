@@ -49,7 +49,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                 src={img}
                 alt={`${productName} — ${i + 1}`}
                 fill
-                unoptimized
+
                 className="object-cover"
                 sizes="64px"
               />
@@ -72,7 +72,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             src={images[active] ?? ''}
             alt={`${productName} — imagem ${active + 1}`}
             fill
-            unoptimized
+
             priority={active === 0}
             className="object-cover object-center transition-transform duration-300"
             style={{
@@ -92,7 +92,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             src={images[active] ?? ''}
             alt={`${productName} — imagem ${active + 1}`}
             fill
-            unoptimized
+
             priority={active === 0}
             className="object-cover object-center"
             sizes="100vw"

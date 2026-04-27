@@ -26,7 +26,7 @@ export default function CartItem({ item }: CartItemProps) {
           src={item.image}
           alt={item.productTitle}
           fill
-          unoptimized
+
           className="object-cover object-center"
           sizes="80px"
         />

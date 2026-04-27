@@ -265,7 +265,7 @@ export default function CheckoutClient() {
               {items.map((item) => (
                 <div key={item.id} className="flex gap-3">
                   <div className="relative flex-shrink-0" style={{ width: '56px', height: '56px', background: '#F5F3EE', borderRadius: '4px', overflow: 'hidden' }}>
-                    <Image src={item.image} alt={item.productTitle} fill className="object-contain p-2" unoptimized />
+                    <Image src={item.image} alt={item.productTitle} fill className="object-contain p-2" />
                     <span className="absolute -top-1 -right-1 rounded-full flex items-center justify-center" style={{ width: '18px', height: '18px', background: '#0A0A0A', color: '#FFFFFF', fontSize: '10px' }}>
                       {item.quantity}
                     </span>

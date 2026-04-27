@@ -112,7 +112,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.images[0]}
             alt={product.name}
             fill
-            unoptimized
+
             className="object-contain"
             style={{ padding: '32px', transition: 'transform 600ms cubic-bezier(0.22, 1, 0.36, 1)', transform: hovered ? 'scale(1.04)' : 'scale(1)' }}
             sizes="(max-width: 768px) 50vw, 25vw"

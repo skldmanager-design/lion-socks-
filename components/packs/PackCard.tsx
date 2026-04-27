@@ -49,7 +49,7 @@ export default function PackCard({ bundle }: PackCardProps) {
           src={bundle.image}
           alt={bundle.name}
           fill
-          unoptimized
+
           className="object-contain"
           style={{ padding: '28px', transition: 'transform 600ms cubic-bezier(0.22, 1, 0.36, 1)' }}
           sizes="(max-width: 768px) 100vw, 33vw"
