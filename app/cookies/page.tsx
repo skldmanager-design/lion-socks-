@@ -50,7 +50,7 @@ export default function CookiesPage() {
 
           <section>
             <h2 className="font-display text-xl text-gray-900 mb-3">Contacto</h2>
-            <p>Para qualquer questão sobre cookies ou privacidade, contacte-nos em <a href="mailto:privacidade@lionsocks.com" className="text-gold underline underline-offset-2">privacidade@lionsocks.com</a>.</p>
+            <p>Para qualquer questão sobre cookies ou privacidade, contacte-nos em <a href="mailto:privacidade@lionsocks.pt" className="text-gold underline underline-offset-2">privacidade@lionsocks.pt</a>.</p>
           </section>
         </div>
       </div>

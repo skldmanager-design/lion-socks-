@@ -36,7 +36,7 @@ export default function DevolucoesPage() {
           <section>
             <h2 className="font-display text-xl mb-3" style={{ color: '#F5F3EE' }}>Como devolver</h2>
             <ol className="space-y-2 list-decimal pl-5">
-              <li>Envie um email para <a href="mailto:devolucoes@lionsocks.com" style={{ color: '#B8960C' }} className="underline underline-offset-2">devolucoes@lionsocks.com</a> com o número da encomenda.</li>
+              <li>Envie um email para <a href="mailto:devolucoes@lionsocks.pt" style={{ color: '#B8960C' }} className="underline underline-offset-2">devolucoes@lionsocks.pt</a> com o número da encomenda.</li>
               <li>Receberá uma etiqueta de devolução pré-paga por email em 24h úteis.</li>
               <li>Embale os produtos na embalagem original.</li>
               <li>Entregue nos CTT com a etiqueta colada.</li>
@@ -55,7 +55,7 @@ export default function DevolucoesPage() {
 
           <section>
             <h2 className="font-display text-xl mb-3" style={{ color: '#F5F3EE' }}>Defeito de fabrico</h2>
-            <p>Se receber um produto com defeito, contacte-nos imediatamente em <a href="mailto:info@lionsocks.com" style={{ color: '#B8960C' }} className="underline underline-offset-2">info@lionsocks.com</a>. Substituímos sem custos adicionais.</p>
+            <p>Se receber um produto com defeito, contacte-nos imediatamente em <a href="mailto:info@lionsocks.pt" style={{ color: '#B8960C' }} className="underline underline-offset-2">info@lionsocks.pt</a>. Substituímos sem custos adicionais.</p>
           </section>
         </div>
 

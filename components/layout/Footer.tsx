@@ -151,11 +151,11 @@ export default function Footer() {
                 <ul className="footer-link-list">
                   <li>
                     <a
-                      href="mailto:hello@lionsocks.com"
+                      href="mailto:info@lionsocks.pt"
                       className="font-body transition-colors hover:text-gold gold-underline"
                       style={linkStyle}
                     >
-                      hello@lionsocks.com
+                      info@lionsocks.pt
                     </a>
                   </li>
                   <li>

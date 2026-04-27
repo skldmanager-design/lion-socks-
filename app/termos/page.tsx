@@ -17,7 +17,7 @@ export default function TermosPage() {
         <div className="space-y-8 font-body text-sm text-gray-700 leading-relaxed">
           <section>
             <h2 className="font-display text-xl text-gray-900 mb-3">1. Aceitação</h2>
-            <p>Ao aceder e utilizar o site lionsocks.com, aceita os presentes Termos e Condições. Se não concordar, pedimos que não utilize o site.</p>
+            <p>Ao aceder e utilizar o site lionsocks.pt, aceita os presentes Termos e Condições. Se não concordar, pedimos que não utilize o site.</p>
           </section>
 
           <section>
@@ -48,7 +48,7 @@ export default function TermosPage() {
           <section>
             <h2 className="font-display text-xl text-gray-900 mb-3">7. Contacto</h2>
             {/* TODO pré-launch: substituir NIF placeholder e morada pelos dados reais Valsport, Lda */}
-            <p>Valsport, Lda · NIF [POR PREENCHER] · [Morada por preencher] · <a href="mailto:info@lionsocks.com" className="text-gold underline underline-offset-2">info@lionsocks.com</a></p>
+            <p>Valsport, Lda · NIF [POR PREENCHER] · [Morada por preencher] · <a href="mailto:info@lionsocks.pt" className="text-gold underline underline-offset-2">info@lionsocks.pt</a></p>
           </section>
         </div>
       </div>

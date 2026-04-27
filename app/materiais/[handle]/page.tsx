@@ -18,8 +18,9 @@ const materialData = {
     family: 'Lello',
     article: 'a',
     tagline: 'O epítome do luxo em meias',
-    heroImage: 'https://placehold.co/1920x900/1a0e1a/B8960C?text=Seda&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/1a0e1a/B8960C?text=Textura+Seda&font=playfair-display',
+    // TODO pré-launch: substituir por fotografia editorial específica de seda (casulos, brilho fibra)
+    heroImage: '/home/seda-elegancia.jpg',
+    textureImage: '/home/seda-elegancia.jpg',
     color: '#8B7355',
     history: [
       'Utilizada pela realeza há mais de quatro mil anos, a seda continua a ser o epítome do luxo. Originária da China, onde o processo de sericultura era guardado como segredo de estado durante séculos, a seda chegou à Europa pela Rota da Seda e conquistou os ateliês dos maiores alfaiates do mundo.',
@@ -42,8 +43,9 @@ const materialData = {
     family: 'Ofício',
     article: 'o',
     tagline: 'Tradição têxtil. Leveza e brilho subtil.',
-    heroImage: 'https://placehold.co/1920x900/1a2e1a/B8960C?text=Fil+d%27Ecosse&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/1a2e1a/B8960C?text=Textura+Fil+d%27Ecosse&font=playfair-display',
+    // TODO pré-launch: substituir por fotografia editorial específica de algodão egípcio mercerizado
+    heroImage: '/home/colecao-classica.jpg',
+    textureImage: '/home/colecao-classica.jpg',
     color: '#4A6741',
     history: [
       "Algodão egípcio de fibra longa, mercerizado duas vezes num processo que lhe confere um brilho subtil e uma durabilidade excepcional. O nome vem da tradição têxtil escocesa — \"fil\" significa fio em francês, e as manufaturas escocesas do século XIX eram famosas pela qualidade do seu trabalho com algodão de longa fibra.",
@@ -66,8 +68,9 @@ const materialData = {
     family: 'Ribeira',
     article: 'a',
     tagline: 'Conforto termorregulador. Para todas as estações.',
-    heroImage: 'https://placehold.co/1920x900/2e2a1a/B8960C?text=La+Merino&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/2e2a1a/B8960C?text=Textura+La+Merino&font=playfair-display',
+    // TODO pré-launch: substituir por fotografia editorial específica de lã merino (ovelhas, fibra macro)
+    heroImage: '/home/hero-homem.jpg',
+    textureImage: '/home/hero-homem.jpg',
     color: '#6B5B45',
     history: [
       'Proveniente das ovelhas Merino da Austrália e Nova Zelândia, esta lã ultrafina é naturalmente termorreguladora — fresca no verão, quente no inverno. Com 18,5 microns de diâmetro, está abaixo do limiar de picada humana (tipicamente 22 microns), o que a torna suave ao toque mesmo para as peles mais sensíveis.',
@@ -90,8 +93,9 @@ const materialData = {
     family: 'Reserva',
     article: 'o',
     tagline: 'A fibra mais fina do mundo',
-    heroImage: 'https://placehold.co/1920x900/2a1a1a/B8960C?text=Cashmere&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/2a1a1a/B8960C?text=Textura+Cashmere&font=playfair-display',
+    // TODO pré-launch: substituir por fotografia editorial específica de cashmere (cabras Mongólia, fibra ultra-fina)
+    heroImage: '/home/edicoes-limitadas.jpg',
+    textureImage: '/home/edicoes-limitadas.jpg',
     color: '#8B6F47',
     history: [
       'O cashmere vem do subpêlo das cabras criadas nos planaltos da Mongólia e do norte da China — onde os invernos chegam a -40°C. Para sobreviverem, estas cabras desenvolvem uma segunda camada de pêlo, extremamente fina e densa, que é recolhida à mão na primavera durante a muda natural.',
@@ -114,8 +118,9 @@ const materialData = {
     family: 'Alma',
     article: 'o',
     tagline: 'A base honesta. Sem dramas.',
-    heroImage: 'https://placehold.co/1920x900/1a2a1a/B8960C?text=Algodao+Penteado&font=playfair-display',
-    textureImage: 'https://placehold.co/900x700/1a2a1a/B8960C?text=Textura+Algodao&font=playfair-display',
+    // TODO pré-launch: substituir por fotografia editorial específica de algodão penteado (penteação, fibra limpa)
+    heroImage: '/home/colecao-classica.jpg',
+    textureImage: '/home/colecao-classica.jpg',
     color: '#D5C9B1',
     history: [
       'Algodão de fibra longa, penteado — um processo que passa cada fibra por pentes finos que removem as fibras curtas e imperfeições. O que fica é um fio mais uniforme, mais macio, mais durável.',
