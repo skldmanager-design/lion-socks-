@@ -13,20 +13,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/loja/mulher',
     '/novidades',
     '/sale',
+    '/destaques',
     '/packs',
+    '/packs/build-your-own',
     '/lions-circle',
     '/sobre',
+    '/craft',
+    '/guide',
     '/contacto',
     '/envios',
+    '/devolucoes',
+    '/cuidados',
     '/guia-tamanhos',
     '/faq',
     '/privacidade',
+    '/termos',
+    '/cookies',
     '/pesquisa',
   ].map((path) => ({
     url: `${BASE_URL}${path}`,
     lastModified: now,
     changeFrequency: 'weekly' as const,
-    priority: path === '' ? 1.0 : 0.8,
+    priority: path === '' ? 1.0 : path.startsWith('/loja') || path.startsWith('/packs') ? 0.9 : 0.7,
   }))
 
   const productRoutes = products.map((p) => ({
@@ -50,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  const materialRoutes = ['seda', 'fil-d-ecosse', 'la-merino'].map((handle) => ({
+  const materialRoutes = ['seda', 'fil-d-ecosse', 'la-merino', 'cashmere', 'algodao-penteado'].map((handle) => ({
     url: `${BASE_URL}/materiais/${handle}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,

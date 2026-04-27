@@ -31,5 +31,29 @@ export default async function PackDetailPage({ params }: Props) {
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => !!p)
 
-  return <PackDetailClient bundle={bundle} products={bundleProducts} />
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: bundle.name,
+    description: bundle.description,
+    brand: { '@type': 'Brand', name: 'Lion Socks' },
+    offers: {
+      '@type': 'Offer',
+      url: `https://lionsocks.pt/packs/${bundle.handle}`,
+      priceCurrency: 'EUR',
+      price: bundle.price,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+    },
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PackDetailClient bundle={bundle} products={bundleProducts} />
+    </>
+  )
 }

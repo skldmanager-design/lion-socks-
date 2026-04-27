@@ -11,6 +11,7 @@ import Footer from '@/components/layout/Footer'
 import CartDrawer from '@/components/cart/CartDrawer'
 import ScrollToTop from '@/components/ui/ScrollToTop'
 import CookieConsent from '@/components/ui/CookieConsent'
+import OrganizationJsonLd from '@/components/seo/OrganizationJsonLd'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lionsocks.pt'),
@@ -94,6 +95,14 @@ export default function RootLayout({
   return (
     <html lang="pt-PT" className="h-full">
       <body className="min-h-full flex flex-col">
+        {/* Skip to content link — a11y, visível com Tab */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-gray-900 focus:text-white focus:px-4 focus:py-2 focus:rounded"
+        >
+          Saltar para o conteúdo
+        </a>
+        <OrganizationJsonLd />
         <ToastProvider>
         <AuthProvider>
         <CartProvider>
@@ -111,7 +120,7 @@ export default function RootLayout({
           <CartDrawer />
 
           {/* Main content */}
-          <main className="flex-1">
+          <main id="main" className="flex-1">
             {children}
           </main>
 
