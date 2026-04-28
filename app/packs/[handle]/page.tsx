@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { bundles, getBundleByHandle, products } from '@/lib/mock-data'
+import { siteConfig } from '@/lib/site-config'
 import PackDetailClient from './PackDetailClient'
 
 interface Props {
@@ -39,7 +40,7 @@ export default async function PackDetailPage({ params }: Props) {
     brand: { '@type': 'Brand', name: 'Lion Socks' },
     offers: {
       '@type': 'Offer',
-      url: `https://lionsocks.pt/packs/${bundle.handle}`,
+      url: `${siteConfig.url}/packs/${bundle.handle}`,
       priceCurrency: 'EUR',
       price: bundle.price,
       availability: 'https://schema.org/InStock',

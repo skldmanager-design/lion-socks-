@@ -12,9 +12,10 @@ import CartDrawer from '@/components/cart/CartDrawer'
 import ScrollToTop from '@/components/ui/ScrollToTop'
 import CookieConsent from '@/components/ui/CookieConsent'
 import OrganizationJsonLd from '@/components/seo/OrganizationJsonLd'
+import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lionsocks.pt'),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: 'Lion Socks — Meias Premium Feitas em Portugal',
     template: '%s | Lion Socks',
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_PT',
     alternateLocale: ['en_US', 'es_ES'],
-    url: 'https://lionsocks.pt',
+    url: siteConfig.url,
     siteName: 'Lion Socks',
     title: 'Lion Socks — Meias Premium Feitas em Portugal',
     description: 'Feitas para quem repara nos detalhes. Fio de escócia, merino, seda, cashmere. Linha dourada no punho.',
@@ -62,10 +63,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://lionsocks.pt',
+    canonical: siteConfig.url,
     languages: {
-      'pt-PT': 'https://lionsocks.pt',
-      'en': 'https://lionsocks.pt/en',
+      'pt-PT': siteConfig.url,
+      'en': `${siteConfig.url}/en`,
     },
   },
   manifest: '/manifest.webmanifest',

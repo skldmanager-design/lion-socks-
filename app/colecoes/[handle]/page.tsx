@@ -24,28 +24,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+// TODO pré-launch: substituir por fotografia editorial específica de cada colecção
+// Por agora reusamos as 4 hero images locais (já comprimidas em /public/home/)
 const collectionImages: Record<string, string> = {
-  'fil-d-ecosse':
-    'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1600&h=500&fit=crop&auto=format&q=80',
-  'la-merino':
-    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&h=500&fit=crop&auto=format&q=80',
-  seda: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=1600&h=500&fit=crop&auto=format&q=80',
-  executive:
-    'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1600&h=500&fit=crop&auto=format&q=80',
-  essentials:
-    'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=1600&h=500&fit=crop&auto=format&q=80',
-  novidades:
-    'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1600&h=500&fit=crop&auto=format&q=80',
-  ribeira:
-    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&h=500&fit=crop&auto=format&q=80',
-  oficio:
-    'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1600&h=500&fit=crop&auto=format&q=80',
-  lello:
-    'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=1600&h=500&fit=crop&auto=format&q=80',
-  reserva:
-    'https://images.unsplash.com/photo-1599447541321-b26dbaa68ae2?w=1600&h=500&fit=crop&auto=format&q=80',
-  alma:
-    'https://images.unsplash.com/photo-1528829954908-f2d5f927e1e1?w=1600&h=500&fit=crop&auto=format&q=80',
+  'fil-d-ecosse': '/home/colecao-classica.jpg',
+  'la-merino': '/home/hero-homem.jpg',
+  seda: '/home/seda-elegancia.jpg',
+  executive: '/home/edicoes-limitadas.jpg',
+  essentials: '/home/colecao-classica.jpg',
+  novidades: '/home/edicoes-limitadas.jpg',
+  ribeira: '/home/hero-homem.jpg',
+  oficio: '/home/colecao-classica.jpg',
+  lello: '/home/seda-elegancia.jpg',
+  reserva: '/home/edicoes-limitadas.jpg',
+  alma: '/home/colecao-classica.jpg',
 }
 
 export default async function ColecaoPage({ params }: Props) {

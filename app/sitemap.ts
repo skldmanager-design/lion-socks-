@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { products, bundles, collections } from '@/lib/mock-data'
+import { siteConfig } from '@/lib/site-config'
 
-const BASE_URL = 'https://lionsocks.pt'
+const BASE_URL = siteConfig.url
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

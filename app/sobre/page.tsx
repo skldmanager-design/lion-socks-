@@ -89,8 +89,9 @@ export default function SobrePage() {
                 borderRadius: '4px',
               }}
             >
+              {/* TODO pré-launch: substituir por fotografia real fábrica Sockland Porto */}
               <Image
-                src="https://images.unsplash.com/photo-1551601651-bc60f254d532?w=1200&h=750&fit=crop&auto=format&q=85"
+                src="/home/colecao-classica.jpg"
                 alt="Fábrica de meias no Porto — máquinas de 200 agulhas em produção"
                 fill
 
