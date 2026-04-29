@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { getProductsByCollection, products } from '@/lib/mock-data'
+import { getProductsByCollection, products } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { type Material, type SockType, type Pattern, type Size } from '@/lib/mock-data'
+import { type Material, type SockType, type Pattern, type Size } from '@/lib/catalog'
 
 export interface FilterState {
   materials: Material[]

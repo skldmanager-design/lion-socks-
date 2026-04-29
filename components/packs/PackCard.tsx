@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Package, ArrowRight } from 'lucide-react'
-import type { Bundle } from '@/lib/mock-data'
-import { products } from '@/lib/mock-data'
+import type { Bundle } from '@/lib/catalog'
+import { products } from '@/lib/catalog'
 import { formatPrice } from '@/lib/utils'
 
 interface PackCardProps {

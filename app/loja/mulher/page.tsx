@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getProductsByGender } from '@/lib/mock-data'
+import { getProductsByGender } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 
 export const metadata: Metadata = {
@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'Meias premium para mulher — conforto refinado, elegância natural.',
 }
 
-export default function MulherPage() {
-  const products = getProductsByGender('mulher')
+export default async function MulherPage() {
+  const products = await getProductsByGender('mulher')
 
   return (
     <div style={{ background: '#F5F3EE', minHeight: '100vh' }} className="pt-12 lg:pt-16 pb-20 lg:pb-28">

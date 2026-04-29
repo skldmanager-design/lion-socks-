@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { getProductsByCollection } from '@/lib/mock-data'
+import { getProductsByCollection } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 
 interface Props {
@@ -189,7 +189,7 @@ export default async function MaterialPage({ params }: Props) {
 
   if (!data) notFound()
 
-  const materialProducts = getProductsByCollection(data.collection)
+  const materialProducts = await getProductsByCollection(data.collection)
 
   return (
     <article>

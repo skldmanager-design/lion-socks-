@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import type { Bundle, Product } from '@/lib/mock-data'
+import type { Bundle, Product } from '@/lib/catalog'
 import { useCart } from '@/context/CartContext'
 import { formatPrice } from '@/lib/utils'
 

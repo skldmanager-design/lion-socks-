@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import { SlidersHorizontal, X } from 'lucide-react'
-import type { Product } from '@/lib/mock-data'
+import type { Product } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 import CollectionFilters, { type FilterState } from './CollectionFilters'
 

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { Check } from 'lucide-react'
-import type { Product } from '@/lib/mock-data'
+import type { Product } from '@/lib/catalog'
 import { formatPrice } from '@/lib/utils'
 import Badge from '@/components/ui/Badge'
 

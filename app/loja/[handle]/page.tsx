@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { products, getProductByHandle, getProductsByCollection } from '@/lib/mock-data'
+import { products, getProductByHandle, getProductsByCollection } from '@/lib/catalog'
 import { formatPrice } from '@/lib/utils'
 import ProductGallery from '@/components/product/ProductGallery'
 import ProductInfo from '@/components/product/ProductInfo'
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params
-  const product = getProductByHandle(handle)
+  const product = await getProductByHandle(handle)
   if (!product) return {}
 
   return {
@@ -35,12 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { handle } = await params
-  const product = getProductByHandle(handle)
+  const product = await getProductByHandle(handle)
 
   if (!product) notFound()
 
   // Related products: same material, exclude current
-  const related = getProductsByCollection(product.material)
+  const related = (await getProductsByCollection(product.material))
     .filter((p) => p.id !== product.id)
     .slice(0, 4)
 

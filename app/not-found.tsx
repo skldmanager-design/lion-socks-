@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 
 export default function NotFound() {

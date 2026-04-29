@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Search as SearchIcon, X } from 'lucide-react'
-import type { Product } from '@/lib/mock-data'
+import type { Product } from '@/lib/catalog'
 import { searchCatalog } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 

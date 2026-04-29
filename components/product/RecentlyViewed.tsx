@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRecentlyViewed } from '@/context/RecentlyViewedContext'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import ProductCard from './ProductCard'
 
 interface Props {

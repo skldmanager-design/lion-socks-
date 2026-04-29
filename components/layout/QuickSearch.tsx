@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search as SearchIcon, X } from 'lucide-react'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import { formatPrice } from '@/lib/utils'
 
 interface QuickSearchProps {

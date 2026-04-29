@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { getProductsByGender, products } from '@/lib/mock-data'
+import { getProductsByGender, products } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 
@@ -51,7 +51,7 @@ export default async function HomemSubcategoryPage({ params }: Props) {
 
   if (!config) notFound()
 
-  const filtered = getProductsByGender('homem').filter(config.filter)
+  const filtered = (await getProductsByGender('homem')).filter(config.filter)
 
   return (
     <div style={{ background: '#F5F3EE', minHeight: '100vh' }} className="pt-12 lg:pt-16 pb-20 lg:pb-28">

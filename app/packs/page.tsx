@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getFeaturedBundles } from '@/lib/mock-data'
+import { getFeaturedBundles } from '@/lib/catalog'
 import PackCard from '@/components/packs/PackCard'
 import BuildYourBox from '@/components/packs/BuildYourBox'
 
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     'Packs de meias premium Lion Socks em embalagem exclusiva. Quatro selecções curadas, cada uma com a nossa embalagem de apresentação.',
 }
 
-export default function PacksPage() {
-  const bundles = getFeaturedBundles()
+export default async function PacksPage() {
+  const bundles = await getFeaturedBundles()
 
   return (
     <div style={{ background: '#0A0A0A' }}>

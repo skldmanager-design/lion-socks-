@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import type { Product } from '@/lib/mock-data'
+import type { Product } from '@/lib/catalog'
 import { formatPrice } from '@/lib/utils'
 
 interface Props {

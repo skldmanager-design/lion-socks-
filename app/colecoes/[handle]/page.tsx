@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { collections, getProductsByCollection } from '@/lib/mock-data'
+import { collections, getProductsByCollection } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 
 interface Props {
@@ -46,7 +46,7 @@ export default async function ColecaoPage({ params }: Props) {
 
   if (!col) notFound()
 
-  const colProducts = getProductsByCollection(handle)
+  const colProducts = await getProductsByCollection(handle)
   const heroImage = collectionImages[handle] ?? collectionImages['novidades']
 
   return (

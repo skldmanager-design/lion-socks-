@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { bundles, getBundleByHandle, products } from '@/lib/mock-data'
+import { bundles, getBundleByHandle, products } from '@/lib/catalog'
 import { siteConfig } from '@/lib/site-config'
 import PackDetailClient from './PackDetailClient'
 
@@ -14,7 +14,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params
-  const bundle = getBundleByHandle(handle)
+  const bundle = await getBundleByHandle(handle)
   if (!bundle) return {}
   return {
     title: bundle.name,
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PackDetailPage({ params }: Props) {
   const { handle } = await params
-  const bundle = getBundleByHandle(handle)
+  const bundle = await getBundleByHandle(handle)
 
   if (!bundle) notFound()
 

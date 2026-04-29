@@ -1,32 +1,45 @@
-// Catalog service: tries Product-Pilot API, falls back to mock-data if unavailable.
-// This lets the site keep working if backend is down, during dev, or before full migration.
+/**
+ * Catalog service: chama o backend Product-Pilot e adapta para a shape do site.
+ * Fallback para mock-data quando a API falha (dev sem backend, etc.).
+ *
+ * Re-exporta tipos e dados legacy de mock-data para minimizar churn nas páginas.
+ * Páginas novas devem usar as funções async (getCatalog, getProduct, ...).
+ */
 
 import { apiGetSafe } from './api'
 import type { PLProduct, PLBundle } from './api-types'
-import { products as mockProducts, bundles as mockBundles, type Product, type Bundle } from './mock-data'
+import {
+  products as mockProducts,
+  bundles as mockBundles,
+  collections as mockCollections,
+  type Product,
+  type Bundle,
+  type Material,
+  type SockType,
+  type Pattern,
+  type Size,
+  type Gender,
+} from './mock-data'
 import { getFamilyByTag, type FamilySlug } from './families'
 import { getColorHex } from './color-map'
 
-// ─── Adapters: PL shape → existing site shape ──────────────────────────
-// Keep existing components working by mapping the API response to the legacy shape.
+// ─── Re-exports de tipos / constantes (compat com pages legacy) ──────────
+export type { Product, Bundle, Material, SockType, Pattern, Size, Gender }
+export const collections = mockCollections
 
-// Type tag → pattern mapping (Product-Pilot uses type tags like 'rib', 'plain', 'padrao-classico')
+// ─── Adapters: PL shape → site shape ──────────────────────────
+
 const TYPE_TAG_TO_PATTERN: Record<string, Product['pattern']> = {
-  plain: 'solid',
-  liso: 'solid',
-  rib: 'ribbed',
-  canelado: 'ribbed',
-  dots: 'pin-dot',
-  'pin-check': 'pin-dot',
+  plain: 'solid', liso: 'solid',
+  rib: 'ribbed', canelado: 'ribbed',
+  dots: 'pin-dot', 'pin-check': 'pin-dot',
   argyle: 'argyle',
   paisley: 'riscas',
   herringbone: 'herringbone',
 }
 
 function extractPattern(tags: string[]): Product['pattern'] {
-  for (const t of tags) {
-    if (TYPE_TAG_TO_PATTERN[t]) return TYPE_TAG_TO_PATTERN[t]
-  }
+  for (const t of tags) if (TYPE_TAG_TO_PATTERN[t]) return TYPE_TAG_TO_PATTERN[t]
   return 'solid'
 }
 
@@ -36,40 +49,39 @@ function extractType(tags: string[]): Product['type'] {
   return 'mid-calf'
 }
 
-function adaptPLProduct(p: PLProduct): Product {
-  const firstVariant = p.variants[0]
-  const sizes = Array.from(new Set(p.variants.map((v) => v.optionValues.Tamanho || v.optionValues.size || '')))
-    .filter(Boolean) as Array<'39-42' | '42-45' | '45-48'>
+function stripHtml(html: string | null): string {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+}
 
-  const color = firstVariant?.optionValues.Cor || firstVariant?.optionValues.color || ''
+function adaptPLProduct(p: PLProduct): Product {
+  const sizes = Array.from(new Set((p.variants || []).map((v) => v.size).filter(Boolean))) as Size[]
+  const firstVariant = p.variants?.[0]
+  const color = firstVariant?.color ?? ''
   const pattern = extractPattern(p.tags)
   const type = extractType(p.tags)
-
-  // Prefer family-derived material over p.material (for consistency with new naming)
   const family = getFamilyByTag(p.tags)
-  const material = (family?.materialHandle || p.material || 'fil-d-ecosse') as Product['material']
+  const material = (family?.materialHandle || 'fil-d-ecosse') as Product['material']
   const materialLabel = family?.material || (material === 'seda' ? 'Seda' : material === 'la-merino' ? 'Lã Merino' : "Fil d'Écosse")
-
+  const description = p.shortDescription || stripHtml(p.descriptionHtml)
   return {
     id: `pl-${p.id}`,
     handle: p.slug,
-    name: p.title,
-    description: p.description || '',
-    price: firstVariant ? firstVariant.priceCents / 100 : 0,
-    material,
-    materialLabel,
+    name: p.name.trim(),
+    description,
+    price: p.priceCents / 100,
+    material, materialLabel,
     type,
     typeLabel: type === 'over-the-calf' ? 'Cano Alto' : type === 'no-show' ? 'Invisível' : 'Mid-calf',
-    color,
-    colorHex: getColorHex(color),
+    color, colorHex: getColorHex(color),
     pattern,
     patternLabel: pattern === 'solid' ? 'Liso' : pattern === 'ribbed' ? 'Canelado' : pattern,
-    images: p.images.length ? p.images : [`/products/${p.slug}.svg`, `/products/${p.slug}.svg`],
-    sizes: sizes.length ? sizes as any : ['39-42','42-45','45-48'],
-    inStock: p.variants.some((v) => v.available),
+    images: p.images?.length ? p.images : [`/products/${p.slug}.svg`, `/products/${p.slug}.svg`],
+    sizes: sizes.length ? sizes : ['39-42','42-45','45-48'],
+    inStock: (p.variants || []).some((v) => (v.stockQuantity ?? 0) > 0),
     collections: p.tags,
     badge: p.flashSale ? 'Destaque' : undefined,
-    gender: (p.tags.includes('mulher') ? 'mulher' : 'homem') as Product['gender'],
+    gender: (p.tags?.includes('mulher') ? 'mulher' : 'homem') as Product['gender'],
   }
 }
 
@@ -92,24 +104,47 @@ function adaptPLBundle(b: PLBundle): Bundle {
   }
 }
 
-// ─── Public API ─────────────────────────────────────────────────────────
+// ─── API pública (async) ─────────────────────────────────────────────
 
 export async function getCatalog(): Promise<Product[]> {
-  const pl = await apiGetSafe<PLProduct[]>('/catalog', { revalidate: 60 })
+  const pl = await apiGetSafe<PLProduct[]>('/products', { revalidate: 60 })
   if (pl && pl.length > 0) return pl.map(adaptPLProduct)
   return mockProducts
 }
 
 export async function getProduct(slug: string): Promise<Product | null> {
-  const pl = await apiGetSafe<PLProduct>(`/catalog/${slug}`, { revalidate: 60 })
+  const pl = await apiGetSafe<PLProduct>(`/products/${slug}`, { revalidate: 60 })
   if (pl) return adaptPLProduct(pl)
   return mockProducts.find((p) => p.handle === slug) ?? null
 }
+
+export const getProductByHandle = getProduct
 
 export async function getBundles(): Promise<Bundle[]> {
   const pl = await apiGetSafe<PLBundle[]>('/bundles', { revalidate: 60 })
   if (pl && pl.length > 0) return pl.map(adaptPLBundle)
   return mockBundles
+}
+
+export async function getFeaturedBundles(): Promise<Bundle[]> {
+  const all = await getBundles()
+  return all.filter((b) => b.featured)
+}
+
+export async function getBundleByHandle(handle: string): Promise<Bundle | null> {
+  const all = await getBundles()
+  return all.find((b) => b.handle === handle) ?? null
+}
+
+export async function getProductsByCollection(handle: string): Promise<Product[]> {
+  const all = await getCatalog()
+  return all.filter((p) => p.collections.includes(handle))
+}
+
+export async function getProductsByGender(gender: Gender): Promise<Product[]> {
+  const all = await getCatalog()
+  if (gender === 'unisex') return all
+  return all.filter((p) => p.gender === gender || p.gender === 'unisex')
 }
 
 export async function getCatalogByFamily(familySlug: FamilySlug): Promise<Product[]> {
@@ -120,9 +155,8 @@ export async function getCatalogByFamily(familySlug: FamilySlug): Promise<Produc
 
 export async function searchCatalog(query: string): Promise<Product[]> {
   if (!query.trim()) return []
-  const pl = await apiGetSafe<PLProduct[]>(`/search?q=${encodeURIComponent(query)}`)
+  const pl = await apiGetSafe<PLProduct[]>(`/products?q=${encodeURIComponent(query)}`)
   if (pl) return pl.map(adaptPLProduct)
-  // Fallback: local search
   const q = query.toLowerCase()
   return mockProducts.filter((p) =>
     p.name.toLowerCase().includes(q) ||
@@ -131,3 +165,10 @@ export async function searchCatalog(query: string): Promise<Product[]> {
     p.patternLabel.toLowerCase().includes(q)
   )
 }
+
+// ─── Legacy: arrays directos (deprecated — preferir funções async) ──────
+// Usado por componentes client + páginas legacy que não foram migradas.
+// Quando todas as páginas estiverem migradas, podemos remover estes exports
+// e o ficheiro mock-data.ts pode ser apagado.
+export const products = mockProducts
+export const bundles = mockBundles

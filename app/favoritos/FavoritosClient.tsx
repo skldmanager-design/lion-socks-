@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { useWishlist } from '@/context/WishlistContext'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 
 export default function FavoritosClient() {

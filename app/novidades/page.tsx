@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getProductsByCollection } from '@/lib/mock-data'
+import { getProductsByCollection } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 
 export const metadata: Metadata = {
@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'As últimas chegadas à Lion Socks — descubra as novidades da coleção.',
 }
 
-export default function NovidadesPage() {
-  const products = getProductsByCollection('novidades')
+export default async function NovidadesPage() {
+  const products = await getProductsByCollection('novidades')
 
   return (
     <div style={{ background: '#F5F3EE', minHeight: '100vh' }} className="pt-12 lg:pt-16 pb-20 lg:pb-28">

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { Check, ChevronRight, Package, ShoppingBag } from 'lucide-react'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import { formatPrice, applyDiscount, cn } from '@/lib/utils'
 import { useCart } from '@/context/CartContext'
 import BoxProductPicker from './BoxProductPicker'

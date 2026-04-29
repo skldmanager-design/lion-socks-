@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import ProductCard from '@/components/product/ProductCard'
 import PortugalFlag from '@/components/ui/PortugalFlag'
 import ListaPrivadaSection from './ListaPrivadaSection'

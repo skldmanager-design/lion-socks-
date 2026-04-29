@@ -2,28 +2,36 @@
 
 export interface PLVariant {
   id: number
-  productId: number
-  sku: string
-  title: string               // e.g. "Preto / 42-45"
-  optionValues: Record<string, string> // e.g. { Cor: "Preto", Tamanho: "42-45" }
-  priceCents: number
-  compareAtPriceCents?: number | null
-  inventoryQuantity: number
-  available: boolean
-  imageUrl?: string | null
+  plProductId: number
+  size: string | null
+  color: string | null
+  sku: string | null
+  barcode: string | null
+  priceCents: number | null     // null = herda do produto
+  stockQuantity: number
+  imageUrl: string | null
+  active: boolean
 }
 
 export interface PLProduct {
   id: number
+  brandId: number
+  productId: number             // ref para o produto B2B na fábrica (Sockland)
+  name: string                  // nome PL (pode ser diferente do B2B)
   slug: string
-  title: string
-  description: string | null
-  images: string[]
+  descriptionHtml: string | null
+  shortDescription: string | null
+  priceCents: number            // preço base do produto
+  compareAtPriceCents: number | null
+  costCents: number | null
+  category: string | null       // ex: 'classic', 'sport'
   tags: string[]
-  material?: string | null
-  active: boolean
+  images: string[]              // paths /uploads/... ou URLs
+  seoTitle: string | null
+  seoDescription: string | null
+  status: 'activo' | 'rascunho' | 'arquivado'
   variants: PLVariant[]
-  // Flash sale override
+  // Flash sale override (opcional, set pelo backend quando aplicável)
   flashSale?: {
     endsAt: string
     discountPercent: number

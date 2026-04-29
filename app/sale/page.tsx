@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { products } from '@/lib/mock-data'
+import { products } from '@/lib/catalog'
 import CollectionGrid from '@/components/collection/CollectionGrid'
 
 export const metadata: Metadata = {

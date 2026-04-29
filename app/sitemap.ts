@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { products, bundles, collections } from '@/lib/mock-data'
+import { products, bundles, collections } from '@/lib/catalog'
 import { siteConfig } from '@/lib/site-config'
 
 const BASE_URL = siteConfig.url

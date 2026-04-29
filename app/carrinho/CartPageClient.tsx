@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Minus, Plus, X, ShoppingBag, CheckCircle2, Truck, ArrowRight, Package } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { formatPrice, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
-import { getFeaturedBundles } from '@/lib/mock-data'
+import type { Bundle } from '@/lib/catalog'
 import Button from '@/components/ui/Button'
 
 function FreeShippingBar({
@@ -46,7 +46,7 @@ function FreeShippingBar({
   )
 }
 
-export default function CartPageClient() {
+export default function CartPageClient({ featuredBundles }: { featuredBundles: Bundle[] }) {
   const {
     items,
     subtotal,
@@ -57,8 +57,6 @@ export default function CartPageClient() {
     removeItem,
     checkoutUrl,
   } = useCart()
-
-  const featuredBundles = getFeaturedBundles().slice(0, 2)
 
   const handleCheckout = () => {
     if (checkoutUrl) {

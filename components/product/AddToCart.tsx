@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Check } from 'lucide-react'
-import type { Product, Size } from '@/lib/mock-data'
+import type { Product, Size } from '@/lib/catalog'
 import { useCart } from '@/context/CartContext'
 import { useToast } from '@/context/ToastContext'
 import { formatPrice, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
