@@ -41,7 +41,7 @@ export default function Hero() {
           }
           /* Tipografia mobile — escala generosa, subtitle visível */
           .hero-eyebrow { font-size: 10px !important; margin-bottom: 14px !important; letter-spacing: 0.22em !important; }
-          .hero-title   { font-size: clamp(28px, 8vw, 44px) !important; line-height: 1.05 !important; margin-bottom: 14px !important; letter-spacing: -0.01em !important; }
+          .hero-title   { font-size: clamp(26px, 7vw, 36px) !important; line-height: 1.1 !important; margin-bottom: 14px !important; letter-spacing: -0.005em !important; }
           .hero-subtitle-desktop { display: none !important; }
           .hero-subtitle-mobile  { display: block !important; }
           .hero-cta     { font-size: 11px !important; padding: 14px 24px !important; min-height: 44px !important; letter-spacing: 0.18em !important; }
@@ -113,12 +113,12 @@ export default function Hero() {
               className="hero-title"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(40px, 7.5vw, 92px)',
+                fontSize: 'clamp(32px, 5.2vw, 64px)',
                 fontWeight: 400,
-                lineHeight: 0.98,
-                letterSpacing: '-0.015em',
+                lineHeight: 1.05,
+                letterSpacing: '-0.01em',
                 color: '#F5F3EE',
-                marginBottom: '32px',
+                marginBottom: '28px',
                 textShadow: '0 2px 24px rgba(0,0,0,0.55)',
                 overflowWrap: 'break-word',
                 textWrap: 'balance' as const,

@@ -186,7 +186,21 @@ export default function Footer() {
             <div className="footer-newsletter-form">
               <NewsletterForm />
             </div>
-            {/* Pledge "Nunca fazemos saldos" promovido para PledgeBand antes do Made-in-Portugal */}
+
+            <p
+              className="font-body italic footer-pledge"
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: 'clamp(11px, 1.3vw, 13px)',
+                color: '#B8960C',
+                lineHeight: 1.5,
+                borderTop: '1px solid rgba(184,150,12,0.2)',
+                paddingTop: 'clamp(10px, 1.5vw, 16px)',
+                marginTop: 'clamp(10px, 2vw, 24px)',
+              }}
+            >
+              Nunca fazemos saldos. O nosso preço é o preço justo, todo o ano.
+            </p>
           </div>
         </div>
       </div>
