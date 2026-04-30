@@ -105,10 +105,10 @@ export default function BuildYourBox() {
       <div className="bg-primary px-6 py-5">
         <div className="flex items-center gap-2 mb-1">
           <Package size={16} className="text-gold" />
-          <h3 className="font-display text-xl text-white">Monta a Tua Caixa</h3>
+          <h3 className="font-display text-xl text-white">Construa a sua caixa</h3>
         </div>
         <p className="text-cream/60 text-xs font-body">
-          Escolhe os teus pares favoritos e recebe numa embalagem premium com desconto.
+          Escolha os pares e receba numa embalagem premium, com desconto.
         </p>
       </div>
 

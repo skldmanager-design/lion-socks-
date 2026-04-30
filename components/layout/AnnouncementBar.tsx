@@ -3,29 +3,19 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
-// Priority: 1) Shipping, 2) Golden Line, 3) Heritage
-const MESSAGES = [
-  'Portes grátis acima de €49  ·  Entregas em 24h',
-  'A linha dourada no punho  ·  Para quem repara nos detalhes',
-  'Fabrico artesanal no Porto  ·  Merino, fio de escócia, seda, cashmere',
-]
+/**
+ * Announcement bar — UMA mensagem fixa.
+ * Casas premium não rotam announcement bars (CD #3.2).
+ */
+const MESSAGE = 'Envio grátis acima de €49  ·  Entregas em 24h em Portugal Continental'
 
 export default function AnnouncementBar() {
   const [visible, setVisible] = useState(true)
-  const [idx, setIdx] = useState(0)
 
   useEffect(() => {
     const dismissed = localStorage.getItem('lion_socks_announcement_dismissed')
     if (dismissed === 'true') setVisible(false)
   }, [])
-
-  useEffect(() => {
-    if (!visible) return
-    const interval = setInterval(() => {
-      setIdx((i) => (i + 1) % MESSAGES.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [visible])
 
   const handleClose = () => {
     localStorage.setItem('lion_socks_announcement_dismissed', 'true')
@@ -51,15 +41,10 @@ export default function AnnouncementBar() {
       `}</style>
       <div className="announce-inner flex items-center justify-center relative">
         <span
-          key={idx}
           className="announce-msg font-body uppercase"
-          style={{
-            color: '#B8960C',
-            fontWeight: 500,
-            animation: 'fadeIn 500ms ease',
-          }}
+          style={{ color: '#B8960C', fontWeight: 500 }}
         >
-          {MESSAGES[idx]}
+          {MESSAGE}
         </span>
 
         <button
@@ -82,12 +67,6 @@ export default function AnnouncementBar() {
           <X size={11} strokeWidth={1.5} />
         </button>
       </div>
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-2px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   )
 }

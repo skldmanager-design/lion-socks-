@@ -137,10 +137,10 @@ export default async function PacksPage() {
         <section id="build-your-box">
           <div className="flex items-baseline gap-3 mb-8">
             <h2 className="font-display text-gray-900" style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 400 }}>
-              Monta a Tua Caixa
+              Construa a sua caixa
             </h2>
             <p className="font-body text-gray-400" style={{ fontSize: '14px', fontWeight: 300 }}>
-              Escolhe os teus pares
+              Escolha os pares
             </p>
           </div>
 

@@ -63,10 +63,10 @@ export default function CartSummary() {
         >
           <Truck size={13} strokeWidth={1.5} />
           {hasFreeShipping ? (
-            <span>Envio gratuito incluído</span>
+            <span>Envio grátis incluído</span>
           ) : (
             <span>
-              Faltam <strong style={{ color: '#1a1a1a' }}>{formatPrice(amountToFreeShipping)}</strong> para envio gratuito
+              Faltam <strong style={{ color: '#1a1a1a' }}>{formatPrice(amountToFreeShipping)}</strong> para envio grátis
             </span>
           )}
         </div>

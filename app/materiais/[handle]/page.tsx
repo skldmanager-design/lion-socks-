@@ -18,6 +18,7 @@ const materialData = {
     family: 'Lello',
     article: 'a',
     tagline: 'O epítome do luxo em meias',
+    historyTitle: 'Quatro mil anos atrás, na China.',
     // TODO pré-launch: substituir por fotografia editorial específica de seda (casulos, brilho fibra)
     heroImage: '/home/seda-elegancia.jpg',
     textureImage: '/home/seda-elegancia.jpg',
@@ -25,7 +26,7 @@ const materialData = {
     history: [
       'Utilizada pela realeza há mais de quatro mil anos, a seda continua a ser o epítome do luxo. Originária da China, onde o processo de sericultura era guardado como segredo de estado durante séculos, a seda chegou à Europa pela Rota da Seda e conquistou os ateliês dos maiores alfaiates do mundo.',
       'Cada fio de seda é produzido por um único bicho-da-seda que tece um casulo contínuo de até 900 metros. A fibra resultante é naturalmente termorreguladora, hipoalergénica e possui um brilho característico que nenhuma fibra sintética consegue imitar — porque esse brilho vem da estrutura triangular da própria fibra, que refracta a luz como um prisma.',
-      'As nossas meias de seda são tecidas em teares de alta precisão, com uma contagem de fios que garante uma leveza quase impossível de sentir no pé. Ao mesmo tempo, a seda é surpreendentemente resistente — mais forte do que o aço pela mesma espessura. Um par para usar nos momentos que merecem o melhor, ou todos os dias, se assim o decidir.',
+      'As nossas meias de seda são tecidas em teares de alta precisão, com uma contagem de fios que garante uma leveza quase impossível de sentir no pé. A seda tem ainda uma resistência à tracção que poucas fibras naturais igualam — daí ter sido usada, durante séculos, em paraquedas e roupa militar. Um par para usar nos momentos que merecem o melhor, ou todos os dias, se assim o decidir.',
     ],
     properties: [
       { label: 'Termorreguladora', desc: 'Fresca no calor, quente no frio' },
@@ -43,6 +44,7 @@ const materialData = {
     family: 'Ofício',
     article: 'o',
     tagline: 'Tradição têxtil. Leveza e brilho subtil.',
+    historyTitle: 'Ao longo do Nilo. Pelas mãos da Escócia.',
     // TODO pré-launch: substituir por fotografia editorial específica de algodão egípcio mercerizado
     heroImage: '/home/colecao-classica.jpg',
     textureImage: '/home/colecao-classica.jpg',
@@ -68,6 +70,7 @@ const materialData = {
     family: 'Ribeira',
     article: 'a',
     tagline: 'Conforto termorregulador. Para todas as estações.',
+    historyTitle: 'Nas pastagens da Austrália e Nova Zelândia.',
     // TODO pré-launch: substituir por fotografia editorial específica de lã merino (ovelhas, fibra macro)
     heroImage: '/home/hero-homem.jpg',
     textureImage: '/home/hero-homem.jpg',
@@ -93,6 +96,7 @@ const materialData = {
     family: 'Reserva',
     article: 'o',
     tagline: 'A fibra mais fina do mundo',
+    historyTitle: 'A −40°C, nos planaltos da Mongólia.',
     // TODO pré-launch: substituir por fotografia editorial específica de cashmere (cabras Mongólia, fibra ultra-fina)
     heroImage: '/home/edicoes-limitadas.jpg',
     textureImage: '/home/edicoes-limitadas.jpg',
@@ -117,15 +121,16 @@ const materialData = {
     name: 'Algodão Penteado',
     family: 'Alma',
     article: 'o',
-    tagline: 'A base honesta. Sem dramas.',
+    tagline: 'A base honesta. Sem ostentação.',
+    historyTitle: 'Sem origem mítica. Apenas fibra longa, bem escolhida.',
     // TODO pré-launch: substituir por fotografia editorial específica de algodão penteado (penteação, fibra limpa)
     heroImage: '/home/colecao-classica.jpg',
     textureImage: '/home/colecao-classica.jpg',
     color: '#D5C9B1',
     history: [
       'Algodão de fibra longa, penteado — um processo que passa cada fibra por pentes finos que removem as fibras curtas e imperfeições. O que fica é um fio mais uniforme, mais macio, mais durável.',
-      'O algodão penteado não tem o glamour do merino nem o brilho da seda, mas é o material que vestes sem pensar e que nunca te desilude. É a base honesta de um guarda-roupa bem construído — aquele par que usas 200 dias por ano e continua a aguentar-se.',
-      'Não encolhe, não deforma, não perde cor. Tricotado nas nossas máquinas com acabamento hand-linked na biqueira. A essência de uma boa meia: sem ruído, sem compromissos, sem exageros.',
+      'O algodão penteado não tem o glamour do merino nem o brilho da seda, mas é o material que se veste sem pensar e que nunca desilude. É a base honesta de um guarda-roupa bem construído — aquele par para usar 200 dias por ano que continua a aguentar-se.',
+      'Não encolhe, não deforma, não perde cor. Tricotado nas nossas máquinas com acabamento hand-linked na biqueira. A essência de uma boa meia: sem ostentação, sem atalhos, sem ruído.',
     ],
     properties: [
       { label: 'Fibra longa', desc: 'Mais suave e resistente' },
@@ -159,21 +164,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // ─── Property card ─────────────────────────────────────────────────────────
 
+/**
+ * PropertyCard — refeito sem o anti-padrão "border-left dourado" (CD #8.3).
+ * Bullet circle dourado de 6px antes do label + sub-divisor de 24px abaixo,
+ * fundo branco puro. Tipografia hierárquica clean.
+ */
 function PropertyCard({ label, desc }: { label: string; desc: string }) {
   return (
     <div
-      className="p-5 transition-colors duration-200"
-      style={{ borderLeft: '2px solid #B8960C', background: '#fafafa' }}
+      className="p-6 transition-all duration-300"
+      style={{ background: '#FFFFFF', borderTop: '1px solid rgba(10,10,10,0.06)' }}
     >
+      <div className="flex items-center gap-2 mb-3">
+        <span
+          aria-hidden
+          style={{
+            width: '6px',
+            height: '6px',
+            borderRadius: '50%',
+            background: '#B8960C',
+            display: 'inline-block',
+            flexShrink: 0,
+          }}
+        />
+        <p
+          className="font-body uppercase"
+          style={{ fontSize: '11px', letterSpacing: '0.14em', fontWeight: 500, color: '#0A0A0A' }}
+        >
+          {label}
+        </p>
+      </div>
+      <div style={{ width: '24px', height: '1px', background: '#B8960C', marginBottom: '12px' }} />
       <p
-        className="font-body uppercase mb-2"
-        style={{ fontSize: '11px', letterSpacing: '0.12em', fontWeight: 500, color: '#1a1a1a' }}
-      >
-        {label}
-      </p>
-      <p
-        className="font-body text-gray-500 leading-relaxed"
-        style={{ fontSize: '13px', fontWeight: 300 }}
+        className="font-body text-gray-600 leading-relaxed"
+        style={{ fontSize: '13.5px', fontWeight: 400 }}
       >
         {desc}
       </p>
@@ -207,12 +231,30 @@ export default async function MaterialPage({ params }: Props) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pb-14 lg:pb-20 w-full">
           <p className="text-gold text-[10px] tracking-[0.45em] uppercase font-body mb-4">
-            {data.name}
+            Família · {data.family}
           </p>
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl text-white mb-4 leading-tight">
-            {data.family}
+          <h1
+            className="font-display text-white mb-4"
+            style={{
+              fontSize: 'clamp(48px, 8vw, 96px)',
+              fontWeight: 400,
+              lineHeight: 0.98,
+              letterSpacing: '-0.015em',
+              textWrap: 'balance' as const,
+            }}
+          >
+            {data.name}
           </h1>
-          <p className="text-cream/70 font-body text-base sm:text-lg max-w-lg leading-relaxed">
+          <p
+            className="font-body italic text-cream/75"
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(15px, 1.6vw, 19px)',
+              fontWeight: 400,
+              maxWidth: '32rem',
+              lineHeight: 1.5,
+            }}
+          >
             {data.tagline}
           </p>
         </div>
@@ -227,8 +269,17 @@ export default async function MaterialPage({ params }: Props) {
             <p className="text-gold text-[10px] tracking-[0.4em] uppercase font-body mb-4">
               A História
             </p>
-            <h2 className="font-display text-3xl lg:text-4xl text-gray-900 mb-8 leading-snug">
-              De onde vem a excelência
+            <h2
+              className="font-display text-gray-900 mb-8"
+              style={{
+                fontSize: 'clamp(26px, 3.2vw, 40px)',
+                fontWeight: 400,
+                lineHeight: 1.1,
+                letterSpacing: '-0.005em',
+                textWrap: 'balance' as const,
+              }}
+            >
+              {data.historyTitle}
             </h2>
 
             <div className="space-y-5">
@@ -251,8 +302,6 @@ export default async function MaterialPage({ params }: Props) {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-            {/* Decorative corner */}
-            <div className="absolute -bottom-3 -right-3 w-20 h-20 border border-gold opacity-30 hidden lg:block" />
           </div>
         </div>
       </section>

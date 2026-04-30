@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Package, RotateCcw, Shield } from 'lucide-react'
+import { Package, RotateCcw } from 'lucide-react'
 import type { Product } from '@/lib/catalog'
 import { products as allProducts } from '@/lib/catalog'
 import Badge from '@/components/ui/Badge'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import AddToCart from './AddToCart'
+import { ReviewsSummary } from './ProductReviews'
 import { cn, formatPrice, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
 
 // Material → composition copy. Lookup beats a 3-deep ternary.
@@ -26,24 +27,19 @@ const MATERIAL_COMPOSITION: Record<string, string> = {
 
 interface ProductInfoProps {
   product: Product
+  activeColor?: string
+  onColorChange?: (color: string) => void
 }
 
 const accordionItems = (product: Product) => [
   {
-    title: 'Materiais & Composição',
-    content: `Este par é fabricado em ${product.materialLabel} — ${
-      MATERIAL_COMPOSITION[product.material] ?? MATERIAL_COMPOSITION['algodao-penteado']
-    }`,
-  },
-  {
-    title: 'Cuidados & Lavagem',
-    content:
-      'Lavar à mão ou em programa delicados a 30°C. Não usar lixívia. Não torcer. Secar na horizontal. Não secar em máquina. Para meias de seda, recomendamos sempre lavagem à mão.',
-  },
-  {
-    title: 'Envios & Devoluções',
-    content:
-      `Envio gratuito em compras acima de €${FREE_SHIPPING_THRESHOLD}. Para encomendas abaixo, o custo de envio é €3,50. Prazo de entrega: 1–3 dias úteis para Portugal Continental. Devoluções gratuitas no prazo de 30 dias, produto não usado e embalagem original.`,
+    title: 'Detalhes',
+    content: [
+      `**Composição.** ${MATERIAL_COMPOSITION[product.material] ?? MATERIAL_COMPOSITION['algodao-penteado']}`,
+      `**Cuidados.** Lavar à mão ou programa delicado a 30°C. Não usar lixívia, não torcer. Secar na horizontal.`,
+      `**Envio.** Gratuito acima de €${FREE_SHIPPING_THRESHOLD}; €3,50 abaixo. Entrega 1–3 dias úteis em Portugal Continental.`,
+      `**Devoluções.** 30 dias, produto não usado, embalagem original.`,
+    ].join('\n\n'),
   },
 ]
 
@@ -75,25 +71,36 @@ function AccordionItem({ title, content }: { title: string; content: string }) {
         className="overflow-hidden transition-all duration-300"
         style={{ maxHeight: open ? '600px' : '0' }}
       >
-        <p
-          className="font-body text-gray-600 pb-4"
-          style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.8 }}
-        >
-          {content}
-        </p>
+        <div className="font-body text-gray-600 pb-4 space-y-3" style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.8 }}>
+          {content.split('\n\n').map((para, i) => (
+            <p key={i}>
+              {para.split(/(\*\*[^*]+\*\*)/g).map((chunk, j) =>
+                chunk.startsWith('**') && chunk.endsWith('**')
+                  ? <strong key={j} className="font-medium text-gray-900">{chunk.slice(2, -2)}</strong>
+                  : <span key={j}>{chunk}</span>
+              )}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
-export default function ProductInfo({ product }: ProductInfoProps) {
-  const siblings = allProducts.filter(
-    (p) =>
-      p.name === product.name &&
-      p.material === product.material &&
-      p.pattern === product.pattern &&
-      p.type === product.type,
-  )
+export default function ProductInfo({ product, activeColor, onColorChange }: ProductInfoProps) {
+  // 1) Se o produto tem variants do backend (colorOptions), usa-as.
+  // 2) Caso contrário (mock-data legacy), procura siblings por nome+material+pattern.
+  const colorOptions = product.colorOptions ?? []
+  const siblings = colorOptions.length === 0
+    ? allProducts.filter(
+        (p) =>
+          p.name === product.name &&
+          p.material === product.material &&
+          p.pattern === product.pattern &&
+          p.type === product.type,
+      )
+    : []
+  const currentColor = activeColor ?? colorOptions[0]?.color ?? product.color
 
   return (
     <div className="space-y-5">
@@ -131,21 +138,45 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {formatPrice(product.price)}
       </p>
 
-      {/* Color picker — siblings (same name + material + pattern, different color) */}
-      <div>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="font-body uppercase text-gray-400"
-            style={{ fontSize: '10px', letterSpacing: '0.15em' }}
-          >
-            Cor:
-          </span>
-          <span className="font-body text-gray-700" style={{ fontSize: '13px', fontWeight: 400 }}>
-            {product.color}
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {siblings.map((s) => {
+      <ReviewsSummary slug={product.handle} />
+
+      {/* Color picker */}
+      {(colorOptions.length > 0 || siblings.length > 1) && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="font-body uppercase text-gray-400" style={{ fontSize: '10px', letterSpacing: '0.15em' }}>Cor:</span>
+            <span className="font-body text-gray-700" style={{ fontSize: '13px', fontWeight: 500 }}>{currentColor}</span>
+            <span className="font-body text-gray-400" style={{ fontSize: '11px' }}>· {colorOptions.length || siblings.length} {(colorOptions.length || siblings.length) === 1 ? 'cor' : 'cores'}</span>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {colorOptions.length > 0 ? (
+              colorOptions.map((opt) => {
+                const active = opt.color === currentColor
+                return (
+                  <button
+                    key={opt.color}
+                    type="button"
+                    onClick={() => onColorChange?.(opt.color)}
+                    aria-label={opt.color}
+                    title={opt.color}
+                    aria-pressed={active}
+                    style={{
+                      display: 'inline-block',
+                      height: '16px',
+                      width: '16px',
+                      borderRadius: '50%',
+                      backgroundColor: opt.colorHex,
+                      border: active ? '1.5px solid #B8960C' : '1px solid rgba(0,0,0,0.18)',
+                      boxShadow: active ? '0 0 0 2px rgba(184,150,12,0.20)' : 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      transition: 'all 160ms ease',
+                    }}
+                  />
+                )
+              })
+            ) : (
+              siblings.map((s) => {
                 const active = s.id === product.id
                 return (
                   <Link
@@ -155,24 +186,25 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                     title={s.color}
                     style={{
                       display: 'inline-block',
-                      height: '44px',
-                      width: '44px',
+                      height: '16px',
+                      width: '16px',
                       borderRadius: '50%',
                       backgroundColor: s.colorHex,
-                      border: active ? '2px solid #B8960C' : '1px solid rgba(0,0,0,0.15)',
-                      outline: active ? '1px solid #B8960C' : 'none',
-                      outlineOffset: '2px',
-                      transition: 'all 200ms ease',
+                      border: active ? '1.5px solid #B8960C' : '1px solid rgba(0,0,0,0.18)',
+                      boxShadow: active ? '0 0 0 2px rgba(184,150,12,0.20)' : 'none',
+                      transition: 'all 160ms ease',
                     }}
                   />
                 )
-              })}
+              })
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Add to cart — BEFORE description (build desire, then justify) */}
       <div className="pt-2">
-        <AddToCart product={product} />
+        <AddToCart product={product} activeColor={currentColor} />
       </div>
 
       {/* Trust badges — immediately after CTA */}
@@ -181,9 +213,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '16px' }}
       >
         {[
-          { Icon: Package, text: `Envio grátis +€${FREE_SHIPPING_THRESHOLD}` },
-          { Icon: RotateCcw, text: 'Devoluções 30 dias' },
-          { Icon: Shield, text: 'Garantia de qualidade' },
+          { Icon: Package, text: `Envio grátis acima de €${FREE_SHIPPING_THRESHOLD}` },
+          { Icon: RotateCcw, text: 'Devolução em 30 dias' },
         ].map(({ Icon, text }) => (
           <div key={text} className="flex items-center gap-1.5">
             <Icon size={13} strokeWidth={1.5} style={{ color: '#B8960C' }} />

@@ -523,24 +523,24 @@ function PacksSection() {
 function EditorialCategories() {
   const categories = [
     {
-      title: 'Everyday',
-      subtitle: 'Os que vestes sem pensar.',
+      title: 'Diário',
+      subtitle: 'O par que se veste sem pensar.',
       href: '/colecoes/oficio',
       img: '/home/colecao-classica.jpg',
       span: 'lg:col-span-1 lg:row-span-2',
       tall: true,
     },
     {
-      title: 'Evening',
-      subtitle: 'Quando os detalhes falam.',
+      title: 'Cerimónia',
+      subtitle: 'Quando o detalhe importa.',
       href: '/colecoes/lello',
       img: '/home/seda-elegancia.jpg',
       span: 'lg:col-span-1',
       tall: false,
     },
     {
-      title: 'Signature',
-      subtitle: 'Raro. Por definição.',
+      title: 'Reserva',
+      subtitle: 'Raro, por natureza.',
       href: '/colecoes/reserva',
       img: '/home/edicoes-limitadas.jpg',
       span: 'lg:col-span-1',
@@ -619,7 +619,7 @@ function EditorialCategories() {
                 }}
                 className="group-hover:tracking-widest"
                 >
-                  Descobrir →
+                  Ver a colecção →
                 </span>
               </div>
             </Link>
@@ -734,8 +734,59 @@ export default function HomeSections() {
       <MateriaisSection />
       <ListaPrivadaSection />
       <SignatureSection />
+      <PledgeBand />
       <MadeInPortugalBar />
     </>
+  )
+}
+
+/* ─── Pledge Band — promove "Nunca fazemos saldos" do footer (CD #2.6) ───── */
+
+function PledgeBand() {
+  return (
+    <section
+      style={{
+        background: '#0A0A0A',
+        padding: 'clamp(40px, 6vw, 64px) 0',
+        borderTop: '1px solid rgba(184,150,12,0.18)',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '880px',
+          margin: '0 auto',
+          padding: '0 clamp(20px, 4vw, 40px)',
+          textAlign: 'center',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: 'clamp(9px, 1vw, 11px)',
+            letterSpacing: '0.32em',
+            textTransform: 'uppercase',
+            color: '#B8960C',
+            fontWeight: 500,
+            marginBottom: 'clamp(14px, 2vw, 22px)',
+          }}
+        >
+          O Nosso Compromisso
+        </p>
+        <p
+          style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontStyle: 'italic',
+            fontSize: 'clamp(20px, 2.8vw, 30px)',
+            fontWeight: 400,
+            lineHeight: 1.3,
+            color: '#F5F3EE',
+            textWrap: 'balance' as const,
+          }}
+        >
+          Nunca fazemos saldos. O preço é o mesmo em Janeiro e em Dezembro.
+        </p>
+      </div>
+    </section>
   )
 }
 

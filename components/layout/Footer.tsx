@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Lock, Truck, RotateCcw, Shield } from 'lucide-react'
+import { Lock, Truck, RotateCcw } from 'lucide-react'
 import NewsletterForm from './NewsletterForm'
 import PortugalFlag from '@/components/ui/PortugalFlag'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
@@ -186,21 +186,7 @@ export default function Footer() {
             <div className="footer-newsletter-form">
               <NewsletterForm />
             </div>
-
-            <p
-              className="font-body italic footer-pledge"
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(11px, 1.3vw, 13px)',
-                color: '#B8960C',
-                lineHeight: 1.5,
-                borderTop: '1px solid rgba(184,150,12,0.2)',
-                paddingTop: 'clamp(10px, 1.5vw, 16px)',
-                marginTop: 'clamp(10px, 2vw, 24px)',
-              }}
-            >
-              Nunca fazemos saldos. O nosso preço é o preço justo, todo o ano.
-            </p>
+            {/* Pledge "Nunca fazemos saldos" promovido para PledgeBand antes do Made-in-Portugal */}
           </div>
         </div>
       </div>
@@ -268,9 +254,8 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-body" style={{ color: '#6B6B6B' }}>
             {[
               { Icon: Lock, text: 'Pagamento seguro SSL' },
-              { Icon: Truck, text: `Envio grátis +€${FREE_SHIPPING_THRESHOLD}` },
+              { Icon: Truck, text: `Envio grátis acima de €${FREE_SHIPPING_THRESHOLD}` },
               { Icon: RotateCcw, text: 'Devolução em 30 dias' },
-              { Icon: Shield, text: 'Garantia de qualidade' },
             ].map(({ Icon, text }) => (
               <span key={text} className="flex items-center gap-1.5">
                 <Icon size={12} strokeWidth={1.5} style={{ color: '#B8960C' }} />
