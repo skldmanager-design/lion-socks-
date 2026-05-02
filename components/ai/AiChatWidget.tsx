@@ -1,44 +1,121 @@
 'use client'
 
-import { useState, useRef, useEffect, useMemo } from 'react'
-import { MessageCircle, X, ArrowRight } from 'lucide-react'
+import { useState, useRef, useEffect, useMemo, Fragment } from 'react'
+import { MessageCircle, X, ArrowRight, Mail } from 'lucide-react'
 import { apiPost, getToken } from '@/lib/api'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
+  /** chips de follow-up para mostrar SOB esta mensagem (assistente apenas) */
+  followUps?: FollowUp[]
+}
+
+interface FollowUp {
+  label: string
+  reply: string
+  followUps?: FollowUp[]
 }
 
 const STORAGE_KEY = 'lion-socks-cs-history'
 const HISTORY_LIMIT = 50
+const ESCALATION_THRESHOLD = 4 // após 4+ trocas, mostra CTA email permanente no fundo
 
-/* ─── Quick replies (welcome state) ───────────────────────────────────────── */
+/* ─── Quick replies (welcome state) — todas com follow-ups contextuais ──── */
 
-const QUICK_REPLIES: Array<{ label: string; reply: string }> = [
+const QUICK_REPLIES: FollowUp[] = [
   {
     label: 'Tamanhos',
     reply:
-      'Os tamanhos Lion Socks são em três cortes — 39–42, 42–45, 45–48. Se estiver entre dois, recomendamos sempre o maior. Quer-me dizer o seu número?',
+      'Os tamanhos Lion Socks são em três cortes — 39–42, 42–45, 45–48. Se estiver entre dois, recomendamos sempre o maior. Pode também consultar a [tabela de tamanhos completa](/guia-tamanhos).',
+    followUps: [
+      {
+        label: 'Como medir o pé?',
+        reply:
+          'Coloque o pé descalço sobre uma folha A4, marque a ponta do dedo maior e o calcanhar, e meça a distância em cm. Some 0,5 cm para folga natural. O nosso [guia de tamanhos](/guia-tamanhos) inclui tabela de conversão EU/UK/US.',
+      },
+      {
+        label: 'Estou entre dois tamanhos',
+        reply:
+          'Recomendamos sempre o tamanho maior — as nossas meias têm elasticidade natural e adaptam-se ao pé. O risco é uma meia ligeiramente folgada, nunca apertada (que seria desconfortável e degrada o tecido).',
+      },
+      {
+        label: 'Não me adapta — posso trocar?',
+        reply:
+          'Claro. Tem 30 dias para troca gratuita por outro tamanho. A meia tem de estar por usar e na embalagem original. Pode iniciar em [Devoluções](/conta/devolucoes) ou escrever para info@lionsocks.pt.',
+      },
+    ],
   },
   {
     label: 'Materiais',
     reply:
-      'Trabalhamos cinco fibras: Fio de Escócia, Lã Merino, Seda, Cashmere, Algodão Penteado. Quer saber qual lhe convém para uma ocasião em particular?',
+      'Trabalhamos cinco fibras — Fio de Escócia, Lã Merino, Seda, Cashmere e Algodão Penteado. Cada uma tem o seu lugar. Pode ler a história de cada material em [Materiais](/guide).',
+    followUps: [
+      {
+        label: 'Qual material para o Inverno?',
+        reply:
+          'Para Inverno recomendamos a [Lã Merino](/materiais/la-merino) (fibra termorreguladora — quente sem sobreaquecer) ou o [Cashmere](/materiais/cashmere) (oito vezes mais isolante que lã comum, topo da colecção).',
+      },
+      {
+        label: 'Diferença entre Merino e Cashmere',
+        reply:
+          'Lã Merino: fibra ultra-fina (18,5 microns), termorreguladora, durável, ideal para uso diário no Inverno. Cashmere: subpêlo de cabra recolhido à mão, oito vezes mais isolante, suavidade superior — material de excepção. Pode ver os pares em [Reserva — Cashmere](/colecoes/reserva).',
+      },
+      {
+        label: 'O que é Fio de Escócia?',
+        reply:
+          'Algodão egípcio de fibra longa, mercerizado duas vezes — processo que cria brilho subtil e durabilidade excepcional. Leve, respirável, próprio para todas as estações. Veja a colecção em [Ofício — Fio de Escócia](/materiais/fil-d-ecosse).',
+      },
+    ],
   },
   {
     label: 'Encomenda',
     reply:
-      'Posso ajudar a localizar uma encomenda. Tem o número de encomenda à mão? (Aparece no email de confirmação.)',
+      'Posso ajudar a localizar uma encomenda. Tem o número à mão? Aparece no email de confirmação. Pode também ver o estado em tempo real na [sua conta](/conta/encomendas).',
+    followUps: [
+      {
+        label: 'Não recebi confirmação',
+        reply:
+          'Verifique a pasta de spam — o email vem de info@lionsocks.pt. Se passaram mais de 30 minutos sem chegar, escreva-nos para info@lionsocks.pt com o nome e morada usados na compra que recuperamos a encomenda.',
+      },
+      {
+        label: 'Quero alterar a morada',
+        reply:
+          'Se a encomenda ainda não foi expedida, conseguimos alterar. Escreva imediatamente para info@lionsocks.pt com o número de encomenda e a nova morada. Após expedição (24h após confirmação), só os CTT podem redireccionar.',
+      },
+      {
+        label: 'Onde está a minha encomenda?',
+        reply:
+          'Acompanhe em tempo real em [As minhas encomendas](/conta/encomendas) — vai ter o link de tracking dos CTT assim que sair do Porto. Prazo médio: 1–3 dias úteis para Continente, 3–5 para Ilhas.',
+      },
+    ],
   },
   {
     label: 'Devolução',
     reply:
-      'Aceitamos devoluções até 30 dias após a entrega, sem custos para Portugal Continental. Quer iniciar uma devolução?',
+      'Aceitamos devoluções até 30 dias após a entrega, sem custos para Portugal Continental. A meia tem de estar por usar e na embalagem original. Pode iniciar em [Devoluções](/conta/devolucoes).',
+    followUps: [
+      {
+        label: 'Como funciona o reembolso?',
+        reply:
+          'Após recebermos a devolução e validarmos as condições (24–48h), o reembolso é processado no método de pagamento original em até 14 dias úteis. Pode optar por crédito de loja (processo imediato, 5% bónus) — ver [Crédito](/conta/credito).',
+      },
+      {
+        label: 'Posso trocar por outro tamanho?',
+        reply:
+          'Pode. A troca por tamanho é gratuita e prioritária — enviamos o novo par antes mesmo de recebermos o original (mediante autorização de cartão). Inicie em [Devoluções → Troca de tamanho](/conta/devolucoes).',
+      },
+      {
+        label: 'Política completa',
+        reply:
+          'A política integral está em [Devoluções & Reembolsos](/devolucoes). Resumo: 30 dias, sem custos em Continente, troca gratuita por tamanho, reembolso em 14 dias úteis.',
+      },
+    ],
   },
   {
     label: 'Falar com a equipa',
     reply:
-      'Com todo o gosto. Escreva-nos para info@lionsocks.pt — respondemos em 24h úteis.',
+      'Com todo o gosto. Escreva-nos para [info@lionsocks.pt](mailto:info@lionsocks.pt) — respondemos em 24 horas úteis. Se preferir, pode usar também o [formulário de contacto](/contacto).',
   },
 ]
 
@@ -56,7 +133,9 @@ function loadHistory(): Message[] {
 function saveHistory(h: Message[]) {
   if (typeof window === 'undefined') return
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(h.slice(-HISTORY_LIMIT)))
+    // Não persistimos os followUps no storage — recriam-se ao falar com o assistente
+    const stripped = h.map(({ role, content }) => ({ role, content }))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stripped.slice(-HISTORY_LIMIT)))
   } catch {}
 }
 
@@ -66,6 +145,50 @@ function getGreeting(): string {
   if (h < 12) return 'Bom dia'
   if (h < 20) return 'Boa tarde'
   return 'Boa noite'
+}
+
+/**
+ * Render mínimo de markdown links: `[texto](url)` ou `[texto](mailto:...)`.
+ * Tudo o resto fica plain text. Para evitar XSS, não permitimos HTML.
+ */
+function renderInlineMarkdown(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = []
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  let key = 0
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(<Fragment key={key++}>{text.slice(lastIndex, match.index)}</Fragment>)
+    }
+    const [, label, href] = match
+    const isExternal = href.startsWith('http')
+    const isMail = href.startsWith('mailto:')
+    parts.push(
+      <a
+        key={key++}
+        href={href}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        style={{
+          color: '#B8960C',
+          textDecoration: 'underline',
+          textUnderlineOffset: '2px',
+          fontWeight: 500,
+        }}
+      >
+        {label}
+        {isExternal && ' ↗'}
+        {isMail && ''}
+      </a>,
+    )
+    lastIndex = match.index + match[0].length
+  }
+  if (lastIndex < text.length) {
+    parts.push(<Fragment key={key++}>{text.slice(lastIndex)}</Fragment>)
+  }
+  return parts
 }
 
 /* ─── Component ────────────────────────────────────────────────────────────── */
@@ -79,13 +202,11 @@ export default function AiChatWidget() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Hidratar histórico do localStorage
   useEffect(() => {
     setMessages(loadHistory())
     setHydrated(true)
   }, [])
 
-  // Persistir + auto-scroll para fundo
   useEffect(() => {
     if (!hydrated) return
     saveHistory(messages)
@@ -97,7 +218,6 @@ export default function AiChatWidget() {
     })
   }, [messages, hydrated])
 
-  // ESC fecha
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -107,7 +227,6 @@ export default function AiChatWidget() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
-  // Focus no input quando abre
   useEffect(() => {
     if (open && messages.length > 0) {
       requestAnimationFrame(() => inputRef.current?.focus())
@@ -115,6 +234,8 @@ export default function AiChatWidget() {
   }, [open, messages.length])
 
   const greeting = useMemo(() => getGreeting(), [open])
+  const exchanges = messages.filter((m) => m.role === 'user').length
+  const showEscalation = exchanges >= ESCALATION_THRESHOLD
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return
@@ -127,26 +248,29 @@ export default function AiChatWidget() {
       const token = getToken()
       const r = await apiPost<{ answer: string }>(
         '/ai/cs-chat',
-        { message: userMsg.content, history: next.slice(0, -1).slice(-8) },
+        {
+          message: userMsg.content,
+          history: next.slice(0, -1).slice(-8).map(({ role, content }) => ({ role, content })),
+        },
         { token: token ?? undefined },
       )
       setMessages([...next, { role: 'assistant', content: r.answer }])
     } catch (err) {
       const msg =
         err instanceof Error && err.message.includes('503')
-          ? 'Estamos em modo limitado. Para questões urgentes, escreva-nos para info@lionsocks.pt.'
-          : 'Não consegui responder agora. Tente de novo dentro de momentos.'
+          ? 'Estamos em modo limitado. Para questões urgentes, escreva-nos para [info@lionsocks.pt](mailto:info@lionsocks.pt).'
+          : 'Não consegui responder agora. Tente de novo dentro de momentos, ou escreva-nos para [info@lionsocks.pt](mailto:info@lionsocks.pt).'
       setMessages([...next, { role: 'assistant', content: msg }])
     } finally {
       setLoading(false)
     }
   }
 
-  const handleQuickReply = (qr: typeof QUICK_REPLIES[number]) => {
+  const handleFollowUp = (fu: FollowUp) => {
     setMessages((prev) => [
       ...prev,
-      { role: 'user', content: qr.label },
-      { role: 'assistant', content: qr.reply },
+      { role: 'user', content: fu.label },
+      { role: 'assistant', content: fu.reply, followUps: fu.followUps },
     ])
   }
 
@@ -164,7 +288,7 @@ export default function AiChatWidget() {
     return (
       <button
         onClick={() => setOpen(true)}
-        aria-label="Falar com o concierge Lion Socks"
+        aria-label="Falar com o assistente Lion Socks"
         title="Ajuda"
         className="fixed z-40 flex items-center justify-center transition-all"
         style={{
@@ -200,14 +324,14 @@ export default function AiChatWidget() {
   return (
     <div
       role="dialog"
-      aria-label="Conversa com o concierge Lion Socks"
+      aria-label="Conversa com o assistente Lion Socks"
       aria-modal="false"
       className="fixed z-40 flex flex-col chat-panel"
       style={{
         bottom: '24px',
         left: '24px',
         width: 'min(380px, 90vw)',
-        height: 'min(540px, 75vh)',
+        height: 'min(560px, 78vh)',
         background: '#F5F3EE',
         border: '1px solid rgba(184,150,12,0.18)',
         borderRadius: '8px',
@@ -249,6 +373,20 @@ export default function AiChatWidget() {
         }
         .chat-chip:hover { background: #0A0A0A; color: #F5F3EE; }
         .chat-chip:focus-visible { outline: 2px solid #B8960C; outline-offset: 2px; }
+        .chat-chip-followup {
+          padding: 6px 12px;
+          font-size: 10px;
+          letter-spacing: 0.12em;
+          color: #424242;
+          border-color: rgba(10,10,10,0.20);
+          text-transform: none;
+          font-weight: 400;
+        }
+        .chat-chip-followup:hover {
+          background: #0A0A0A;
+          color: #F5F3EE;
+          border-color: #0A0A0A;
+        }
       `}</style>
 
       {/* Header preto sólido */}
@@ -285,7 +423,7 @@ export default function AiChatWidget() {
               marginTop: '3px',
             }}
           >
-            Concierge
+            Assistente
           </p>
         </div>
 
@@ -373,7 +511,7 @@ export default function AiChatWidget() {
               }}
             >
               {QUICK_REPLIES.map((qr) => (
-                <button key={qr.label} onClick={() => handleQuickReply(qr)} className="chat-chip">
+                <button key={qr.label} onClick={() => handleFollowUp(qr)} className="chat-chip">
                   {qr.label}
                 </button>
               ))}
@@ -409,9 +547,15 @@ export default function AiChatWidget() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {messages.map((m, i) => (
-              <ChatBubble key={i} role={m.role} content={m.content} />
+              <Fragment key={i}>
+                <ChatBubble role={m.role} content={m.content} />
+                {m.role === 'assistant' && m.followUps && i === messages.length - 1 && !loading && (
+                  <FollowUpRow followUps={m.followUps} onPick={handleFollowUp} />
+                )}
+              </Fragment>
             ))}
             {loading && <TypingIndicator />}
+            {showEscalation && !loading && <EscalationCard />}
           </div>
         )}
       </div>
@@ -493,7 +637,93 @@ function ChatBubble({ role, content }: { role: 'user' | 'assistant'; content: st
           wordBreak: 'break-word',
         }}
       >
-        {content}
+        {isUser ? content : renderInlineMarkdown(content)}
+      </div>
+    </div>
+  )
+}
+
+function FollowUpRow({
+  followUps,
+  onPick,
+}: {
+  followUps: FollowUp[]
+  onPick: (fu: FollowUp) => void
+}) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '6px',
+        marginTop: '4px',
+        marginLeft: '4px',
+      }}
+    >
+      {followUps.map((fu) => (
+        <button
+          key={fu.label}
+          onClick={() => onPick(fu)}
+          className="chat-chip chat-chip-followup"
+        >
+          {fu.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function EscalationCard() {
+  return (
+    <div
+      style={{
+        marginTop: '8px',
+        padding: '14px 16px',
+        background: 'rgba(184,150,12,0.08)',
+        border: '1px solid rgba(184,150,12,0.25)',
+        borderRadius: '8px',
+        display: 'flex',
+        gap: '12px',
+        alignItems: 'flex-start',
+      }}
+    >
+      <Mail size={16} strokeWidth={1.5} style={{ color: '#B8960C', marginTop: '2px', flexShrink: 0 }} />
+      <div>
+        <p
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '12px',
+            fontWeight: 500,
+            color: '#0A0A0A',
+            margin: 0,
+            marginBottom: '4px',
+          }}
+        >
+          Não está a encontrar o que procura?
+        </p>
+        <p
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '12px',
+            color: '#424242',
+            margin: 0,
+            lineHeight: 1.5,
+          }}
+        >
+          Escreva-nos para{' '}
+          <a
+            href="mailto:info@lionsocks.pt"
+            style={{
+              color: '#B8960C',
+              textDecoration: 'underline',
+              textUnderlineOffset: '2px',
+              fontWeight: 500,
+            }}
+          >
+            info@lionsocks.pt
+          </a>
+          {' '}— respondemos em 24h úteis.
+        </p>
       </div>
     </div>
   )
